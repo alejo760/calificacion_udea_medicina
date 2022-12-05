@@ -93,9 +93,11 @@ def main():
     if st.button("Store data in Firestore"):
       store_data_in_firestore(df)
       st.success("Data stored successfully in Firestore")
-
-    if st.button("Download QR codes"):
-       download_df_in_excel(df)
+    #download xlsx in streamlit
+    if st.button("Download xlsx"):
+      b64 = base64.b64encode(download_df_in_excel(df)).decode()
+      href = f'<a href="data:file/xlsx;base64,{b64}" download="myfilename.xlsx">Download xlsx file</a>'
+      st.markdown(href, unsafe_allow_html=True)
 
   # Calification page
   student_id = st.text_input("Enter student id:")
