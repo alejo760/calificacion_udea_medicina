@@ -99,7 +99,7 @@ def main():
       st.success("Data stored successfully in Firestore")
     #download xlsx in streamlit
     if st.button("Download xlsx"):
-      b64 = base64.b64encode(download_df_in_excel(qr)).decode()
+      b64 = base64.b64encode(download_df_in_excel(df)).decode()
       href = f'<a href="data:file/xlsx;base64,{b64}" download="myfilename.xlsx">Download xlsx file</a>'
       st.markdown(href, unsafe_allow_html=True)
 
