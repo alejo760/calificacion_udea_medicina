@@ -6,7 +6,6 @@ import base64
 import io
 import xlsxwriter
 import json
-from attrdict import AttrDict
 
 
 
@@ -16,12 +15,11 @@ from google.oauth2 import service_account
 
 @st.experimental_singleton
 def get_db():
-    key_dict =  json.loads(st.secrets.textkey().dict())
+    key_dict = json.loads(st.secrets["textkey"])
     creds=service_account.Credentials.from_service_account_info(key_dict)
     db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")
 
     return db
-
 
 # Function to upload a database in xlsx format with the list of students name, e-mail, and id
 def upload_database():

@@ -1,3 +1,6 @@
 data.json
 data.toml
 tomltojson.py
+secrets.toml
+.vscode
+firestore-key.json
