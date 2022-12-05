@@ -10,7 +10,7 @@ import toml
 
 creds=toml.dump(st.secrets.keys)
 key_firestore = json.loads(creds)
-cred = credentials.Certificate(st.secrets.keys)
+cred = credentials.Certificate(key_firestore)
 firebase_admin.initialize_app(cred)
 
 
