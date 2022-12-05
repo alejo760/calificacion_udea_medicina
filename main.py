@@ -1,17 +1,19 @@
 import streamlit as st
 import pandas as pd
 import pyqrcode
-from firebase_admin import firestore
-import firebase_admin
-from firebase_admin import credentials
-from google.oauth2 import service_account
-import json
-import toml
 
-creds=toml.dumps(st.secrets.keys)
-key_firestore = json.loads(creds)
-cred = credentials.Certificate(key_firestore)
-firebase_admin.initialize_app(cred)
+
+from google.cloud import firestore
+from google.cloud.firestore import Client
+from google.oauth2 import service_account
+
+@st.experimental_singleton
+def get_db():
+    key_dict = json.loads(st.secrets["textkey"])
+    creds = service_account.Credentials.from_service_account_info(key_dict)
+    db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")
+
+    return db
 
 
 # Function to upload a database in xlsx format with the list of students name, e-mail, and id
