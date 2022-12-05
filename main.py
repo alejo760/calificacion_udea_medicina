@@ -4,6 +4,8 @@ import pyqrcode
 import png
 import base64
 import io
+import xlsxwriter
+
 
 
 from google.cloud import firestore
