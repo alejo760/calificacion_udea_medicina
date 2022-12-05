@@ -8,6 +8,7 @@ from google.oauth2 import service_account
 import json
 
 key_dict =json.loads(st.secrets.keys)
+key_dict = key_dict.to_string()
 cred = credentials.Certificate(key_dict)
 firebase_admin.initialize_app(cred)
 db = firestore.client()
