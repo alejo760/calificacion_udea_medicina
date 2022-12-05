@@ -4,24 +4,12 @@ import pyqrcode
 from firebase_admin import firestore
 import firebase_admin
 from firebase_admin import credentials
-import json
 from google.oauth2 import service_account
 
-key_dict = json.loads(st.secrets)
-creds = service_account.Credentials.from_service_account_info(key_dict)
-db = firestore.Client(credentials=creds, project="streamlit-reddit")
 
-
+cred = credentials.Certificate(st.secrets.keys)
 firebase_admin.initialize_app(cred)
-
-# Initialize Firestore
-
-# Get the Firestore credentials from Streamlit secrets
-creds = st.secrets.get("firebase_credentials")
-
-# Create a Firestore client using the credentials
 db = firestore.client()
-
 
 
 # Function to upload a database in xlsx format with the list of students name, e-mail, and id
