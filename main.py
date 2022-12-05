@@ -2,13 +2,14 @@ import streamlit as st
 import pandas as pd
 import pyqrcode
 from firebase_admin import firestore
-import json
-from google.oauth2 import service_account
+
 # Initialize Firestore
 
-key_dict = st.secrets["textkey"]
-creds = service_account.Credentials.from_service_account_info(key_dict)
-db = firestore.client(credentials=creds)
+# Get the Firestore credentials from Streamlit secrets
+creds = st.secrets.get_secrets('firestore')
+
+# Create a Firestore client using the credentials
+db = firestore.Client(credentials=creds)
 
 # Function to upload a database in xlsx format with the list of students name, e-mail, and id
 def upload_database():
