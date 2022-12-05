@@ -30,13 +30,13 @@ def upload_database():
 
 # Function to generate a QR code for each student
 def generate_qr_codes(df):
-  qr_png={}
+
   for i, row in df.iterrows():
     url = f"https://qrudeamedicina.streamlit.app/?student_id={row['id']}"
     qr = pyqrcode.create(url)
     # Download png image of the QR code with student name and id caption in streamilit 
-    qr.png(f"{row['name']}_{row['id']}.png", scale=6, module_color=[0, 0, 0, 128], background=[0xff, 0xff, 0xcc])
-    qr_png[row['name']]=f"{row['name']}_{row['id']}.png"
+    st.image(qr.png(f"{row['name']}_{row['id']}.png", scale=6, module_color=[0, 0, 0, 128], background=[0xff, 0xff, 0xcc]))
+
   return qr_png
     
 
