@@ -3,11 +3,12 @@ import pandas as pd
 import pyqrcode
 from firebase_admin import firestore
 import json
+from google.oauth2 import service_account
 # Initialize Firestore
 
-key_dict = st.secrets["firebase"]
-creds = json.loads(key_dict)
-db = firestore.client(credentials=creds, project="EstudiantesUdeA")
+key_dict = st.secrets["textkey"]
+creds = service_account.Credentials.from_service_account_info(key_dict)
+db = firestore.client(credentials=creds)
 
 # Function to upload a database in xlsx format with the list of students name, e-mail, and id
 def upload_database():
