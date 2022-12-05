@@ -26,7 +26,7 @@ def upload_database():
 # Function to generate a QR code for each student
 def generate_qr_codes(df):
   for i, row in df.iterrows():
-    url = f"https://my-calification-page.com?student_id={row['id']}"
+    url = f"https://qrudeamedicina.streamlit.app/?student_id={row['id']}"
     qr = pyqrcode.create(url)
     # Save the QR code as an image file
     qr.png(f"qr_codes/{row['id']}.png", scale=6)
