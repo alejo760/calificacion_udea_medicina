@@ -6,10 +6,12 @@ from firebase_admin import firestore
 # Initialize Firestore
 
 # Get the Firestore credentials from Streamlit secrets
-creds = st.secrets.get_secrets('firestore')
+creds = st.secrets.get("firebase_credentials")
 
 # Create a Firestore client using the credentials
-db = firestore.Client(credentials=creds)
+db = firestore.client(credentials=creds)
+
+
 
 # Function to upload a database in xlsx format with the list of students name, e-mail, and id
 def upload_database():
