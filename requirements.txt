@@ -1,6 +1,5 @@
+firebase_admin==6.0.1
 pandas==1.4.1
-protobuf==4.21.10
 PyQRCode==1.2.1
 streamlit==1.14.0
 toml==0.10.2
-google-cloud-firestore==2.7.2
