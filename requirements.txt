@@ -3,4 +3,4 @@ PyQRCode==1.2.1
 streamlit==1.14.0
 toml==0.10.2
 openpyxl==3.0.10
-png==0.1.7
+pypng==0.20220715.0
