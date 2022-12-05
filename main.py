@@ -37,7 +37,11 @@ def generate_qr_codes(df):
     # Save the QR code as an image file
     #append to qrdict
     qrdict[row['id']]=qr.png_as_base64_str(scale=8)
-  df['QR']=qrdict
+
+  df['QR']=qrdict.values()
+  return df
+
+
     
 
     
@@ -95,7 +99,7 @@ def main():
       st.success("Data stored successfully in Firestore")
     #download xlsx in streamlit
     if st.button("Download xlsx"):
-      b64 = base64.b64encode(download_df_in_excel(df)).decode()
+      b64 = base64.b64encode(download_df_in_excel(qr)).decode()
       href = f'<a href="data:file/xlsx;base64,{b64}" download="myfilename.xlsx">Download xlsx file</a>'
       st.markdown(href, unsafe_allow_html=True)
 
