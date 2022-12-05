@@ -36,7 +36,7 @@ def generate_qr_codes(df):
     qr = pyqrcode.create(url)
     # Save the QR code as an image file
     #append to qrdict
-    qr_png=qr.png_as_base64_str(f"qr_codes/{row['id']}.png", scale=6)
+    qr_png=qr.png_as_base64_str(scale=6)
     st.image(qr_png)
 
 
