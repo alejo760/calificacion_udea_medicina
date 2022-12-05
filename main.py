@@ -28,17 +28,25 @@ def upload_database():
     df = pd.read_excel(data)
     return df
 
-# Function to generate a QR code for each student
+# Function to generate a QR code for each student in a pdf file and download the pdf file
 def generate_qr_codes(df):
-
   for i, row in df.iterrows():
-    url = f"https://qrudeamedicina.streamlit.app/?student_id={row['id']}"
-    qr = pyqrcode.create(url)
-    # Download png image of the QR code with student name and id caption in streamilit 
-    st.image(qr.png(f"{row['name']}_{row['id']}.png", scale=6, module_color=[0, 0, 0, 128], background=[0xff, 0xff, 0xcc]))
+    # Generate the QR code
+    url = pyqrcode.create(row['id'])
+    url.png(f"{row['id']}.png", scale=6)
 
-  return qr_png
+    # Download the QR code
+    image = open(f"{row['id']}.png", "rb")
+    image_read = image.read()
+    b64 = base64.b64encode(image_read).decode()
+    href = f'<a href="data:file/png;base64,{b64}" download="{row['id']}.png">Download {row['id']}.png</a>'
+    st.markdown(href, unsafe_allow_html=True)
+
+
     
+
+
+
 
 
     
