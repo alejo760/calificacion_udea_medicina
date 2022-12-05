@@ -2,9 +2,12 @@ import streamlit as st
 import pandas as pd
 import pyqrcode
 from firebase_admin import firestore
-
+import json
 # Initialize Firestore
-db = firestore.client()
+
+key_dict = st.secrets["firebase"]
+creds = json.loads(key_dict)
+db = firestore.client(credentials=creds, project="EstudiantesUdeA")
 
 # Function to upload a database in xlsx format with the list of students name, e-mail, and id
 def upload_database():
