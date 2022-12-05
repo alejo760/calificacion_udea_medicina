@@ -63,7 +63,7 @@ def get_table_download_link(df):
   in:  dataframe
   out: href string
   """
-  csv = df.to_xlsx(index=False)
+  csv = df.to_excel(index=False)
   b64 = base64.b64encode(
       csv.encode()
   ).decode()  # some strings <-> bytes conversions necessary here
