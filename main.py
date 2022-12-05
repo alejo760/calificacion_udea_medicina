@@ -8,8 +8,8 @@ from google.oauth2 import service_account
 import json
 import toml
 
-
-creds=toml.dump(st.secrets.keys)
+creds= st.secrets.keys
+creds=toml.dump()
 key_firestore = json.loads(creds)
 cred = credentials.Certificate(st.secrets.keys)
 firebase_admin.initialize_app(cred)
