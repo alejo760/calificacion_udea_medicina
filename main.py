@@ -53,8 +53,8 @@ def store_data_in_firestore(df):
       'name': row['name'],
       'email': row['email']
     })
-#Download the xlsx file with the list of students and qr codes
-def download_qr_codes():
+
+
 
 
 # Main function
@@ -75,6 +75,9 @@ def main():
     if st.button("Store data in Firestore"):
       store_data_in_firestore(df)
       st.success("Data stored successfully in Firestore")
+
+    if st.button("Download QR codes"):
+      st.markdown(get_table_download_link(df), unsafe_allow_html=True)
 
   # Calification page
   student_id = st.text_input("Enter student id:")
