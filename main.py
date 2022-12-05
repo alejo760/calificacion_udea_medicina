@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import pyqrcode
 import png
+import base64
 
 
 from google.cloud import firestore
