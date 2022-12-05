@@ -15,6 +15,7 @@ from google.oauth2 import service_account
 
 @st.experimental_singleton
 def get_db():
+    global db
     key_dict = json.loads(st.secrets["textkey"])
     creds=service_account.Credentials.from_service_account_info(key_dict)
     db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")
