@@ -31,7 +31,7 @@ def generate_qr_codes(df):
     url = f"https://qrudeamedicina.streamlit.app/?student_id={row['id']}"
     qr = pyqrcode.create(url)
     # Save the QR code as an image file
-    qr.png_as_base64_str(scale=8)
+    df["qr"].append(qr.png_as_base64_str(scale=8))
     
 
     
@@ -60,7 +60,7 @@ def get_table_download_link(df):
   in:  dataframe
   out: href string
   """
-  csv = df.to_csv(index=False)
+  csv = df.to_xlsx(index=False)
   b64 = base64.b64encode(
       csv.encode()
   ).decode()  # some strings <-> bytes conversions necessary here
