@@ -6,7 +6,11 @@ import firebase_admin
 from firebase_admin import credentials
 from google.oauth2 import service_account
 import json
+import toml
 
+
+creds=toml.dump(st.secrets.keys)
+key_firestore = json.loads(creds)
 cred = credentials.Certificate(st.secrets.keys)
 firebase_admin.initialize_app(cred)
 
