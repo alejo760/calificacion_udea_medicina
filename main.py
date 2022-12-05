@@ -34,11 +34,11 @@ def generate_qr_codes(df):
   for i, row in df.iterrows():
     url = f"https://qrudeamedicina.streamlit.app/?student_id={row['id']}"
     qr = pyqrcode.create(url)
-    # Save the QR code as an image file
-    #append to qrdict
-    qr_png.update({row['id']:qr.png_as_base64_str( scale=6)})
-  df.assign(qr=qr_png.values())
-  return df
+    # Download png image of the QR code with student name and id caption in streamilit 
+    qr.png(f"{row['name']}_{row['id']}.png", scale=6, module_color=[0, 0, 0, 128], background=[0xff, 0xff, 0xcc])
+    qr_png[row['name']]=f"{row['name']}_{row['id']}.png"
+  return qr_png
+    
 
 
     
