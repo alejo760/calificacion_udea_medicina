@@ -45,14 +45,6 @@ def generate_qr_codes(df):
 
 
 
-
-
-#create a streamlir page of each student that allow teachers to calificate them
-def student_page(student_id):
-
-
-
-
     
 
     
