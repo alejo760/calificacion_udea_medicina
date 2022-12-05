@@ -30,7 +30,7 @@ def generate_qr_codes(df):
     url = f"https://qrudeamedicina.streamlit.app/?student_id={row['id']}"
     qr = pyqrcode.create(url)
     # Save the QR code as an image file
-    qr.png_as_base64_str(f"qr_codes/{row['id']}.png")
+    qr.png_as_base64_str(scale=8)
     
 
     
