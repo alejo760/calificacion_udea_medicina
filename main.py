@@ -13,14 +13,9 @@ from google.cloud import firestore
 from google.cloud.firestore import Client
 from google.oauth2 import service_account
 
-@st.experimental_singleton
-def get_db():
-    global db
-    key_dict = json.loads(st.secrets["textkey"])
-    creds=service_account.Credentials.from_service_account_info(key_dict)
-    db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")
-
-    return db
+key_dict = json.loads(st.secrets["textkey"])
+creds=service_account.Credentials.from_service_account_info(key_dict)
+db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")
 
 # Function to upload a database in xlsx format with the list of students name, e-mail, and id
 def upload_database():
