@@ -39,11 +39,11 @@ def generate_qr_codes(df):
     image = open(f"{row['id']}.png", "rb")
     image_read = image.read()
     b64 = base64.b64encode(image_read).decode()
-    href = f'<a href="data:file/png;base64,{b64}" download="{row['id']}.png">Download {row['id']}.png</a>'
+    href = f'<a href="data:file/png;base64,{b64}" download="{row["id"]}.png">Download {row["id"]}.png</a>'
     st.markdown(href, unsafe_allow_html=True)
 
 
-    
+
 
 
 
