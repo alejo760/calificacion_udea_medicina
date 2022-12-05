@@ -2,6 +2,17 @@ import streamlit as st
 import pandas as pd
 import pyqrcode
 from firebase_admin import firestore
+import firebase_admin
+from firebase_admin import credentials
+import json
+from google.oauth2 import service_account
+
+key_dict = json.loads(st.secrets["private_key"])
+creds = service_account.Credentials.from_service_account_info(key_dict)
+db = firestore.Client(credentials=creds, project="streamlit-reddit")
+
+
+firebase_admin.initialize_app(cred)
 
 # Initialize Firestore
 
