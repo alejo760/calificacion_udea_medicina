@@ -62,7 +62,7 @@ def calification_page(student_id):
 def store_data_in_firestore(df):
   get_db()
   for i, row in df.iterrows():
-    student_ref = db.collection("students").document(row['id'])
+    student_ref = db.collection("students").document(str(row['id']))
     student_ref.set({
       'name': row['name'],
       'email': row['email']
