@@ -30,7 +30,7 @@ def generate_qr_codes(df):
     qr = pyqrcode.create(url)
     # Save the QR code as an image file
     qr.png(f"qr_codes/{row['id']}.png", scale=6)
-
+    
 # Create a calification page that shows the student info and a form that allows the teacher to calificate the student from 0.0 to 5.0
 def calification_page(student_id):
   student_ref = db.collection("students").document(student_id)
