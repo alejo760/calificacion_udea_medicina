@@ -6,9 +6,6 @@ import base64
 import io
 import xlsxwriter
 import json
-
-
-
 from google.cloud import firestore
 from google.cloud.firestore import Client
 from google.oauth2 import service_account
@@ -37,11 +34,6 @@ def generate_qr_codes(df):
     b64 = base64.b64encode(image_read).decode()
     href = f'<a href="data:file/png;base64,{b64}" download="{row["id"]}.png">Download {row["id"]}.png</a>'
     st.markdown(href, unsafe_allow_html=True)
-
-
-
-    
-
     
 # Create a calification page that shows the student info and a form that allows the teacher to calificate the student from 0.0 to 5.0
 def calification_page(student_id):
