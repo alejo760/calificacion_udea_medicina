@@ -7,11 +7,8 @@ from firebase_admin import credentials
 from google.oauth2 import service_account
 import json
 
-key_dict =json.loads(st.secrets.keys)
-key_dict = json.dumps(key_dict)
-cred = credentials.Certificate(key_dict)
+cred = credentials.Certificate(st.secrets.keys)
 firebase_admin.initialize_app(cred)
-db = firestore.client()
 
 
 # Function to upload a database in xlsx format with the list of students name, e-mail, and id
