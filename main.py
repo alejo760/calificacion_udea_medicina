@@ -9,7 +9,7 @@ from firebase_admin import firestore
 creds = st.secrets.get("firebase_credentials")
 
 # Create a Firestore client using the credentials
-db = firestore.client(credentials=creds)
+db = firestore.client()
 
 
 
