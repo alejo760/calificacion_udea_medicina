@@ -3,6 +3,7 @@ import pandas as pd
 import pyqrcode
 import png
 import base64
+import io
 
 
 from google.cloud import firestore
@@ -58,16 +59,18 @@ def store_data_in_firestore(df):
       'email': row['email']
     })
 
-def get_table_download_link(df):
-  """Generates a link allowing the data in a given panda dataframe to be downloaded
-  in:  dataframe
-  out: href string
-  """
-  csv = df.to_excel(index=False)
-  b64 = base64.b64encode(
-      csv.encode()
-  ).decode()  # some strings <-> bytes conversions necessary here
-  return f'<a href="data:file/csv;base64,{b64}" download="myfilename.csv">Download csv file</a>'
+def download_df_in_excel(df):
+  output = io.BytesIO()
+  writer = pd.ExcelWriter(output, engine='xlsxwriter')
+  df.to_excel(writer, sheet_name='Sheet1')
+  writer.save()
+  processed_data = output.getvalue()
+  return processed_data
+
+  
+  
+  
+  
 
 
 # Main function
@@ -90,7 +93,7 @@ def main():
       st.success("Data stored successfully in Firestore")
 
     if st.button("Download QR codes"):
-      st.markdown(get_table_download_link(df), unsafe_allow_html=True)
+       download_df_in_excel(df)
 
   # Calification page
   student_id = st.text_input("Enter student id:")
