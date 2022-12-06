@@ -5,9 +5,7 @@ import png
 import base64
 import io
 import xlsxwriter
-
-
-
+from zipfile import ZipFile
 from google.cloud import firestore
 from google.cloud.firestore import Client
 from google.oauth2 import service_account
@@ -37,16 +35,15 @@ def generate_qr_codes(df):
     # Download png image of the QR code with student name and id caption
     qr.png(f"{row['name']}_{row['id']}.png", scale=6)
     qr_png[row['name']]=f"{row['name']}_{row['id']}.png"
-    # button to  download all the QR codes in a zip file
+    # button to download all the QR codes
     if st.button("Download QR codes"):
-      zip_file = io.BytesIO()
-      with zipfile.ZipFile(zip_file, 'w') as z:
-        for name, file in qr_png.items():
-          z.write(file)
-      z.close()
-      b64 = base64.b64encode(zip_file.getvalue()).decode()
-      href = f'<a href="data:file/zip;base64,{b64}" download="myfilename.zip">Download zip file</a>'
-      st.markdown(href, unsafe_allow_html=True)
+      zipObj = ZipFile('all_qr_codes.zip', 'w')
+      for key in qr_png:
+        zipObj.write(qr_png[key])
+      zipObj.close()
+      st.success("QR codes downloaded successfully")
+
+
   return qr_png
     
 
