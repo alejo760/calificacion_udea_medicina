@@ -43,8 +43,8 @@ def generate_qr_codes(df):
         zipObj.write(qr_png[key])
   zipObj.close()
   #download zip in streamlit
-  b64 = base64.b64encode(open('all_qr_codes.zip', 'rb').read()).decode()
-  href = f'<a href="data:file/zip;base64,{b64}" download="all_qr_codes.zip">Download zip file</a>'
+  b64 = base64.b64encode(open('todos_qr_codes.zip', 'rb').read()).decode()
+  href = f'<a href="data:file/zip;base64,{b64}" download="todos_qr_codes.zip">Download zip file</a>'
   st.markdown(href, unsafe_allow_html=True)
 
   return qr_png
