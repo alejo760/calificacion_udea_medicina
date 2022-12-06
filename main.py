@@ -13,8 +13,11 @@ from fpdf import FPDF
 from io import BytesIO
 
 lista=["1dcsad","21wd","3asDASDA"]
-st.sidebar.write(lista)
-
+with st.sidebar:
+    add_radio = st.radio(
+        "Choose a shipping method",
+        (lista)
+    )
 key_dict = json.loads(st.secrets["textkey"])
 creds = service_account.Credentials.from_service_account_info(key_dict)
 db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")
