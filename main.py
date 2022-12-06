@@ -6,13 +6,14 @@ import base64
 import io
 import xlsxwriter
 import json
-from google.cloud import firestore
-from google.cloud.firestore import Client
-from google.oauth2 import service_account
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import firestore
 
 key_dict = json.loads(st.secrets["textkey"])
-creds=service_account.Credentials.from_service_account_info(key_dict)
-db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")
+creds=credentials.Certificate(key_dict)
+app = firebase_admin.initialize_app(creds)
+db = firestore.client(credentials=creds, project="estudiantesudea-1bbcd")
 
 # Function to upload a database in xlsx format with the list of students name, e-mail, and id
 def upload_database():
