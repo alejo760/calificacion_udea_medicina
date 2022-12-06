@@ -100,14 +100,13 @@ def main():
 
   # Calification page
  #st.text_input("Enter student id:")
-
-  
+    student_id = st.experimental_get_query_params().get("student_id", None)
   if student_id==None:
     student_id=st.text_input("Enter student id:")
     calification_page(student_id)
   else:
-    student_id = st.experimental_get_query_params().get("student_id", None)
     calification_page(student_id)
+
 
 # Run the app
 if __name__ == "__main__":
