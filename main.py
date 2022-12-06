@@ -7,17 +7,14 @@ import io
 import xlsxwriter
 import json
 from zipfile import ZipFile
-from google.cloud import firestore
+from firebase_admin import firestore
 from google.cloud.firestore import Client
 from google.oauth2 import service_account
 
-@st.experimental_singleton
-def get_db():
-    key_dict = json.loads(st.secrets["textkey"])
-    creds = service_account.Credentials.from_service_account_info(key_dict)
-    db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")
 
-    return db
+key_dict = json.loads(st.secrets["textkey"])
+creds = service_account.Credentials.from_service_account_info(key_dict)
+db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")
 
 
 
@@ -103,9 +100,14 @@ def main():
 
   # Calification page
  #st.text_input("Enter student id:")
-  student_id = st.experimental_get_query_params().get("student_id", None)
-  #if student_id:
-  calification_page(student_id)
+
+  
+  if student_id==None:
+    student_id=st.text_input("Enter student id:")
+    calification_page(student_id)
+  else:
+    student_id = st.experimental_get_query_params().get("student_id", None)
+    calification_page(student_id)
 
 # Run the app
 if __name__ == "__main__":
