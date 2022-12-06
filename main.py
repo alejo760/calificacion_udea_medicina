@@ -13,7 +13,7 @@ from google.oauth2 import service_account
 
 key_dict = json.loads(st.secrets["textkey"])
 creds = service_account.Credentials.from_service_account_info(key_dict)
-db = firestore.Client(credentials=creds, project="streamlit-reddit")
+db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")
 
 # Function to upload a database in xlsx format with the list of students name, e-mail, and id
 def upload_database():
@@ -32,11 +32,14 @@ def generate_qr_codes(df):
     url.png_as_base64_str(scale=10)
 
     # Download the QR code
-    image = open(f"{row['id']}.png", "rb")
+    image = open(f"{row['id']}", "rb")
     image_read = image.read()
     b64 = base64.b64encode(image_read).decode()
     href = f'<a href="data:file/png;base64,{b64}" download="{row["id"]}.png">Download {row["id"]}.png</a>'
     st.markdown(href, unsafe_allow_html=True)
+
+    
+
     
 # Create a calification page that shows the student info and a form that allows the teacher to calificate the student from 0.0 to 5.0
 def calification_page(student_id):
