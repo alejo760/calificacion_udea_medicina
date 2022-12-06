@@ -64,7 +64,6 @@ def calification_page(student_id):
 
 # Create a function to store all the data in Firestore
 def store_data_in_firestore(df):
-  get_db()
   for i, row in df.iterrows():
     student_ref = db.collection("students").document(row['id'])
     student_ref.set({
@@ -103,10 +102,11 @@ def main():
     
     student_id = st.experimental_get_query_params().get("student_id", None)
 
-    if student_id is not None:
+    if student_id is None:
+      student_id = st.text_input("Enter student id:")
       calification_page(student_id)
     else:
-      student_id = st.text_input("Enter student id:")
+      
       calification_page(student_id)
 
 
