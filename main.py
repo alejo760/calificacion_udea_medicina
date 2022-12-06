@@ -20,6 +20,7 @@ def get_db():
     return db
 
 
+
 # Function to upload a database in xlsx format with the list of students name, e-mail, and id
 def upload_database():
   data = st.file_uploader("Upload a database in xlsx format", type="xlsx")
@@ -101,18 +102,10 @@ def main():
       st.success("Data stored successfully in Firestore")
 
   # Calification page
-  student_id = st.text_input("Enter student id:")
-  #create a function that recieves a link to anchor and enter student id
-  if student_id != "":
-    calification_page(student_id)
-    st.success("Calification stored successfully in Firestore")
-    
-
-
-  
-
-  if student_id:
-    calification_page(student_id)
+ #st.text_input("Enter student id:")
+  student_id = st.experimental_get_query_params().get("student_id", None)
+  #if student_id:
+  calification_page(student_id)
 
 # Run the app
 if __name__ == "__main__":
