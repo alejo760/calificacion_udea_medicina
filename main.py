@@ -14,10 +14,10 @@ key_dict = json.loads(st.secrets["textkey"])
 creds=credentials.Certificate(key_dict)
 
 # Provide a unique name for the app
-app = firebase_admin.initialize_app(creds, name="calificacionudea")
+app = firebase_admin.initialize_app(creds, name="calificacionudea***")
 
 # Use the app name to get the app instance
-db = firebase_admin.get_app(credentials=creds, project="estudiantesudea-1bbcd", name="calificacionudea")
+db = firebase_admin.get_app(credentials=creds, project="estudiantesudea-1bbcd", name="calificacionudea***")
 
 # Function to upload a database in xlsx format with the list of students name, e-mail, and id
 def upload_database():
