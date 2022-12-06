@@ -23,7 +23,7 @@ db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")
 
 # Function to upload a database in xlsx format with the list of students name, e-mail, and id
 def upload_database():
-  data = st.file_uploader("Upload a database in xlsx format", type="xlsx")
+  data = st.file_uploader("Subir base de datos de estudiantes, debe tener", type="xlsx")
   if data is not None:
     df = pd.read_excel(data)
     return df
@@ -38,37 +38,7 @@ def generate_qr_codes(df):
     qr.png(f"{row['name']}_{row['id']}.png", scale=6)
     qr_png[row['name']]=f"{row['name']}_{row['id']}.png"
     # button to download all the QR codes
-  zipObj = ZipFile('all_qr_codes.zip', 'w')
-  for key in qr_png:
-        zipObj.write(qr_png[key])
-  zipObj.close()
-  #download zip in streamlit
-  b64 = base64.b64encode(open('all_qr_codes.zip', 'rb').read()).decode()
-  href = f'<a href="data:file/zip;base64,{b64}" download="all_qr_codes.zip">Download zip file</a>'
-  st.markdown(href, unsafe_allow_html=True)
-
-  return qr_png
-
-
-
-# Function to upload a database in xlsx format with the list of students name, e-mail, and id
-def upload_database():
-  data = st.file_uploader("Upload a database in xlsx format", type="xlsx")
-  if data is not None:
-    df = pd.read_excel(data)
-    return df
-
-# Function to generate a QR code for each student
-def generate_qr_codes(df):
-  qr_png={}
-  for i, row in df.iterrows():
-    url = f"https://qrudeamedicina.streamlit.app/?student_id={int(row['id'])}"
-    qr = pyqrcode.create(url)
-    # Download png image of the QR code with student name and id caption
-    qr.png(f"{row['name']}_{row['id']}.png", scale=6)
-    qr_png[row['name']]=f"{row['name']}_{row['id']}.png"
-    # button to download all the QR codes
-  zipObj = ZipFile('all_qr_codes.zip', 'w')
+  zipObj = ZipFile('todos_qr_codes.zip', 'w')
   for key in qr_png:
         zipObj.write(qr_png[key])
   zipObj.close()
@@ -88,13 +58,6 @@ def store_data_in_firestore(df):
       'email': row['email']
     }) 
   
-
-
-# create a streamlit page for each student f"https://qrudeamedicina.streamlit.app/?student_id={row['id']}" to calificate the student
-
-# Create a calification page that opens with tge qr code that shows the student info and a form that allows the teacher to calificate the student from 0.0 to 5.0
-
-
 #---------------------------------#
 
 
@@ -104,22 +67,18 @@ def store_data_in_firestore(df):
 
 # Main function
 def main():
-  st.title("Calification App")
+  st.title("App de calificacion Medicina UdeA prueba hecha por Alejandro Hernández-Arango MD")
 
   # Upload the database
   df = upload_database()
+  store_data_in_firestore(df)
   if df is not None:
-    st.success("Database uploaded successfully")
+    st.success("Base de datos cargada exitosamente y guardada exitosamente")
 
     # Generate QR codes
-    if st.button("Generate QR codes"):
+    if st.button("Generar códigos QR"):
       generate_qr_codes(df)
-      st.success("QR codes generated successfully")
-
-    # Store the data in Firestore
-    if st.button("Store data in Firestore"):
-      store_data_in_firestore(df)
-      st.success("Data stored successfully in Firestore")
+      st.success("códigos QR generados exitosamente")
 
 
 
