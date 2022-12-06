@@ -39,7 +39,7 @@ def generate_qr_codes(df):
     zipObj = ZipFile('all_qr_codes.zip', 'w')
     for key in qr_png:
         zipObj.write(qr_png[key])
-        zipObj.close()
+    zipObj.close()
     st.success("QR codes downloaded successfully")
 
 
