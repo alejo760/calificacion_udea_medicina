@@ -43,7 +43,7 @@ def main():
       calification_page(student_id[0])
 
 
-# Run the app
+# Run the appsjadnkajsdn
 if __name__ == "__main__":
   main()
 

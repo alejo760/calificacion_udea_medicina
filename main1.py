@@ -62,7 +62,7 @@ def store_data_in_firestore(df):
 
 
 
-#---------------------------------#
+#---------------------------------....#
 
 
 # Main function
@@ -81,5 +81,7 @@ def main():
       st.success("códigos QR generados exitosamente")
 
 
-
+# Run the app
+if __name__ == "__main__":
+  main()
 
