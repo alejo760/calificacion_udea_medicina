@@ -5,6 +5,7 @@ import png
 import base64
 import io
 import xlsxwriter
+import json
 from zipfile import ZipFile
 from google.cloud import firestore
 from google.cloud.firestore import Client
@@ -48,7 +49,7 @@ def generate_qr_codes(df):
   return qr_png
     
 
-
+# create a streamlit page for each student f"https://qrudeamedicina.streamlit.app/?student_id={row['id']}" to calificate the student
 
     
 
@@ -73,13 +74,6 @@ def store_data_in_firestore(df):
       'email': row['email']
     })
 
-def download_df_in_excel(df):
-  output = io.BytesIO()
-  writer = pd.ExcelWriter(output, engine='xlsxwriter')
-  df.to_excel(writer, sheet_name='Sheet1')
-  writer.save()
-  processed_data = output.getvalue()
-  return processed_data
 
   
   
@@ -105,14 +99,18 @@ def main():
     if st.button("Store data in Firestore"):
       store_data_in_firestore(df)
       st.success("Data stored successfully in Firestore")
-    #download xlsx in streamlit
-    if st.button("Download xlsx"):
-      b64 = base64.b64encode(download_df_in_excel(df)).decode()
-      href = f'<a href="data:file/xlsx;base64,{b64}" download="myfilename.xlsx">Download xlsx file</a>'
-      st.markdown(href, unsafe_allow_html=True)
 
   # Calification page
   student_id = st.text_input("Enter student id:")
+  #create a function that recieves a link to anchor and enter student id
+  if student_id != "":
+    calification_page(student_id)
+    st.success("Calification stored successfully in Firestore")
+    
+
+
+  
+
   if student_id:
     calification_page(student_id)
 
