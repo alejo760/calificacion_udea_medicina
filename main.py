@@ -5,7 +5,6 @@ import png
 import base64
 import io
 import xlsxwriter
-import json
 
 
 
@@ -15,10 +14,12 @@ from google.oauth2 import service_account
 
 @st.experimental_singleton
 def get_db():
-    global db
     key_dict = json.loads(st.secrets["textkey"])
-    creds=service_account.Credentials.from_service_account_info(key_dict)
+    creds = service_account.Credentials.from_service_account_info(key_dict)
     db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")
+
+    return db
+
 
 # Function to upload a database in xlsx format with the list of students name, e-mail, and id
 def upload_database():
@@ -27,20 +28,18 @@ def upload_database():
     df = pd.read_excel(data)
     return df
 
-# Function to generate a QR code for each student in a pdf file and download the pdf file
+# Function to generate a QR code for each student
 def generate_qr_codes(df):
+  qr_png={}
   for i, row in df.iterrows():
-    # Generate the QR code
-    url = pyqrcode.create(row['id'])
-    url.png(f"{row['id']} {row['name']}.png", scale=10)
+    url = f"https://qrudeamedicina.streamlit.app/?student_id={row['id']}"
+    qr = pyqrcode.create(url)
+    # Download png image of the QR code with student name and id caption in streamilit 
+    qr.png(f"{row['name']}_{row['id']}.png", scale=6, module_color=[0, 0, 0, 128], background=[0xff, 0xff, 0xcc])
+    qr_png[row['name']]=f"{row['name']}_{row['id']}.png"
 
-    # Download the QR code
-    image = open(f"{row['id']}.png", "rb")
-    image_read = image.read()
-    b64 = base64.b64encode(image_read).decode()
-    href = f'<a href="data:file/png;base64,{b64}" download="{row["id"]}.png">Download {row["id"]}.png</a>'
-    st.markdown(href, unsafe_allow_html=True)
-
+  return qr_png
+    
 
 
     
@@ -60,7 +59,7 @@ def calification_page(student_id):
 def store_data_in_firestore(df):
   get_db()
   for i, row in df.iterrows():
-    student_ref = db.collection("students").document(str(row['id']))
+    student_ref = db.collection("students").document(row['id'])
     student_ref.set({
       'name': row['name'],
       'email': row['email']
