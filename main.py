@@ -6,75 +6,44 @@ import base64
 import io
 import xlsxwriter
 import json
-from firebase_admin import firestore
+
+
+
+from google.cloud import firestore
 from google.cloud.firestore import Client
 from google.oauth2 import service_account
-from fpdf import FPDF
-from io import BytesIO
 
-lista=["1dcsad","21wd","3asDASDA"]
-with st.sidebar:
-    add_radio = st.radio(
-        "Choose a shipping method",
-        (lista)
-    )
-key_dict = json.loads(st.secrets["textkey"])
-creds = service_account.Credentials.from_service_account_info(key_dict)
-db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")
+@st.experimental_singleton
+def get_db():
+    global db
+    key_dict = json.loads(st.secrets["textkey"])
+    creds=service_account.Credentials.from_service_account_info(key_dict)
+    db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")
 
 # Function to upload a database in xlsx format with the list of students name, e-mail, and id
 def upload_database():
   data = st.file_uploader("Upload a database in xlsx format", type="xlsx")
   if data is not None:
     df = pd.read_excel(data)
-    df['id'] = df['id'].astype(int)
-    df['id'] = df['id'].astype(str)
     return df
 
-# Function to generate a QR code for each student in df and generate a pdf file to download
-def generate_qr_codes(student):
+# Function to generate a QR code for each student in a pdf file and download the pdf file
+def generate_qr_codes(df):
+  for i, row in df.iterrows():
     # Generate the QR code
-    url = pyqrcode.create(f"{student['id']}.png")
-    url.png_as_base64_str(scale=6)
-    return url
+    url = pyqrcode.create(row['id'])
+    url.png(f"{row['id']} {row['name']}.png", scale=10)
 
-# Function to generate a PDF file with QR codes for each student
-def generate_qr_code_pdf(df):
-  # Create a new PDF file
-  pdf = FPDF()
-  
-  # Iterate over the students
-  for student in df:
-    # Add a new page to the PDF
-    pdf.add_page()
+    # Download the QR code
+    image = open(f"{row['id']}.png", "rb")
+    image_read = image.read()
+    b64 = base64.b64encode(image_read).decode()
+    href = f'<a href="data:file/png;base64,{b64}" download="{row["id"]}.png">Download {row["id"]}.png</a>'
+    st.markdown(href, unsafe_allow_html=True)
+
+
+
     
-    # Generate a QR code for the student
-    qr_code = generate_qr_codes(student)
-    
-    # Convert the QR code to a BytesIO object
-    qr_code_bytes = BytesIO(base64.b64decode(qr_code))
-    
-    # Add the QR code to the PDF page
-    pdf.image(qr_code_bytes, x=10, y=10, w=100, h=100)
-  
-  # Return the PDF as a bytes object
-    pdf.output(dest="b")
-
-# Function to download the PDF file
-
-    # Convert the PDF bytes to a BytesIO object
-    pdf_bytes_io = BytesIO(pdf_bytes)
-
-    # Create a download link for the PDF file
-    st.markdown("Click [here](download_pdf) to download the PDF file with QR codes.", unsafe_allow_html=True)
-
-    # Set the bytes object as the response for the download link
-    st.set_response(
-        response=pdf_bytes_io,
-        mimetype="application/pdf",
-        file_name="qr_codes.pdf",
-    )
-
 
     
 # Create a calification page that shows the student info and a form that allows the teacher to calificate the student from 0.0 to 5.0
@@ -89,6 +58,7 @@ def calification_page(student_id):
 
 # Create a function to store all the data in Firestore
 def store_data_in_firestore(df):
+  get_db()
   for i, row in df.iterrows():
     student_ref = db.collection("students").document(str(row['id']))
     student_ref.set({
@@ -121,7 +91,7 @@ def main():
 
     # Generate QR codes
     if st.button("Generate QR codes"):
-      generate_qr_code_pdf(df)
+      generate_qr_codes(df)
       st.success("QR codes generated successfully")
 
     # Store the data in Firestore
