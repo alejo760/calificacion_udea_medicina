@@ -29,7 +29,7 @@ def generate_qr_codes(df):
   for i, row in df.iterrows():
     # Generate the QR code
     url = pyqrcode.create(row['id'])
-    url.png_as_base64_str(f"{row['id']} {row['name']}.png", scale=6)
+    url.png_as_base64_str(scale=10)
 
     # Download the QR code
     image = open(f"{row['id']}.png", "rb")
