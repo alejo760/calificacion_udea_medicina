@@ -7,3 +7,4 @@ pypng==0.20220715.0
 xlsxwriter==3.0.3
 attrdict==2.0.1
 firebase_admin==6.0.1
+fpdf==1.7.2

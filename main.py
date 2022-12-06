@@ -9,6 +9,9 @@ import json
 from firebase_admin import firestore
 from google.cloud.firestore import Client
 from google.oauth2 import service_account
+from fpdf import FPDF
+from io import BytesIO
+
 
 
 key_dict = json.loads(st.secrets["textkey"])
@@ -24,21 +27,50 @@ def upload_database():
     df['id'] = df['id'].astype(str)
     return df
 
-# Function to generate a QR code for each student in a pdf file and download the pdf file
-def generate_qr_codes(df):
-  for i, row in df.iterrows():
+# Function to generate a QR code for each student in df and generate a pdf file to download
+def generate_qr_codes(student):
     # Generate the QR code
-    url = pyqrcode.create(f"{row['id']}.png")
+    url = pyqrcode.create(f"{student['id']}.png")
     url.png_as_base64_str(scale=6)
+    return url
 
-    # Download the QR code
-    image = open(f"{row['id']}.png", "rb")
-    image_read = image.read()
-    b64 = base64.b64encode(image_read).decode()
-    href = f'<a href="data:file/png;base64,{b64}" download="{row["id"]}.png">Download {row["id"]}.png</a>'
-    st.markdown(href, unsafe_allow_html=True)
-
+# Function to generate a PDF file with QR codes for each student
+def generate_qr_code_pdf(df):
+  # Create a new PDF file
+  pdf = FPDF()
+  
+  # Iterate over the students
+  for student in df:
+    # Add a new page to the PDF
+    pdf.add_page()
     
+    # Generate a QR code for the student
+    qr_code = generate_qr_code(student)
+    
+    # Convert the QR code to a BytesIO object
+    qr_code_bytes = BytesIO(base64.b64decode(qr_code))
+    
+    # Add the QR code to the PDF page
+    pdf.image(qr_code_bytes, x=10, y=10, w=100, h=100)
+  
+  # Return the PDF as a bytes object
+  return pdf.output(dest="b")
+
+# Function to download the PDF file
+def download_pdf(pdf_bytes):
+  # Convert the PDF bytes to a BytesIO object
+  pdf_bytes_io = BytesIO(pdf_bytes)
+
+  # Create a download link for the PDF file
+  st.markdown("Click [here](download_pdf) to download the PDF file with QR codes.", unsafe_allow_html=True)
+
+  # Set the bytes object as the response for the download link
+  st.set_response(
+      response=pdf_bytes_io,
+      mimetype="application/pdf",
+      file_name="qr_codes.pdf",
+  )
+
 
     
 # Create a calification page that shows the student info and a form that allows the teacher to calificate the student from 0.0 to 5.0
