@@ -101,13 +101,13 @@ def main():
  #st.text_input("Enter student id:")
     
     student_id = st.experimental_get_query_params().get("student_id")
-    st.header(student_id)
+    st.header(student_id[0])
 
     if student_id is None:
       student_id = st.text_input("Enter student id:")
       calification_page(student_id)
     else:
-      calification_page(student_id)
+      calification_page(student_id[0])
 
 
 # Run the app
