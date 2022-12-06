@@ -12,8 +12,9 @@ from google.oauth2 import service_account
 from fpdf import FPDF
 from io import BytesIO
 
-lista=[1,2,3]
-st.sidebar(lista)
+lista=["1dcsad","21wd","3asDASDA"]
+st.sidebar.write(lista)
+
 key_dict = json.loads(st.secrets["textkey"])
 creds = service_account.Credentials.from_service_account_info(key_dict)
 db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")
