@@ -13,7 +13,7 @@ from firebase_admin import firestore
 key_dict = json.loads(st.secrets["textkey"])
 creds=credentials.Certificate(key_dict)
 app = firebase_admin.initialize_app(creds)
-db = firestore.client(credentials=creds, project="estudiantesudea-1bbcd")
+db = firebase_admin.get_app(credentials=creds, project="estudiantesudea-1bbcd")
 
 # Function to upload a database in xlsx format with the list of students name, e-mail, and id
 def upload_database():
