@@ -36,12 +36,11 @@ def generate_qr_codes(df):
     qr.png(f"{row['name']}_{row['id']}.png", scale=6)
     qr_png[row['name']]=f"{row['name']}_{row['id']}.png"
     # button to download all the QR codes
-    if st.button("Download QR codes"):
-      zipObj = ZipFile('all_qr_codes.zip', 'w')
-      for key in qr_png:
+    zipObj = ZipFile('all_qr_codes.zip', 'w')
+    for key in qr_png:
         zipObj.write(qr_png[key])
-      zipObj.close()
-      st.success("QR codes downloaded successfully")
+        zipObj.close()
+    st.success("QR codes downloaded successfully")
 
 
   return qr_png
