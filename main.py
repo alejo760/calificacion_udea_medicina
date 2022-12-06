@@ -58,7 +58,7 @@ def calification_page(student_id):
   student = student_ref.get().to_dict()
   st.write(f"Name: {student['name']}")
   st.write(f"E-mail: {student['email']}")
-  score = st.number_input("Enter calification (0.0-5.0):", min_value=0.0, max_value=5.0)
+  score = st.slider("Enter calification (0.0-5.0):", min_value=0.0, max_value=5.0, step=0.1)
   # Store the calification in Firestore
   student_ref.update({'calification': score})
 
@@ -99,10 +99,7 @@ def main():
 
   # Calification page
  #st.text_input("Enter student id:")
-    
     student_id = st.experimental_get_query_params().get("student_id")
-    st.header(student_id[0])
-
     if student_id is None:
       student_id = st.text_input("Enter student id:")
       calification_page(student_id)
