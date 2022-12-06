@@ -100,7 +100,7 @@ def main():
   # Calification page
  #st.text_input("Enter student id:")
     
-    student_id = st.experimental_get_query_params().get("student_id", None)
+    student_id = st.experimental_get_query_params().get("student_id")
     st.header(student_id)
 
     if student_id is None:
