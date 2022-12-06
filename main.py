@@ -28,11 +28,11 @@ def upload_database():
 def generate_qr_codes(df):
   for i, row in df.iterrows():
     # Generate the QR code
-    url = pyqrcode.create(row['id'])
+    url = pyqrcode.create(f"{row['id']}.png")
     url.png_as_base64_str(scale=10)
 
     # Download the QR code
-    image = open(f"{row['id']}", "rb")
+    image = open(f"{row['id']}.png", "rb")
     image_read = image.read()
     b64 = base64.b64encode(image_read).decode()
     href = f'<a href="data:file/png;base64,{b64}" download="{row["id"]}.png">Download {row["id"]}.png</a>'
