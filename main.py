@@ -102,7 +102,7 @@ def main():
  #st.text_input("Enter student id:")
     student_id = ""
     student_id = st.experimental_get_query_params().get("student_id", None)
-  if student_id==None:
+  if student_id=="":
     student_id=st.text_input("Enter student id:")
     calification_page(student_id)
   else:
