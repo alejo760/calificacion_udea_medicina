@@ -101,6 +101,7 @@ def main():
  #st.text_input("Enter student id:")
     
     student_id = st.experimental_get_query_params()
+    st.header(student_id)
 
     if student_id is None:
       student_id = st.text_input("Enter student id:")
