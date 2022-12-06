@@ -20,6 +20,7 @@ def upload_database():
   data = st.file_uploader("Upload a database in xlsx format", type="xlsx")
   if data is not None:
     df = pd.read_excel(data)
+    df['id'] = df['id'].astype(int)
     df['id'] = df['id'].astype(str)
     return df
 
