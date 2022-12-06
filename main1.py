@@ -71,8 +71,9 @@ def main():
 
   # Upload the database
   df = upload_database()
-  store_data_in_firestore(df)
+
   if df is not None:
+    store_data_in_firestore(df)
     st.success("Base de datos cargada exitosamente y guardada exitosamente")
 
     # Generate QR codes
