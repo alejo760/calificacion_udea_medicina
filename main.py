@@ -11,7 +11,6 @@ from google.cloud.firestore import Client
 from google.oauth2 import service_account
 
 
-
 key_dict = json.loads(st.secrets["textkey"])
 creds = service_account.Credentials.from_service_account_info(key_dict)
 db = firestore.Client(credentials=creds, project="streamlit-reddit")
@@ -21,6 +20,7 @@ def upload_database():
   data = st.file_uploader("Upload a database in xlsx format", type="xlsx")
   if data is not None:
     df = pd.read_excel(data)
+    df['id'] = df['id'].astype(str)
     return df
 
 # Function to generate a QR code for each student in a pdf file and download the pdf file
