@@ -32,7 +32,7 @@ def upload_database():
 def generate_qr_codes(df):
   qr_png={}
   for i, row in df.iterrows():
-    url = f"https://qrudeamedicina.streamlit.app/?student_id={row['id']}"
+    url = f"https://qrudeamedicina.streamlit.app/?student_id={int(row['id'])}"
     qr = pyqrcode.create(url)
     # Download png image of the QR code with student name and id caption
     qr.png(f"{row['name']}_{row['id']}.png", scale=6)
