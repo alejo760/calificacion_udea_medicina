@@ -37,7 +37,7 @@ def generate_qr_codes(df):
     # Download png image of the QR code with student name and id caption
     qr.png(f"{row['name']}_{row['id']}.png", scale=6)
     qr_png[row['name']]=f"{row['name']}_{row['id']}.png"
-    # show a list of markdown links to the QR codes
+    # show list of markdown links to the QR codes to download
     st.markdown(f"[{row['name']}_{row['id']}.png]({qr_png[row['name']]})")
   return qr_png
     
