@@ -45,7 +45,7 @@ def generate_qr_code_pdf(df):
     pdf.add_page()
     
     # Generate a QR code for the student
-    qr_code = generate_qr_code(student)
+    qr_code = generate_qr_codes(student)
     
     # Convert the QR code to a BytesIO object
     qr_code_bytes = BytesIO(base64.b64decode(qr_code))
@@ -54,22 +54,22 @@ def generate_qr_code_pdf(df):
     pdf.image(qr_code_bytes, x=10, y=10, w=100, h=100)
   
   # Return the PDF as a bytes object
-  return pdf.output(dest="b")
+    pdf.output(dest="b")
 
 # Function to download the PDF file
-def download_pdf(pdf_bytes):
-  # Convert the PDF bytes to a BytesIO object
-  pdf_bytes_io = BytesIO(pdf_bytes)
 
-  # Create a download link for the PDF file
-  st.markdown("Click [here](download_pdf) to download the PDF file with QR codes.", unsafe_allow_html=True)
+    # Convert the PDF bytes to a BytesIO object
+    pdf_bytes_io = BytesIO(pdf_bytes)
 
-  # Set the bytes object as the response for the download link
-  st.set_response(
-      response=pdf_bytes_io,
-      mimetype="application/pdf",
-      file_name="qr_codes.pdf",
-  )
+    # Create a download link for the PDF file
+    st.markdown("Click [here](download_pdf) to download the PDF file with QR codes.", unsafe_allow_html=True)
+
+    # Set the bytes object as the response for the download link
+    st.set_response(
+        response=pdf_bytes_io,
+        mimetype="application/pdf",
+        file_name="qr_codes.pdf",
+    )
 
 
     
@@ -117,7 +117,7 @@ def main():
 
     # Generate QR codes
     if st.button("Generate QR codes"):
-      generate_qr_codes(df)
+      generate_qr_code_pdf(df)
       st.success("QR codes generated successfully")
 
     # Store the data in Firestore
