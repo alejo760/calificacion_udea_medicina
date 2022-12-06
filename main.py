@@ -37,8 +37,16 @@ def generate_qr_codes(df):
     # Download png image of the QR code with student name and id caption
     qr.png(f"{row['name']}_{row['id']}.png", scale=6)
     qr_png[row['name']]=f"{row['name']}_{row['id']}.png"
-    # show list of markdown links to the QR codes to download
-    st.markdown(f"[{row['name']}_{row['id']}.png]({qr_png[row['name']]})")
+    # button to  download all the QR codes in a zip file
+    if st.button("Download QR codes"):
+      zip_file = io.BytesIO()
+      with zipfile.ZipFile(zip_file, 'w') as z:
+        for name, file in qr_png.items():
+          z.write(file)
+      z.close()
+      b64 = base64.b64encode(zip_file.getvalue()).decode()
+      href = f'<a href="data:file/zip;base64,{b64}" download="myfilename.zip">Download zip file</a>'
+      st.markdown(href, unsafe_allow_html=True)
   return qr_png
     
 
