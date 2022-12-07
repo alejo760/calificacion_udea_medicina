@@ -87,7 +87,7 @@ def main():
   st.set_page_config(page_title="Calificación VIII Medicina Interna UdeA", page_icon=":bar_chart:", layout="wide", initial_sidebar_state="expanded")
   st.image("https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES", width=200)
   st.title("App de calificacion VIII Medicina Interna UdeA")
-  st.write("hecha por Alejandro Hernández-Arango MD")
+  st.write("hecha por Alejandro Hernández-Arango internista MD")
   # Calification page
   student_id = st.experimental_get_query_params().get("student_id")
   if student_id is None:
