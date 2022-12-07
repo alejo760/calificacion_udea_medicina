@@ -76,7 +76,8 @@ def calification_page(student_id):
                         student_ref.update({"calificaciones": numero_calificaciones+1})
 
 
-              except:
+              except Exception as e:
+                st.warning(e)             
                 st.warning("No se encontró el estudiante o el codigo QR no fue leido porfavor comunicarse con: \n Alejandro.Hernandeza@udea.edu.co")
             else:
                 st.warning('Login fallido, revise las credenciales de acceso son las mismas del Ghips')
