@@ -83,6 +83,7 @@ def calification_page(student_id):
 
 # Main function
 def main():
+  st.image("https://drive.google.com/file/d/1HMwDzO0cFjrqG8OrPaJLk3dRSlMmsqka/view")
   st.title("App de calificacion VIII Medicina Interna UdeA")
   st.write("prueba hecha por Alejandro Hernández-Arango MD")
   # Calification page
