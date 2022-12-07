@@ -42,7 +42,7 @@ def calification_page(student_id):
                   student = student_ref.get().to_dict()
                   st.write(f"Nombre: {student['name']}")
                   st.write(f"E-mail: {student['email']}")
-                  #st.write(f"Cédula: {student['student_id']}")
+                  st.write(f"Cédula: {student_id}")
                   numero_calificaciones=student.get("calificaciones")
                   if numero_calificaciones >= 4:
                     st.write("El estudiante ya tiene 4 calificaciones, por ello no se puede calificar")
