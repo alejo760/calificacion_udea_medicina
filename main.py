@@ -10,6 +10,7 @@ from zipfile import ZipFile
 from firebase_admin import firestore
 from google.cloud.firestore import Client
 from google.oauth2 import service_account
+import requests
 
 
 key_dict = json.loads(st.secrets["textkey"])
@@ -19,21 +20,66 @@ db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")
 
 # Create a calification page that shows the student info and a form that allows the teacher to calificate the student from 0.0 to 5.0
 def calification_page(student_id):
-  try:
-    student_ref = db.collection("students").document(student_id)
-    student = student_ref.get().to_dict()
-    st.write(f"Name: {student['name']}")
-    st.write(f"E-mail: {student['email']}")
-    score = st.slider("Calificar el estdiente (0.0 - 5.0):", min_value=0.0, max_value=5.0, step=0.1)
-    # Store the calification in Firestore
-    student_ref.update({'calification': score})
-  except:
-    st.write("No se encontró el estudiante")
+  otros=['roben1319@yahoo.com','dandres.velez@udea.edu.co']
+  logins=st.expander("login", expanded=True)
+  with logins:
+        usuario= st.text_input('Usuario')
+        clave= st.text_input('Clave',type="password")
+        if st.button('Login'):
+          with st.spinner('Calculando...  \napp creada por Alejo ;)'):
+            url = 'https://api.ghips.co/api/login/authenticate'
+            password = {"Username": usuario, "Password": clave}
+            x = requests.post(url, data = password)
+            response_status = x.status_code
+            if response_status == 200 or usuario==[otros]:
+              try:
+                  student_ref = db.collection("students").document(student_id)
+                  student = student_ref.get().to_dict()
+                  st.write(f"Nombre: {student['name']}")
+                  st.write(f"E-mail: {student['email']}")
+                  st.write(f"Cédula: {student['student_id']}")
+                  if student.get("calificaciones") is >4:
+                    st.write("El estudiante ya tiene 4 calificaciones, por ello no se puede calificar")
+                  else:
+                    score = st.slider("Calificar el estdiente (0.0 - 5.0):", min_value=0.0, max_value=5.0, step=0.1)
+                    st.write('escriba un concpeto sobre el estudiante')
+                    concepto= st.text_area()
+                    # Store the calification in Firestore
+                    if st.button("Calificar"):
+                      numero_calificaciones=student.get("calificaciones") 
+                      if numero_calificaciones == 0:
+                        student_ref.update({"profesor": usuario})
+                        student_ref.update({"calificacion": score})
+                        student_ref.update({"concepto": concepto})
+                        student_ref.update({"calificaciones": numero_calificaciones+1})
+                      elif numero_calificaciones == 1:
+                        student_ref.update({"profesor1": usuario})
+                        student_ref.update({"calificacion1": score})
+                        student_ref.update({"concepto1": concepto})
+                        student_ref.update({"calificaciones": numero_calificaciones+1})
+                      elif numero_calificaciones == 2:
+                        student_ref.update({"profesor2": usuario})
+                        student_ref.update({"calificacion2": score})
+                        student_ref.update({"concepto2": concepto})
+                        student_ref.update({"calificaciones": numero_calificaciones+1})
+                      elif numero_calificaciones == 3:
+                        student_ref.update({"profesor3": usuario})
+                        student_ref.update({"calificacion3": score})
+                        student_ref.update({"concepto3": concepto})
+                        student_ref.update({"calificaciones": numero_calificaciones+1})
+
+
+              except:
+                st.write("No se encontró el estudiante")
+            else:
+                st.subheader('Login fallido, revise las credenciales de acceso son las mismas del Ghips')
+
 
 
 # Main function
 def main():
-  st.title("App de calificacion Medicina UdeA prueba hecha por Alejandro Hernández-Arango MD")
+  st.title("App de calificacion VIII Medicina Interna UdeA")
+  st.write("prueba hecha por Alejandro Hernández-Arango MD")
   # Calification page
   student_id = st.experimental_get_query_params().get("student_id")
   if student_id is None:
