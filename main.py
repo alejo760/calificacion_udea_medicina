@@ -31,7 +31,7 @@ def calification_page(student_id):
             password = {"Username": usuario, "Password": clave}
             x = requests.post(url, data = password)
             response_status = x.status_code
-            if response_status == 200 or usuario==[otros]:
+            if response_status == 200 or usuario==[otros[0]]or usuario==[otros[1]]:
               if student_id is None:
                 st.warning("el codigo QR no fue leido:")
               else:
