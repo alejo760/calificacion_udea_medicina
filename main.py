@@ -26,12 +26,16 @@ def calification_page(student_id):
         usuario= st.text_input('Usuario')
         clave= st.text_input('Clave',type="password")
         if st.button('Login'):
-          with st.spinner('Calculando...  \napp creada por Alejo ;)'):
+          with st.spinner('ingresando...  \napp creada por Alejo ;)'):
             url = 'https://api.ghips.co/api/login/authenticate'
             password = {"Username": usuario, "Password": clave}
             x = requests.post(url, data = password)
             response_status = x.status_code
             if response_status == 200 or usuario==[otros]:
+              if student_id is None:
+                student_id = st.text_input("Escriba la CC del estudiante:")
+              else:
+                pass
               try:
                   student_ref = db.collection("students").document(student_id)
                   student = student_ref.get().to_dict()
@@ -83,7 +87,6 @@ def main():
   # Calification page
   student_id = st.experimental_get_query_params().get("student_id")
   if student_id is None:
-      student_id = st.text_input("Escriba la CC del estudiante:")
       calification_page(student_id)
   else:
       calification_page(student_id[0])
