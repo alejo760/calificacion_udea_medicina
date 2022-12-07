@@ -11,6 +11,7 @@ from firebase_admin import firestore
 from google.cloud.firestore import Client
 from google.oauth2 import service_account
 import requests
+from google.cloud import firestore
 
 
 key_dict = json.loads(st.secrets["textkey"])
@@ -43,7 +44,8 @@ def calification_page(student_id):
                   st.write(f"Nombre: {student['name']}")
                   st.write(f"E-mail: {student['email']}")
                   st.write(f"Cédula: {student['student_id']}")
-                  if student.get("calificaciones") >= 4:
+                  numero_calificaciones=student.get("calificaciones")
+                  if numero_calificaciones >= 4:
                     st.write("El estudiante ya tiene 4 calificaciones, por ello no se puede calificar")
                   else:
                     score = st.slider("Calificar el estdiente (0.0 - 5.0):", min_value=0.0, max_value=5.0, step=0.1)
