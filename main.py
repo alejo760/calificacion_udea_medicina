@@ -22,7 +22,6 @@ db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")
 
 # Create a calification page that shows the student info and a form that allows the teacher to calificate the student from 0.0 to 5.0
 def calification_page(student_id):
-  otros=['roben1319@yahoo.com','dandres.velez@udea.edu.co']
   logins=st.expander("login", expanded=True)
   with logins:
         usuario= st.text_input('Usuario')
@@ -35,7 +34,7 @@ def calification_page(student_id):
             response_status = x.status_code
             if response_status == 200 or usuario=='roben1319@yahoo.com' or usuario=='dandres.velez@udea.edu.co':
               if student_id is None:
-                st.warning("el codigo QR no fue leido:")
+                st.warning("el codigo QR no fue leido adecuadamente:")
               else:
                 pass
               try:
@@ -43,7 +42,7 @@ def calification_page(student_id):
                   student = student_ref.get().to_dict()
                   st.write(f"Nombre: {student['name']}")
                   st.write(f"E-mail: {student['email']}")
-                  st.write(f"Cédula: {student['student_id']}")
+                  #st.write(f"Cédula: {student['student_id']}")
                   numero_calificaciones=student.get("calificaciones")
                   if numero_calificaciones >= 4:
                     st.write("El estudiante ya tiene 4 calificaciones, por ello no se puede calificar")
