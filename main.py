@@ -18,6 +18,7 @@ creds = service_account.Credentials.from_service_account_info(key_dict)
 db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")
 
 
+
 # Create a calification page that shows the student info and a form that allows the teacher to calificate the student from 0.0 to 5.0
 def calification_page(student_id):
   otros=['roben1319@yahoo.com','dandres.velez@udea.edu.co']
@@ -31,7 +32,7 @@ def calification_page(student_id):
             password = {"Username": usuario, "Password": clave}
             x = requests.post(url, data = password)
             response_status = x.status_code
-            if response_status == 200 or usuario==[otros[0]]or usuario==[otros[1]]:
+            if response_status == 200 or usuario==[otros[0]] or usuario==[otros[1]]:
               if student_id is None:
                 st.warning("el codigo QR no fue leido:")
               else:
