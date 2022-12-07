@@ -67,7 +67,8 @@ def store_data_in_firestore(df):
 
 # Main function
 def main():
-  st.title("App de calificacion Medicina UdeA prueba hecha por Alejandro Hernández-Arango MD")
+  st.title("App de calificación VIII Medicina Interna UdeA")
+  st.write("prueba hecha por Alejandro Hernández-Arango MD")
 
   # Upload the database
   df = upload_database()
