@@ -83,7 +83,7 @@ def calification_page(student_id):
 
 # Main function
 def main():
-  st.image("https://drive.google.com/file/d/1HMwDzO0cFjrqG8OrPaJLk3dRSlMmsqka/view")
+  st.image("https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES")
   st.title("App de calificacion VIII Medicina Interna UdeA")
   st.write("prueba hecha por Alejandro Hernández-Arango MD")
   # Calification page
