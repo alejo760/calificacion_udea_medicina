@@ -85,7 +85,6 @@ def calification_page(student_id):
 def main():
   # Set the page layout
   st.set_page_config(page_title="Calificación VIII Medicina Interna UdeA", page_icon=":bar_chart:", layout="wide", initial_sidebar_state="expanded")
-  st.image("https://almamater.hospital/almamater/wp-content/uploads/2019/10/Logo-almamater-1.png", width=200)
   st.image("https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES", width=200)
   st.title("App de calificacion VIII Medicina Interna UdeA")
   st.write("prueba hecha por Alejandro Hernández-Arango MD")
