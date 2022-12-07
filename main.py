@@ -42,13 +42,13 @@ def calification_page(student_id):
                   student = student_ref.get().to_dict()
                   st.write(f"Nombre: {student['name']}")
                   st.write(f"E-mail: {student['email']}")
-                  #st.write(f"Cédula: {student_id}")
+                  st.write(f"Cédula: {student_id}")
                   numero_calificaciones=student.get("calificaciones")
-                  if numero_calificaciones >= 4:
-                    st.write("El estudiante ya tiene 4 calificaciones, por ello no se puede calificar")
+                  if numero_calificaciones == 4:
+                    st.write("El estudiante ya tiene 4 calificaciones, no se puede calificar")
                   else:
                     score = st.slider("Calificar el estdiente (0.0 - 5.0):", min_value=0.0, max_value=5.0, step=0.1)
-                    st.write('escriba un concpeto sobre el estudiante')
+                    st.write('escriba un concepto sobre el estudiante')
                     concepto= st.text_area()
                     # Store the calification in Firestore
                     if st.button("Calificar"):
