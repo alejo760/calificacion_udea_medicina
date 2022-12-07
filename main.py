@@ -74,7 +74,7 @@ def calification_page(student_id):
 
 
               except:
-                st.warning("No se encontró el estudiante o el codigo QR no fue leido profavor comunicarse con: \n Alejandro.Hernandeza@udea.edu.co")
+                st.warning("No se encontró el estudiante o el codigo QR no fue leido porfavor comunicarse con: \n Alejandro.Hernandeza@udea.edu.co")
             else:
                 st.warning('Login fallido, revise las credenciales de acceso son las mismas del Ghips')
 
