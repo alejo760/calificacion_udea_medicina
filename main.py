@@ -33,7 +33,7 @@ def calification_page(student_id):
             response_status = x.status_code
             if response_status == 200 or usuario==[otros]:
               if student_id is None:
-                student_id = st.text_input("Escriba la CC del estudiante:")
+                st.write("el codigo QR no fue leido:")
               else:
                 pass
               try:
@@ -74,7 +74,7 @@ def calification_page(student_id):
 
 
               except:
-                st.write("No se encontró el estudiante")
+                st.write("No se encontró el estudiante o no fuen ingresado")
             else:
                 st.subheader('Login fallido, revise las credenciales de acceso son las mismas del Ghips')
 
