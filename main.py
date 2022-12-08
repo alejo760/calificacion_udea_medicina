@@ -62,6 +62,7 @@ def main():
   student_id = st.experimental_get_query_params().get("student_id")
   student_ref = db.collection("students").document(str(student_id))
   student = student_ref.get().to_dict()
+  st.write(student)
   loginexitoso =0
   usuario= st.text_input('Usuario')
   clave= st.text_input('Clave',type="password")
