@@ -86,6 +86,8 @@ def main():
   student_id = st.experimental_get_query_params().get("student_id")
   usuario= st.text_input('Usuario')
   clave= st.text_input('Clave',type="password")
+  if student_id is None:
+      st.warning("el codigo QR no fue leido adecuadamente:")
   if st.button('Login'):
           login(loginexitoso, usuario, clave)
   if loginexitoso==True:
