@@ -53,9 +53,9 @@ def main():
     if st.button('Mostrar calificaciones anteriores'):
       try:
        df_student= pd.Dataframe(student)
-       st.write(df_student)
-      except: 
-        pass
+       st.table(df_student)
+      except Exception as e:
+        st.write(e)
       try: 
         st.write(f"Fecha: {student.get('fecha1')}")
         st.write(f"Profesor: {student.get('profesor1')}")  
