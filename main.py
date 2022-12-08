@@ -37,7 +37,7 @@ def calification_page(student_id):
                 st.warning("el codigo QR no fue leido adecuadamente:")
               else:
                 pass
-  with st.form(key='calificar')
+  with st.form(key='calificar'):
               try:
                   student_ref = db.collection("students").document(student_id)
                   student = student_ref.get().to_dict()
