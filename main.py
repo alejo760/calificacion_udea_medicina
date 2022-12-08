@@ -19,13 +19,6 @@ from firebase_admin import firestore
 
 
 
-
-
-key_dict = json.loads(st.secrets["textkey"])
-creds = service_account.Credentials.from_service_account_info(key_dict)
-db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")
-
-
 # Create a calification page that shows the student info and a form that allows the teacher to calificate the student from 0.0 to 5.0
 def calification_page(student_ref, numero_calificaciones, score, concepto, usuario):
                     if numero_calificaciones == 4:
@@ -67,12 +60,10 @@ def main():
   st.title("App de calificacion VIII Medicina Interna UdeA")
   st.write("hecha por Alejandro Hernández-Arango internista MD")
   student_id = st.experimental_get_query_params().get("student_id")
-  student_ref = db.collection("students").document(student_id[0])
-  student = student_ref.get().to_dict()
   loginexitoso =0
   usuario= st.text_input('Usuario')
   clave= st.text_input('Clave',type="password")
-  numero_calificaciones=student.get("calificaciones")
+  
   if student_id is None:
     st.warning("el codigo QR no fue leido adecuadamente:")
   if st.button('Login'):
@@ -85,7 +76,13 @@ def main():
             else:
                 st.warning('Login fallido, revise las credenciales de acceso son las mismas del Ghips')
                 st.experimental_rerun()
-            if loginexitoso == 1:    
+            if loginexitoso == 1:  
+                key_dict = json.loads(st.secrets["textkey"])
+                creds = service_account.Credentials.from_service_account_info(key_dict)
+                db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")  
+                student_ref = db.collection("students").document(student_id[0])
+                student = student_ref.get().to_dict()
+                numero_calificaciones=student.get("calificaciones")
                 st.write(f"Nombre: {student['name']}")
                 st.write(f"E-mail: {student['email']}")
                 st.write(f"Cédula: {student_id[0]}")
