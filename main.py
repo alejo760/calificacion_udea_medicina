@@ -90,7 +90,7 @@ def main():
   st.write("hecha por Alejandro Hernández-Arango internista MD")
   loginexitoso= False
   student_id = st.experimental_get_query_params().get("student_id")
-  login(loginexitoso)==True and student_id is not None
+  login(loginexitoso)
   calification_page(student_id, usuario, loginexitoso)
 
 
