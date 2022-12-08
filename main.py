@@ -36,12 +36,12 @@ def login(loginexitoso):
     return loginexitoso, usuario
 # Create a calification page that shows the student info and a form that allows the teacher to calificate the student from 0.0 to 5.0
 def calification_page(student_id, usuario):
-  
+ with st.form(key='calificar'):
+  score = st.slider("Calificar el estdiente (0.0 - 5.0):", min_value=0.0, max_value=5.0, step=0.1,)
+  concepto= st.text_area('escriba un concepto sobre el estudiante')
   if student_id is None:
                 st.warning("el codigo QR no fue leido adecuadamente:")
   else:
-
-    try:
                   student_ref = db.collection("students").document(student_id)
                   student = student_ref.get().to_dict()
                   st.write(f"Nombre: {student['name']}")
@@ -51,9 +51,7 @@ def calification_page(student_id, usuario):
                   if numero_calificaciones == 4:
                     st.write("El estudiante ya tiene 4 calificaciones, no se puede calificar")
                   else:
-                    if st.button("Calificar"):
-                        score = st.slider("Calificar el estdiente (0.0 - 5.0):", min_value=0.0, max_value=5.0, step=0.1,)
-                        concepto= st.text_area('escriba un concepto sobre el estudiante')
+                   if st.form_submit_button("Calificar"):
                     if numero_calificaciones == 0:
                         student_ref.update({"profesor": usuario})
                         student_ref.update({"calificacion": score})
@@ -77,11 +75,7 @@ def calification_page(student_id, usuario):
                         student_ref.update({"calificacion3": score})
                         student_ref.update({"concepto3": concepto})
                         student_ref.update({"calificaciones": numero_calificaciones+1})
-                        st.success("Estudiante calificado y nota guardada exitosamente")
-
-    except Exception as e:
-                st.warning("Error en la calificacion porfavor comunicarse con: \n Alejandro.Hernandeza@udea.edu.co")
-                st.warning(e)                   
+                        st.success("Estudiante calificado y nota guardada exitosamente")                 
 # Main function
 def main():
   # Set the page layout
