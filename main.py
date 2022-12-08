@@ -91,10 +91,10 @@ def main():
   st.write("hecha por Alejandro Hernández-Arango internista MD")
   loginexitoso= False
   student_id = st.experimental_get_query_params().get("student_id")
-  if login(loginexitoso)==True:
+  while login(loginexitoso)==True and student_id is not None:
     calification_page(student_id)
   else:
-    pass
+    st.text("lea el QR del estudiante e ingrese sus credenciales de acceso al Ghips ")
 
 
 # Run the main function
