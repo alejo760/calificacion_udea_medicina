@@ -84,19 +84,20 @@ def main():
   st.write("hecha por Alejandro Hernández-Arango internista MD")
   loginexitoso= False
   student_id = st.experimental_get_query_params().get("student_id")
-  usuario= st.text_input('Usuario')
-  clave= st.text_input('Clave',type="password")
+  with st.sidebar:
+    usuario= st.text_input('Usuario')
+    clave= st.text_input('Clave',type="password")
+    st.button('Login')
   if student_id is None:
       st.warning("el codigo QR no fue leido adecuadamente:")
-  if st.button('Login'):
-    try:
+  try:
           login(loginexitoso, usuario, clave)
-    except Exception as e:
+  except Exception as e:
       st.warning(e)
   if loginexitoso==True:
-      try:
+  try:
           calification_page(student_id, usuario)
-      except Exception as e:
+  except Exception as e:
        st.warning(e)
 # Run the main function
 if __name__ == "__main__":
