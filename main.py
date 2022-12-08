@@ -26,7 +26,7 @@ def login(loginexitoso, usuario, clave):
             x = requests.post(url, data = password)
             response_status = x.status_code
             if response_status == 200 or usuario=='roben1319@yahoo.com' or usuario=='dandres.velez@udea.edu.co':
-               loginexitoso= True
+               loginexitoso== True
             else:
                 st.warning('Login fallido, revise las credenciales de acceso son las mismas del Ghips')
         return loginexitoso
@@ -94,7 +94,7 @@ def main():
            if st.button("Calificar"):
             calification_page(student_ref, numero_calificaciones, score, concepto, usuario)
   else:
-      st.warning(loginexitoso)
+      st.warning(Loginexitoso)
 
 # Run the main function
 if __name__ == "__main__":
