@@ -89,9 +89,15 @@ def main():
   if student_id is None:
       st.warning("el codigo QR no fue leido adecuadamente:")
   if st.button('Login'):
+    try:
           login(loginexitoso, usuario, clave)
+    except Exception as e:
+      st.warning(e)
   if loginexitoso==True:
+      try:
           calification_page(student_id, usuario)
+      except Exception as e:
+       st.warning(e)
 # Run the main function
 if __name__ == "__main__":
   main()
