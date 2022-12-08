@@ -92,7 +92,7 @@ def main():
             x = requests.post(url, data = password)
             response_status = x.status_code
             if response_status == 200 or usuario=='roben1319@yahoo.com' or usuario=='dandres.velez@udea.edu.co':
-               loginexitoso= 1
+               loginexitoso== 1
                calification_page(student_ref, numero_calificaciones, score, concepto, usuario)
             else:
                 st.warning('Login fallido, revise las credenciales de acceso son las mismas del Ghips')
