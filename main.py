@@ -59,26 +59,26 @@ def main():
                st.success('Login exitoso')
                if numero_calificaciones == 4:
                       st.write("El estudiante ya tiene 4 calificaciones, no se puede calificar")
-               else:
-                        if numero_calificaciones == 0:
+
+               elif numero_calificaciones == 0:
                             student_ref.update({"profesor": usuario})
                             student_ref.update({"calificacion": score})
                             student_ref.update({"concepto": concepto})
                             student_ref.update({"calificaciones": numero_calificaciones+1})
                             st.success("Estudiante calificado y nota guardada exitosamente")
-                        elif numero_calificaciones == 1:
+               elif numero_calificaciones == 1:
                             student_ref.update({"profesor1": usuario})
                             student_ref.update({"calificacion1": score})
                             student_ref.update({"concepto1": concepto})
                             student_ref.update({"calificaciones": numero_calificaciones+1})
                             st.success("Estudiante calificado y nota guardada exitosamente")
-                        elif numero_calificaciones == 2:
+               elif numero_calificaciones == 2:
                             student_ref.update({"profesor2": usuario})
                             student_ref.update({"calificacion2": score})
                             student_ref.update({"concepto2": concepto})
                             student_ref.update({"calificaciones": numero_calificaciones+1})
                             st.success("Estudiante calificado y nota guardada exitosamente")
-                        elif numero_calificaciones == 3:
+               elif numero_calificaciones == 3:
                             student_ref.update({"profesor3": usuario})
                             student_ref.update({"calificacion3": score})
                             student_ref.update({"concepto3": concepto})
