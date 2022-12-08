@@ -71,7 +71,6 @@ def main():
   if student_id is None:
     st.warning("el codigo QR no fue leido adecuadamente:")
   if st.button('Login'):
-        with st.spinner('ingresando...  \napp creada por Alejo ;)'):
             url = 'https://api.ghips.co/api/login/authenticate'
             password = {"Username": usuario, "Password": clave}
             x = requests.post(url, data = password)
