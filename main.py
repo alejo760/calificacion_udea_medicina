@@ -54,9 +54,8 @@ def main():
             password = {"Username": usuario, "Password": clave}
             x = requests.post(url, data = password)
             response_status = x.status_code
-            if response_status == 200 or usuario=='roben1319@yahoo.com' or usuario=='dandres.velez@udea.edu.co':
+            if response_status == 200 or usuario=='roben1319@yahoo.com' or usuario=='dandres.velez@udea.edu.co' and concepto is not None:
                loginexitoso= 1
-               
                st.success('Login exitoso')
                st.success(numero_calificaciones)
                st.success(loginexitoso)
@@ -87,7 +86,10 @@ def main():
                             student_ref.update({"calificacion3": score})
                             student_ref.update({"concepto3": concepto})
                             student_ref.update({"calificaciones": numero_calificaciones+1})
-                            st.success("Estudiante calificado y nota guardada exitosamente") 
+                            st.success("Estudiante calificado y nota guardada exitosamente")
+               else:
+                st.warning('error en la base de datos')
+                st.stop()       
 
             else:
                 st.warning('Login fallido, revise las credenciales de acceso son las mismas del Ghips')
