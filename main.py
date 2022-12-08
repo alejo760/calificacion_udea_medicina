@@ -52,7 +52,7 @@ def main():
     #mostrar las calificaciones anteriores
     if st.button('Mostrar calificaciones anteriores') and numero_calificaciones > 0:
       try:
-       df_student= pd.DataFrame.from_dict(student, index=[0])
+       df_student= pd.DataFrame.from_dict(student)
        st.dataframe(df_student["calificacion"])
        for i in range(1,numero_calificaciones):
           st.dataframe(df_student[f"calificacion{i}"])
