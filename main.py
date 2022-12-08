@@ -53,8 +53,8 @@ def main():
     if st.button('Mostrar calificaciones anteriores'):
       try:
        df_student= pd.DataFrame(student, index=[0])
-       df_student=df_student['calificacion']
-       st.table(df_student)
+       for i in range(0,numero_calificaciones):
+        st.table(df_student[f"calificacion{i}"])
       except Exception as e:
         st.write(e)
   except:
@@ -66,7 +66,6 @@ def main():
   fecha = datetime.now(tz_col).strftime('%a, %d %b %Y %I:%M %p')
   score = st.slider("Calificar el estudiante (0.0 - 5.0):", min_value=0.0, max_value=5.0, step=0.1)
   concepto= st.text_area('escriba un concepto sobre el estudiante')
-  loginexitoso =0
   usuario= st.text_input('Usuario')
   clave= st.text_input('Clave',type="password")
   if st.button('Calificar'):
