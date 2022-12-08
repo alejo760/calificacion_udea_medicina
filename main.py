@@ -72,10 +72,9 @@ def main():
   st.write("hecha por Alejandro Hernández-Arango internista MD")
   loginexitoso =0
   student_id = st.experimental_get_query_params().get("student_id")
-  with st.sidebar:
-    usuario= st.text_input('Usuario')
-    clave= st.text_input('Clave',type="password")
-    st.button('Login')
+  usuario= st.text_input('Usuario')
+  clave= st.text_input('Clave',type="password")
+  st.button('Login')
   if student_id is None:
     st.warning("el codigo QR no fue leido adecuadamente:")
   try:
