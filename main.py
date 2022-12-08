@@ -52,7 +52,8 @@ def main():
     #mostrar las calificaciones anteriores
     if st.button('Mostrar calificaciones anteriores'):
       try:
-        st.text(f"Fecha: {student.get('fecha')} Profesor: {student.get('profesor')} Calificacion: {student.get('calificacion')} Concepto: {student.get('concepto')}")
+       df_student= pd.Dataframe(student)
+       st.write(df_student)
       except: 
         pass
       try: 
