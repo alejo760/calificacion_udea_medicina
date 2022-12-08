@@ -1,10 +1,5 @@
 import streamlit as st
 import pandas as pd
-import pyqrcode
-import png
-import base64
-import io
-import xlsxwriter
 import json
 from zipfile import ZipFile
 from firebase_admin import firestore
@@ -16,6 +11,8 @@ from google.cloud import firestore
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
+from datetime import datetime
+import pytz 
         
 
                  
@@ -52,6 +49,8 @@ def main():
     st.warning("por favor comuniquese con el administrador alejandro.hernandeza@udea.edu.co")
     st.experimental_rerun()
   #calificar el estudiante
+  tz_col = pytz.timezone('America/Bogota') 
+  fecha = datetime.now(tz_col).strftime('%a, %d %b %Y %I:%M %p')
   score = st.slider("Calificar el estudiante (0.0 - 5.0):", min_value=0.0, max_value=5.0, step=0.1)
   concepto= st.text_area('escriba un concepto sobre el estudiante')
   loginexitoso =0
@@ -76,24 +75,28 @@ def main():
                             student_ref.update({"calificacion": score})
                             student_ref.update({"concepto": concepto})
                             student_ref.update({"calificaciones": 1})
+                            student_ref.update({"fecha": fecha})
                             st.success("Estudiante calificado y nota guardada exitosamente")
                elif numero_calificaciones == 1:
                             student_ref.update({"profesor1": usuario})
                             student_ref.update({"calificacion1": score})
                             student_ref.update({"concepto1": concepto})
                             student_ref.update({"calificaciones": 2})
+                            student_ref.update({"fecha1": fecha})
                             st.success("Estudiante calificado y nota guardada exitosamente")
                elif numero_calificaciones == 2:
                             student_ref.update({"profesor2": usuario})
                             student_ref.update({"calificacion2": score})
                             student_ref.update({"concepto2": concepto})
                             student_ref.update({"calificaciones": 3})
+                            student_ref.update({"fecha2": fecha})
                             st.success("Estudiante calificado y nota guardada exitosamente")
                elif numero_calificaciones == 3:
                             student_ref.update({"profesor3": usuario})
                             student_ref.update({"calificacion3": score})
                             student_ref.update({"concepto3": concepto})
                             student_ref.update({"calificaciones": 4})
+                            student_ref.update({"fecha3": fecha})
                             st.success("Estudiante calificado y nota guardada exitosamente")
                else:
                 st.warning('error en la base de datos')
