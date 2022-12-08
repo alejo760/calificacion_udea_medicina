@@ -22,11 +22,11 @@ db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")
 
 # Create a calification page that shows the student info and a form that allows the teacher to calificate the student from 0.0 to 5.0
 def calification_page(student_id):
-  logins=st.expander("login", expanded=True)
-  with logins:
+
+  with st.form(key='login'):
         usuario= st.text_input('Usuario')
         clave= st.text_input('Clave',type="password")
-        if st.button('Login'):
+        if st.form_submit_button('Login'):
           with st.spinner('ingresando...  \napp creada por Alejo ;)'):
             url = 'https://api.ghips.co/api/login/authenticate'
             password = {"Username": usuario, "Password": clave}
@@ -37,6 +37,7 @@ def calification_page(student_id):
                 st.warning("el codigo QR no fue leido adecuadamente:")
               else:
                 pass
+  with st.form(key='calificar')
               try:
                   student_ref = db.collection("students").document(student_id)
                   student = student_ref.get().to_dict()
@@ -50,8 +51,8 @@ def calification_page(student_id):
                     # Store the calification in Firestore and dontht callback as slider moves
                     score = st.slider("Calificar el estdiente (0.0 - 5.0):", min_value=0.0, max_value=5.0, step=0.1,)
                     concepto= st.text_area('escriba un concepto sobre el estudiante')
-                    if st.button("Calificar"):
-                      numero_calificaciones=student.get("calificaciones") 
+                    numero_calificaciones=student.get("calificaciones") 
+                    if st.form_submit_button("Calificar"):
                       if numero_calificaciones == 0:
                         student_ref.update({"profesor": usuario})
                         student_ref.update({"calificacion": score})
@@ -81,8 +82,8 @@ def calification_page(student_id):
                 st.warning("Error en la calificacion porfavor comunicarse con: \n Alejandro.Hernandeza@udea.edu.co")
                 st.warning(e)             
 
-            else:
-                st.warning('Login fallido, revise las credenciales de acceso son las mismas del Ghips')
+            #else:
+                #st.warning('Login fallido, revise las credenciales de acceso son las mismas del Ghips')
 
 
 
