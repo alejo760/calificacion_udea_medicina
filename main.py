@@ -53,9 +53,9 @@ def main():
     if st.button('Mostrar calificaciones anteriores') and numero_calificaciones > 0:
       try:
        df_student= pd.DataFrame(student, index=[0])
-       st.echo(df_student["calificacion"])
+       st.write(df_student["calificacion"])
        for i in range(1,numero_calificaciones):
-          st.echo(df_student[f"calificacion{i}"])
+          st.write(df_student[f"calificacion{i}"])
       except Exception as e:
         st.write(e)
   except:
