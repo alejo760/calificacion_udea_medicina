@@ -33,7 +33,6 @@ def login(loginexitoso, usuario, clave):
 # Create a calification page that shows the student info and a form that allows the teacher to calificate the student from 0.0 to 5.0
 def calification_page(student_id, usuario, loginexitoso):
  with st.form(key='calificar'):
-  if loginexitoso==True:
     score = st.slider("Calificar el estdiente (0.0 - 5.0):", min_value=0.0, max_value=5.0, step=0.1,)
     concepto= st.text_area('escriba un concepto sobre el estudiante')
     st.form_submit_button("Calificar")
@@ -73,8 +72,7 @@ def calification_page(student_id, usuario, loginexitoso):
                             student_ref.update({"concepto3": concepto})
                             student_ref.update({"calificaciones": numero_calificaciones+1})
                             st.success("Estudiante calificado y nota guardada exitosamente") 
-  else:
-    st.warning("no se puede calificar sin logearse")
+
 
                  
 # Main function
@@ -91,8 +89,10 @@ def main():
   clave= st.text_input('Clave',type="password")
   if st.button('Login'):
           login(loginexitoso, usuario, clave)
-          calification_page(student_id, usuario, loginexitoso)
-
+          if loginexitoso==True:
+             calification_page(student_id, usuario, loginexitoso)
+          else:
+             st.warning("error en el login, revise las credenciales de acceso son las mismas del Ghips")
 
 # Run the main function
 if __name__ == "__main__":
