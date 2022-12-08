@@ -28,23 +28,31 @@ def main():
   st.title("App de calificacion VIII Medicina Interna UdeA")
   st.write("hecha por Alejandro Hernández-Arango internista MD")
   #tomar informacion del QR por el metodo experimental_get_query_params
-  student_id = st.experimental_get_query_params().get("student_id")
-  if student_id is None:
+  try:
+    student_id = st.experimental_get_query_params().get("student_id")
+  except:
     st.warning("el codigo QR no fue leido adecuadamente:")
+    st.warning("por favor escanee el codigo QR nuevamente")
+    st.warning("si el problema persiste, por favor comuniquese con el administrador alejandro.hernandeza@udea.edu.co")
     st.experimental_rerun()
+  try:
   #cargar la llave de firebase
-  key_dict = json.loads(st.secrets["textkey"])
-  creds = service_account.Credentials.from_service_account_info(key_dict)
-  db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")  
-  student_ref = db.collection("students").document(student_id[0])
-  student = student_ref.get().to_dict()
-  #mostrar la informacion del estudiante
-  numero_calificaciones=student.get("calificaciones")
-  st.write(f"Nombre: {student['name']}")
-  st.write(f"E-mail: {student['email']}")
-  st.write(f"Cédula: {student_id[0]}")
+    key_dict = json.loads(st.secrets["textkey"])
+    creds = service_account.Credentials.from_service_account_info(key_dict)
+    db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")  
+    student_ref = db.collection("students").document(student_id[0])
+    student = student_ref.get().to_dict()
+    #mostrar la informacion del estudiante
+    numero_calificaciones=student.get("calificaciones")
+    st.write(f"Nombre: {student['name']}")
+    st.write(f"E-mail: {student['email']}")
+    st.write(f"Cédula: {student_id[0]}")
+  except:
+    st.warning("error en la base de datos el estudiante no se encuentra habilitado")
+    st.warning("por favor comuniquese con el administrador alejandro.hernandeza@udea.edu.co")
+    st.experimental_rerun()
   #calificar el estudiante
-  score = st.slider("Calificar el estdiente (0.0 - 5.0):", min_value=0.0, max_value=5.0, step=0.1,)
+  score = st.slider("Calificar el estudiante (0.0 - 5.0):", min_value=0.0, max_value=5.0, step=0.1,color="green")
   concepto= st.text_area('escriba un concepto sobre el estudiante')
   loginexitoso =0
   usuario= st.text_input('Usuario')
