@@ -26,8 +26,8 @@ def calification_page(student_id):
   with st.form(key='login'):
         usuario= st.text_input('Usuario')
         clave= st.text_input('Clave',type="password")
-        if st.form_submit_button('Login'):
-          with st.spinner('ingresando...  \napp creada por Alejo ;)'):
+        st.form_submit_button('Login'):
+        with st.spinner('ingresando...  \napp creada por Alejo ;)'):
             url = 'https://api.ghips.co/api/login/authenticate'
             password = {"Username": usuario, "Password": clave}
             x = requests.post(url, data = password)
@@ -52,8 +52,8 @@ def calification_page(student_id):
                     score = st.slider("Calificar el estdiente (0.0 - 5.0):", min_value=0.0, max_value=5.0, step=0.1,)
                     concepto= st.text_area('escriba un concepto sobre el estudiante')
                     numero_calificaciones=student.get("calificaciones") 
-                    if st.form_submit_button("Calificar"):
-                      if numero_calificaciones == 0:
+                    st.form_submit_button("Calificar"):
+                    if numero_calificaciones == 0:
                         student_ref.update({"profesor": usuario})
                         student_ref.update({"calificacion": score})
                         student_ref.update({"concepto": concepto})
