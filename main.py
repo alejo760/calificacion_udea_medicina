@@ -31,7 +31,7 @@ def login(loginexitoso, usuario, clave):
                 st.warning('Login fallido, revise las credenciales de acceso son las mismas del Ghips')
         return loginexitoso
 # Create a calification page that shows the student info and a form that allows the teacher to calificate the student from 0.0 to 5.0
-def calification_page(student_id, usuario, loginexitoso):
+def calification_page(student_id, usuario):
  with st.form(key='calificar'):
     score = st.slider("Calificar el estdiente (0.0 - 5.0):", min_value=0.0, max_value=5.0, step=0.1,)
     concepto= st.text_area('escriba un concepto sobre el estudiante')
