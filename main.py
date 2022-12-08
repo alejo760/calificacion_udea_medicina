@@ -93,6 +93,7 @@ def main():
   student_id = st.experimental_get_query_params().get("student_id")
   while login(loginexitoso)==True and student_id is not None:
     calification_page(student_id)
+    break
   else:
     st.text("lea el QR del estudiante e ingrese sus credenciales de acceso al Ghips ")
 
