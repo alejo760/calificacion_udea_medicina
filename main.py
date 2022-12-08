@@ -19,17 +19,6 @@ creds = service_account.Credentials.from_service_account_info(key_dict)
 db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")
 
 
-def login(loginexitoso, usuario, clave):
-        with st.spinner('ingresando...  \napp creada por Alejo ;)'):
-            url = 'https://api.ghips.co/api/login/authenticate'
-            password = {"Username": usuario, "Password": clave}
-            x = requests.post(url, data = password)
-            response_status = x.status_code
-            if response_status == 200 or usuario=='roben1319@yahoo.com' or usuario=='dandres.velez@udea.edu.co':
-               loginexitoso= 1
-            else:
-                st.warning('Login fallido, revise las credenciales de acceso son las mismas del Ghips')
-        return loginexitoso
 # Create a calification page that shows the student info and a form that allows the teacher to calificate the student from 0.0 to 5.0
 def calification_page(student_ref, numero_calificaciones, score, concepto, usuario):
                     if numero_calificaciones == 4:
@@ -74,14 +63,19 @@ def main():
   student_id = st.experimental_get_query_params().get("student_id")
   usuario= st.text_input('Usuario')
   clave= st.text_input('Clave',type="password")
-  st.button('Login')
   if student_id is None:
     st.warning("el codigo QR no fue leido adecuadamente:")
-  try:
-          login(loginexitoso, usuario, clave)
-  except Exception as e:
-      st.warning(e)
-  if loginexitoso==1:
+  if st.button('Login'):
+        with st.spinner('ingresando...  \napp creada por Alejo ;)'):
+            url = 'https://api.ghips.co/api/login/authenticate'
+            password = {"Username": usuario, "Password": clave}
+            x = requests.post(url, data = password)
+            response_status = x.status_code
+            if response_status == 200 or usuario=='roben1319@yahoo.com' or usuario=='dandres.velez@udea.edu.co':
+               loginexitoso= 1
+            else:
+                st.warning('Login fallido, revise las credenciales de acceso son las mismas del Ghips')
+  if loginexitoso == 1:    
            student_ref = db.collection("students").document(student_id)
            student = student_ref.get().to_dict()
            st.write(f"Nombre: {student['name']}")
@@ -94,6 +88,7 @@ def main():
             calification_page(student_ref, numero_calificaciones, score, concepto, usuario)
   else:
       st.warning(loginexitoso)
+      st.warning("corrio bien el login")
 
 # Run the main function
 if __name__ == "__main__":
