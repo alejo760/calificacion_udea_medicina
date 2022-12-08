@@ -93,7 +93,8 @@ def main():
            concepto= st.text_area('escriba un concepto sobre el estudiante')
            if st.button("Calificar"):
             calification_page(student_ref, numero_calificaciones, score, concepto, usuario)
-
+  else:
+      st.warning(loginexitoso)
 
 # Run the main function
 if __name__ == "__main__":
