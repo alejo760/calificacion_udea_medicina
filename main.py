@@ -87,10 +87,9 @@ def main():
   st.write("hecha por Alejandro Hernández-Arango internista MD")
   loginexitoso= False
   student_id = st.experimental_get_query_params().get("student_id")
-  with st.form(key='login'):
-        usuario= st.text_input('Usuario')
-        clave= st.text_input('Clave',type="password")
-        if  st.form_submit_button('Login'):
+  usuario= st.text_input('Usuario')
+  clave= st.text_input('Clave',type="password")
+  if st.button('Login'):
           login(loginexitoso, usuario, clave)
           calification_page(student_id, usuario, loginexitoso)
 
