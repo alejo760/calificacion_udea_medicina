@@ -108,7 +108,7 @@ def main():
                               'name': student['name'],
                               'email': student['email'],
                               "calificaciones": student['calificaciones']+1,  
-                              "calificacion": [{
+                              f"calificacion{numero_calificaciones}": [{
                                 f"score{numero_calificaciones}":score,
                                 f"concepto{numero_calificaciones}": concepto,
                                 f"profesor{numero_calificaciones}": usuario,
