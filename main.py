@@ -87,7 +87,7 @@ def main():
 
             else:
                 st.warning('Login fallido, revise las credenciales de acceso son las mismas del Ghips')
-                st.experimental_rerun()
+                st.stop()
 
 # Run the main function
 if __name__ == "__main__":
