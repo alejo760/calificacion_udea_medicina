@@ -58,7 +58,7 @@ def generate_qr_codes(df):
   return qr_png
 
 # Create a function to store all the data in Firestore
-def store_data_in_firestore(df):
+def store_data_in_firestore(df, fecha):
   for i, row in df.iterrows():
     student_ref = db.collection("students").document(str(int(row['id'])))
     student_ref.set({
@@ -77,6 +77,7 @@ def store_data_in_firestore(df):
       "calificacion3": 0.00,
       "concepto3": "",
       "calificaciones": 0
+      "fecha": fecha,
     })
 
 #---------------------------------#
@@ -101,7 +102,8 @@ def main():
 
     # Generate QR codes
     if st.button("Generar códigos QR"):
-      generate_qr_codes(df)
+      fecha = set_time()
+      generate_qr_codes(df, fecha)
       st.success("códigos QR generados exitosamente")
 
 
