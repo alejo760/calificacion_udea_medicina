@@ -48,7 +48,7 @@ def calification_page(student_id):
                     st.write("El estudiante ya tiene 4 calificaciones, no se puede calificar")
                   else:
                     # Store the calification in Firestore
-                    score = st.slider("Calificar el estdiente (0.0 - 5.0):", min_value=0.0, max_value=5.0, step=0.1)
+                    score = st.slider("Calificar el estdiente (0.0 - 5.0):", min_value=0.0, max_value=5.0, step=0.1,on_change=None)
                     concepto= st.text_area('escriba un concepto sobre el estudiante')
                     if st.button("Calificar"):
                       numero_calificaciones=student.get("calificaciones") 
