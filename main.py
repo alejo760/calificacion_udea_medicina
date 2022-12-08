@@ -52,7 +52,7 @@ def main():
     st.warning("por favor comuniquese con el administrador alejandro.hernandeza@udea.edu.co")
     st.experimental_rerun()
   #calificar el estudiante
-  score = st.slider("Calificar el estudiante (0.0 - 5.0):", min_value=0.0, max_value=5.0, step=0.1,color="green")
+  score = st.slider("Calificar el estudiante (0.0 - 5.0):", min_value=0.0, max_value=5.0, step=0.1)
   concepto= st.text_area('escriba un concepto sobre el estudiante')
   loginexitoso =0
   usuario= st.text_input('Usuario')
