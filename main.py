@@ -90,11 +90,9 @@ def main():
   with st.form(key='login'):
         usuario= st.text_input('Usuario')
         clave= st.text_input('Clave',type="password")
-        st.form_submit_button('Login')
-
-        login(loginexitoso, clave)
-  
-        calification_page(student_id, usuario, loginexitoso)
+        if  st.form_submit_button('Login'):
+          login(loginexitoso, clave)
+          calification_page(student_id, usuario, loginexitoso)
 
 
 # Run the main function
