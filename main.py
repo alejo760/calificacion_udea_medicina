@@ -53,33 +53,10 @@ def main():
     if st.button('Mostrar calificaciones anteriores'):
       try:
        df_student= pd.DataFrame(student, index=[0])
-       df_student=df_student.set_index('calificaciones')
+       df_student=df_student['calificacion']
        st.table(df_student)
       except Exception as e:
         st.write(e)
-      try: 
-        st.write(f"Fecha: {student.get('fecha1')}")
-        st.write(f"Profesor: {student.get('profesor1')}")  
-        st.write(f"Calificacion: {student.get('calificacion1')}")
-        st.write(f"Concepto: {student.get('concepto1')}")
-      except: 
-        pass
-      try:
-        st.write(f"Fecha: {student.get('fecha2')}")
-        st.write(f"Profesor: {student.get('profesor2')}")  
-        st.write(f"Calificacion: {student.get('calificacion2')}")
-        st.write(f"Concepto: {student.get('concepto2')}")
-      except: 
-        pass    
-      try:
-        st.write(f"Fecha: {student.get('fecha3')}")
-        st.write(f"Profesor: {student.get('profesor3')}")  
-        st.write(f"Calificacion: {student.get('calificacion3')}")
-        st.write(f"Concepto: {student.get('concepto3')}")
-      except: 
-        pass
-    else:
-      pass
   except:
     st.warning("error en la base de datos el estudiante no se encuentra habilitado")
     st.warning("por favor comuniquese con el administrador alejandro.hernandeza@udea.edu.co")
