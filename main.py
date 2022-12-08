@@ -20,16 +20,9 @@ import pytz
 def main():
   # Set the page layout
   st.set_page_config(
-    page_title="Calificacion VIII Medicina Interna UdeA",
-    page_icon="https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES",
-    layout="wide",
+    page_title="Calificación VIII Medicina Interna UdeA", 
+    page_icon=":bar_chart:", layout="wide", 
     initial_sidebar_state="expanded",
-    
-
-
-    
-
-
     )
   
   st.image("https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES", width=200)
