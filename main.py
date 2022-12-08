@@ -49,33 +49,38 @@ def main():
     st.write(f"E-mail: {student['email']}")
     st.write(f"Cédula: {student_id[0]}")
     st.write(f" El estudiante ha sido calificado antes:{student.get('calificaciones')} veces")
-    try: 
-      st.write(f"Fecha: {student.get('fecha')}")
-      st.write(f"Profesor: {student.get('profesor')}")  
-      st.write(f"Calificacion: {student.get('calificacion')}")
-      st.write(f"Concepto: {student.get('concepto')}")
-    except: 
-      pass
-    try: 
-      st.write(f"Fecha: {student.get('fecha1')}")
-      st.write(f"Profesor: {student.get('profesor1')}")  
-      st.write(f"Calificacion: {student.get('calificacion1')}")
-      st.write(f"Concepto: {student.get('concepto1')}")
-    except: 
-      pass
-    try:
-      st.write(f"Fecha: {student.get('fecha2')}")
-      st.write(f"Profesor: {student.get('profesor2')}")  
-      st.write(f"Calificacion: {student.get('calificacion2')}")
-      st.write(f"Concepto: {student.get('concepto2')}")
-    except: 
-      pass    
-    try:
-      st.write(f"Fecha: {student.get('fecha3')}")
-      st.write(f"Profesor: {student.get('profesor3')}")  
-      st.write(f"Calificacion: {student.get('calificacion3')}")
-      st.write(f"Concepto: {student.get('concepto3')}")
-    except: 
+    #mostrar las calificaciones anteriores
+    if st.button('Mostrar calificaciones anteriores'):
+      try:
+        st.write(f"Fecha: {student.get('fecha')}")
+        st.write(f"Profesor: {student.get('profesor')}")  
+        st.write(f"Calificacion: {student.get('calificacion')}")
+        st.write(f"Concepto: {student.get('concepto')}")
+        st.write(f"Fecha: {student.get('fecha1')}")
+      except: 
+        pass
+      try: 
+        st.write(f"Fecha: {student.get('fecha1')}")
+        st.write(f"Profesor: {student.get('profesor1')}")  
+        st.write(f"Calificacion: {student.get('calificacion1')}")
+        st.write(f"Concepto: {student.get('concepto1')}")
+      except: 
+        pass
+      try:
+        st.write(f"Fecha: {student.get('fecha2')}")
+        st.write(f"Profesor: {student.get('profesor2')}")  
+        st.write(f"Calificacion: {student.get('calificacion2')}")
+        st.write(f"Concepto: {student.get('concepto2')}")
+      except: 
+        pass    
+      try:
+        st.write(f"Fecha: {student.get('fecha3')}")
+        st.write(f"Profesor: {student.get('profesor3')}")  
+        st.write(f"Calificacion: {student.get('calificacion3')}")
+        st.write(f"Concepto: {student.get('concepto3')}")
+      except: 
+        pass
+    else:
       pass
   except:
     st.warning("error en la base de datos el estudiante no se encuentra habilitado")
