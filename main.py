@@ -12,6 +12,13 @@ from google.cloud.firestore import Client
 from google.oauth2 import service_account
 import requests
 from google.cloud import firestore
+#import library to uptdate firestore database
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import firestore
+
+
+
 
 
 key_dict = json.loads(st.secrets["textkey"])
@@ -81,11 +88,13 @@ def main():
             if loginexitoso == 1:    
                 st.write(f"Nombre: {student['name']}")
                 st.write(f"E-mail: {student['email']}")
-                st.write(f"Cédula: {student_id}")
+                st.write(f"Cédula: {student_id[0]}")
                 score = st.slider("Calificar el estdiente (0.0 - 5.0):", min_value=0.0, max_value=5.0, step=0.1,)
                 concepto= st.text_area('escriba un concepto sobre el estudiante')
-                if st.button("Calificar"):
+                if st.button("Calificar") and score is not None and concepto is not None:
                   calification_page(student_ref, numero_calificaciones, score, concepto, usuario)
+                else:
+                  st.warning("Por favor califique al estudiante y escriba un concepto")
             else:
                 st.warning(loginexitoso)
                 st.warning("aun sin login")
