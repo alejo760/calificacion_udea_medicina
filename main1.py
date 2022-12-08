@@ -12,13 +12,18 @@ from firebase_admin import firestore
 from google.cloud.firestore import Client
 from google.oauth2 import service_account
 import firebase_admin
-
+from datetime import datetime
+import pytz 
 
 
 key_dict = json.loads(st.secrets["textkey"])
 creds = service_account.Credentials.from_service_account_info(key_dict)
 db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")
 
+def set_time():
+  tz_col = pytz.timezone('America/Bogota') 
+  fecha = datetime.now(tz_col).strftime('%a, %d %b %Y %I:%M %p')
+  return fecha
 
 #---------------------------------#
 
@@ -53,7 +58,7 @@ def generate_qr_codes(df):
   return qr_png
 
 # Create a function to store all the data in Firestore
-def store_data_in_firestore(df):
+def store_data_in_firestore(df,fecha):
   for i, row in df.iterrows():
     student_ref = db.collection("students").document(str(int(row['id'])))
     student_ref.set({
@@ -71,8 +76,8 @@ def store_data_in_firestore(df):
       "profesor3": "",
       "calificacion3": 0.00,
       "concepto3": "",
-      "calificaciones": 0
-      "fecha": "",
+      "calificaciones": 0,
+      "fecha": fecha,
     })
 
 #---------------------------------#
@@ -92,7 +97,8 @@ def main():
 
   if df is not None:
     #set_time()
-    store_data_in_firestore(df)
+    fecha = set_time()
+    store_data_in_firestore(df, fecha)
     st.success("Base de datos cargada exitosamente y guardada exitosamente")
 
     # Generate QR codes
