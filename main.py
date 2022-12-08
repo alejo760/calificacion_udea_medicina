@@ -17,6 +17,9 @@ from google.cloud import firestore
 key_dict = json.loads(st.secrets["textkey"])
 creds = service_account.Credentials.from_service_account_info(key_dict)
 db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")
+student_id = st.experimental_get_query_params().get("student_id")
+student_ref = db.collection("students").document(student_id)
+student = student_ref.get().to_dict()
 
 
 # Create a calification page that shows the student info and a form that allows the teacher to calificate the student from 0.0 to 5.0
@@ -60,7 +63,6 @@ def main():
   st.title("App de calificacion VIII Medicina Interna UdeA")
   st.write("hecha por Alejandro Hernández-Arango internista MD")
   loginexitoso =0
-  student_id = st.experimental_get_query_params().get("student_id")
   usuario= st.text_input('Usuario')
   clave= st.text_input('Clave',type="password")
   numero_calificaciones=student.get("calificaciones")
@@ -80,8 +82,6 @@ def main():
                 st.warning('Login fallido, revise las credenciales de acceso son las mismas del Ghips')
                 st.experimental_rerun()
             if loginexitoso == 1:    
-                student_ref = db.collection("students").document(student_id)
-                student = student_ref.get().to_dict()
                 st.write(f"Nombre: {student['name']}")
                 st.write(f"E-mail: {student['email']}")
                 st.write(f"Cédula: {student_id}")
