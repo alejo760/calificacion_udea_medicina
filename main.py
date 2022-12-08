@@ -52,11 +52,7 @@ def main():
     #mostrar las calificaciones anteriores
     if st.button('Mostrar calificaciones anteriores'):
       try:
-        st.write(f"Fecha: {student.get('fecha')}")
-        st.write(f"Profesor: {student.get('profesor')}")  
-        st.write(f"Calificacion: {student.get('calificacion')}")
-        st.write(f"Concepto: {student.get('concepto')}")
-        st.write(f"Fecha: {student.get('fecha1')}")
+        st.write(f"Fecha: {student.get('fecha')} Profesor: {student.get('profesor')} Calificacion: {student.get('calificacion')} Concepto: {student.get('concepto')}")
       except: 
         pass
       try: 
