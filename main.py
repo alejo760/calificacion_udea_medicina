@@ -89,6 +89,7 @@ def main():
   st.title("App de calificacion VIII Medicina Interna UdeA")
   st.write("hecha por Alejandro Hernández-Arango internista MD")
   loginexitoso= False
+  usuario=""
   student_id = st.experimental_get_query_params().get("student_id")
   login(loginexitoso)
   calification_page(student_id, usuario, loginexitoso)
