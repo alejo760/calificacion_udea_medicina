@@ -16,44 +16,7 @@ from google.cloud import firestore
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
-
-
-
-# Create a calification page that shows the student info and a form that allows the teacher to calificate the student from 0.0 to 5.0
-def calification_page(student_ref, numero_calificaciones, score, concepto, usuario, student_id):
-                  key_dict = json.loads(st.secrets["textkey"])
-                  creds = service_account.Credentials.from_service_account_info(key_dict)
-                  db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")  
-                  student_ref = db.collection("students").document(student_id[0])
-                  student = student_ref.get().to_dict()
-                  if numero_calificaciones == 4:
-                      st.write("El estudiante ya tiene 4 calificaciones, no se puede calificar")
-                  else:
-                        if numero_calificaciones == 0:
-                            student_ref.update({"profesor": usuario})
-                            student_ref.update({"calificacion": score})
-                            student_ref.update({"concepto": concepto})
-                            student_ref.update({"calificaciones": numero_calificaciones+1})
-                            st.success("Estudiante calificado y nota guardada exitosamente")
-                        elif numero_calificaciones == 1:
-                            student_ref.update({"profesor1": usuario})
-                            student_ref.update({"calificacion1": score})
-                            student_ref.update({"concepto1": concepto})
-                            student_ref.update({"calificaciones": numero_calificaciones+1})
-                            st.success("Estudiante calificado y nota guardada exitosamente")
-                        elif numero_calificaciones == 2:
-                            student_ref.update({"profesor2": usuario})
-                            student_ref.update({"calificacion2": score})
-                            student_ref.update({"concepto2": concepto})
-                            student_ref.update({"calificaciones": numero_calificaciones+1})
-                            st.success("Estudiante calificado y nota guardada exitosamente")
-                        elif numero_calificaciones == 3:
-                            student_ref.update({"profesor3": usuario})
-                            student_ref.update({"calificacion3": score})
-                            student_ref.update({"concepto3": concepto})
-                            student_ref.update({"calificaciones": numero_calificaciones+1})
-                            st.success("Estudiante calificado y nota guardada exitosamente") 
-
+        
 
                  
 # Main function
@@ -93,7 +56,35 @@ def main():
             response_status = x.status_code
             if response_status == 200 or usuario=='roben1319@yahoo.com' or usuario=='dandres.velez@udea.edu.co':
                loginexitoso== 1
-               calification_page(student_ref, numero_calificaciones, score, concepto, usuario)
+               st.success('Login exitoso')
+               if numero_calificaciones == 4:
+                      st.write("El estudiante ya tiene 4 calificaciones, no se puede calificar")
+               else:
+                        if numero_calificaciones == 0:
+                            student_ref.update({"profesor": usuario})
+                            student_ref.update({"calificacion": score})
+                            student_ref.update({"concepto": concepto})
+                            student_ref.update({"calificaciones": numero_calificaciones+1})
+                            st.success("Estudiante calificado y nota guardada exitosamente")
+                        elif numero_calificaciones == 1:
+                            student_ref.update({"profesor1": usuario})
+                            student_ref.update({"calificacion1": score})
+                            student_ref.update({"concepto1": concepto})
+                            student_ref.update({"calificaciones": numero_calificaciones+1})
+                            st.success("Estudiante calificado y nota guardada exitosamente")
+                        elif numero_calificaciones == 2:
+                            student_ref.update({"profesor2": usuario})
+                            student_ref.update({"calificacion2": score})
+                            student_ref.update({"concepto2": concepto})
+                            student_ref.update({"calificaciones": numero_calificaciones+1})
+                            st.success("Estudiante calificado y nota guardada exitosamente")
+                        elif numero_calificaciones == 3:
+                            student_ref.update({"profesor3": usuario})
+                            student_ref.update({"calificacion3": score})
+                            student_ref.update({"concepto3": concepto})
+                            student_ref.update({"calificaciones": numero_calificaciones+1})
+                            st.success("Estudiante calificado y nota guardada exitosamente") 
+
             else:
                 st.warning('Login fallido, revise las credenciales de acceso son las mismas del Ghips')
                 st.experimental_rerun()
