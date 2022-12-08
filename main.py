@@ -50,7 +50,7 @@ def main():
     st.write(f"Cédula: {student_id[0]}")
     st.write(f" El estudiante ha sido calificado antes {student.get('calificaciones')} veces")
     #mostrar las calificaciones anteriores
-    if st.button('Mostrar calificaciones anteriores'):
+    if st.button('Mostrar calificaciones anteriores') and numero_calificaciones > 0:
       try:
        df_student= pd.DataFrame(student, index=[0])
        st.table(df_student["calificacion"])
