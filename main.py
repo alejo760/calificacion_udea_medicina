@@ -19,7 +19,18 @@ import pytz
 # Main function
 def main():
   # Set the page layout
-  st.set_page_config(page_title="Calificación VIII Medicina Interna UdeA", page_icon=":bar_chart:", layout="wide", initial_sidebar_state="expanded")
+  st.set_page_config(
+    page_title="Calificacion VIII Medicina Interna UdeA",
+    page_icon="https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES",
+    layout="wide",
+    initial_sidebar_state="expanded",
+    
+
+
+    
+
+
+    )
   
   st.image("https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES", width=200)
   st.title("App de calificacion VIII Medicina Interna UdeA")
@@ -41,9 +52,38 @@ def main():
     student = student_ref.get().to_dict()
     #mostrar la informacion del estudiante
     numero_calificaciones=student.get("calificaciones")
-    st.write(f"Nombre: {student['name']}")
+    st.subheader(f"Nombre: {student['name']}")
     st.write(f"E-mail: {student['email']}")
     st.write(f"Cédula: {student_id[0]}")
+    st.write(f" El estudiante ha sido calificado antes:{student.get('calificaciones')} veces")
+    try: 
+      st.write(f"Fecha: {student.get('fecha')}")
+      st.write(f"Profesor: {student.get('profesor')}")  
+      st.write(f"Calificacion: {student.get('calificacion')}")
+      st.write(f"Concepto: {student.get('concepto')}")
+    except: 
+      pass
+    try: 
+      st.write(f"Fecha: {student.get('fecha1')}")
+      st.write(f"Profesor: {student.get('profesor1')}")  
+      st.write(f"Calificacion: {student.get('calificacion1')}")
+      st.write(f"Concepto: {student.get('concepto1')}")
+    except: 
+      pass
+    try:
+      st.write(f"Fecha: {student.get('fecha2')}")
+      st.write(f"Profesor: {student.get('profesor2')}")  
+      st.write(f"Calificacion: {student.get('calificacion2')}")
+      st.write(f"Concepto: {student.get('concepto2')}")
+    except: 
+      pass    
+    try:
+      st.write(f"Fecha: {student.get('fecha3')}")
+      st.write(f"Profesor: {student.get('profesor3')}")  
+      st.write(f"Calificacion: {student.get('calificacion3')}")
+      st.write(f"Concepto: {student.get('concepto3')}")
+    except: 
+      pass
   except:
     st.warning("error en la base de datos el estudiante no se encuentra habilitado")
     st.warning("por favor comuniquese con el administrador alejandro.hernandeza@udea.edu.co")
@@ -62,11 +102,7 @@ def main():
             x = requests.post(url, data = password)
             response_status = x.status_code
             if response_status == 200 or usuario=='roben1319@yahoo.com' or usuario=='dandres.velez@udea.edu.co' and concepto is not None:
-               loginexitoso= 1
-               st.success('Login exitoso')
-               st.success(numero_calificaciones)
-               st.success(loginexitoso)
-
+               st.success("Login exitoso")
                if numero_calificaciones == 4:
                       st.write("El estudiante ya tiene 4 calificaciones, no se puede calificar")
 
