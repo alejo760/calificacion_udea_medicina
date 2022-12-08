@@ -60,7 +60,7 @@ def main():
   st.title("App de calificacion VIII Medicina Interna UdeA")
   st.write("hecha por Alejandro Hernández-Arango internista MD")
   student_id = st.experimental_get_query_params().get("student_id")
-  student_ref = db.collection("students").document(str(student_id))
+  student_ref = db.collection("students").document(student_id[0])
   student = student_ref.get().to_dict()
   st.write(student)
   loginexitoso =0
