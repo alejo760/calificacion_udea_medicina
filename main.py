@@ -114,7 +114,7 @@ def main():
                                 f"profesor{numero_calificaciones}": usuario,
                                 f"fecha{numero_calificaciones}": fecha,
                             }]
-                            }merge=True)
+                            },merge=True)
                         st.success("Estudiante calificado y nota guardada exitosamente")
                
             else:
