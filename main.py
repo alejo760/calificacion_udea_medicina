@@ -52,7 +52,8 @@ def main():
     #mostrar las calificaciones anteriores
     if st.button('Mostrar calificaciones anteriores'):
       try:
-       df_student= pd.DataFrame(student, index=[4])
+       df_student= pd.DataFrame(student)
+       df_student=df_student.set_index('calificaciones')
        st.table(df_student)
       except Exception as e:
         st.write(e)
