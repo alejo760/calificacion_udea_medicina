@@ -37,7 +37,6 @@ def calification_page(student_id):
                 st.warning("el codigo QR no fue leido adecuadamente:")
               else:
                 pass
-  with st.form(key='calificar'):
               try:
                   student_ref = db.collection("students").document(student_id)
                   student = student_ref.get().to_dict()
@@ -48,11 +47,11 @@ def calification_page(student_id):
                   if numero_calificaciones == 4:
                     st.write("El estudiante ya tiene 4 calificaciones, no se puede calificar")
                   else:
-                    # Store the calification in Firestore and dontht callback as slider moves
-                    score = st.slider("Calificar el estdiente (0.0 - 5.0):", min_value=0.0, max_value=5.0, step=0.1,)
-                    concepto= st.text_area('escriba un concepto sobre el estudiante')
-                    numero_calificaciones=student.get("calificaciones") 
-                    st.form_submit_button("Calificar")
+                    with st.form(key='calificar'):
+                        score = st.slider("Calificar el estdiente (0.0 - 5.0):", min_value=0.0, max_value=5.0, step=0.1,)
+                        concepto= st.text_area('escriba un concepto sobre el estudiante')
+                        numero_calificaciones=student.get("calificaciones") 
+                        st.form_submit_button("Calificar")
                     if numero_calificaciones == 0:
                         student_ref.update({"profesor": usuario})
                         student_ref.update({"calificacion": score})
