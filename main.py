@@ -34,7 +34,7 @@ def login(loginexitoso, usuario, clave):
 def calification_page(student_id, usuario):
     score = st.slider("Calificar el estdiente (0.0 - 5.0):", min_value=0.0, max_value=5.0, step=0.1,)
     concepto= st.text_area('escriba un concepto sobre el estudiante')
-    st.form_submit_button("Calificar")
+    st.button("Calificar")
     if student_id is None:
                   st.warning("el codigo QR no fue leido adecuadamente:")
     else:
