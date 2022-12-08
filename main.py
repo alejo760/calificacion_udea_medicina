@@ -89,15 +89,15 @@ def main():
     clave= st.text_input('Clave',type="password")
     st.button('Login')
   if student_id is None:
-      st.warning("el codigo QR no fue leido adecuadamente:")
+    st.warning("el codigo QR no fue leido adecuadamente:")
   try:
           login(loginexitoso, usuario, clave)
   except Exception as e:
       st.warning(e)
   if loginexitoso==True:
-  try:
+   try:
           calification_page(student_id, usuario)
-  except Exception as e:
+   except Exception as e:
        st.warning(e)
 # Run the main function
 if __name__ == "__main__":
