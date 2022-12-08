@@ -55,7 +55,9 @@ def main():
        df_student= pd.DataFrame(student, index=[0])
        st.dataframe(df_student["calificacion"])
        for i in range(1,numero_calificaciones):
-          st.dataframe(df_student[f"calificacion{i}"])
+          dictionary=df_student[f"calificacion{i}"].to_dict("dict")
+          st.write(dictionary)
+
       except Exception as e:
         st.write(e)
   except:
