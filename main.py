@@ -106,14 +106,17 @@ def main():
                         student_ref = db.collection("students").document(student_id[0])
                         student_ref.set({
                               'name': student['name'],
-                              'email': student['email'],  
-                              "profesor": usuario,
-                              "calificacion": score,
-                              "concepto": concepto,
-                              "calificaciones": student['calificaciones']+1,
-                              "fecha": fecha,
-                            })
+                              'email': student['email'],
+                              "calificaciones": student['calificaciones']+1,  
+                              "calificacion": [{
+                                f"score{numero_calificaciones}":score,
+                                f"concepto{numero_calificaciones}": concepto,
+                                f"profesor{numero_calificaciones}": usuario,
+                                f"fecha{numero_calificaciones}": fecha,
+                            }]
+                            }merge=True)
                         st.success("Estudiante calificado y nota guardada exitosamente")
+               
             else:
                 st.warning('Login fallido, revise las credenciales de acceso son las mismas del Ghips')
                 st.stop()
