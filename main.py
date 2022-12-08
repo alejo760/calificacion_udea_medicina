@@ -26,7 +26,7 @@ def login(loginexitoso, usuario, clave):
             x = requests.post(url, data = password)
             response_status = x.status_code
             if response_status == 200 or usuario=='roben1319@yahoo.com' or usuario=='dandres.velez@udea.edu.co':
-               loginexitoso== True
+               loginexitoso= 1
             else:
                 st.warning('Login fallido, revise las credenciales de acceso son las mismas del Ghips')
         return loginexitoso
@@ -70,7 +70,7 @@ def main():
   st.image("https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES", width=200)
   st.title("App de calificacion VIII Medicina Interna UdeA")
   st.write("hecha por Alejandro Hernández-Arango internista MD")
-  loginexitoso =False
+  loginexitoso =0
   student_id = st.experimental_get_query_params().get("student_id")
   with st.sidebar:
     usuario= st.text_input('Usuario')
@@ -82,7 +82,7 @@ def main():
           login(loginexitoso, usuario, clave)
   except Exception as e:
       st.warning(e)
-  if loginexitoso==True:
+  if loginexitoso==1:
            student_ref = db.collection("students").document(student_id)
            student = student_ref.get().to_dict()
            st.write(f"Nombre: {student['name']}")
