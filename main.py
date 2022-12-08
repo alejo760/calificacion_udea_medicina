@@ -47,9 +47,9 @@ def calification_page(student_id):
                   if numero_calificaciones == 4:
                     st.write("El estudiante ya tiene 4 calificaciones, no se puede calificar")
                   else:
-                    score = st.slider("Calificar el estdiente (0.0 - 5.0):", min_value=0.0, max_value=5.0, step=0.1)
-                    concepto= st.text_area('escriba un concepto sobre el estudiante')
                     # Store the calification in Firestore
+                    score = st.text_input("Calificar el estdiente (0.0 - 5.0):", min_value=0.0, max_value=5.0, step=0.1)
+                    concepto= st.text_area('escriba un concepto sobre el estudiante')
                     if st.button("Calificar"):
                       numero_calificaciones=student.get("calificaciones") 
                       if numero_calificaciones == 0:
@@ -57,26 +57,30 @@ def calification_page(student_id):
                         student_ref.update({"calificacion": score})
                         student_ref.update({"concepto": concepto})
                         student_ref.update({"calificaciones": numero_calificaciones+1})
+                        st.success("Estudiante calificado y nota guardada exitosamente")
                       elif numero_calificaciones == 1:
                         student_ref.update({"profesor1": usuario})
                         student_ref.update({"calificacion1": score})
                         student_ref.update({"concepto1": concepto})
                         student_ref.update({"calificaciones": numero_calificaciones+1})
+                        st.success("Estudiante calificado y nota guardada exitosamente")
                       elif numero_calificaciones == 2:
                         student_ref.update({"profesor2": usuario})
                         student_ref.update({"calificacion2": score})
                         student_ref.update({"concepto2": concepto})
                         student_ref.update({"calificaciones": numero_calificaciones+1})
+                        st.success("Estudiante calificado y nota guardada exitosamente")
                       elif numero_calificaciones == 3:
                         student_ref.update({"profesor3": usuario})
                         student_ref.update({"calificacion3": score})
                         student_ref.update({"concepto3": concepto})
                         student_ref.update({"calificaciones": numero_calificaciones+1})
-
+                        st.success("Estudiante calificado y nota guardada exitosamente")
 
               except Exception as e:
+                st.warning("Error en la calificacion porfavor comunicarse con: \n Alejandro.Hernandeza@udea.edu.co")
                 st.warning(e)             
-                st.warning("No se encontró el estudiante o el codigo QR no fue leido porfavor comunicarse con: \n Alejandro.Hernandeza@udea.edu.co")
+
             else:
                 st.warning('Login fallido, revise las credenciales de acceso son las mismas del Ghips')
 
