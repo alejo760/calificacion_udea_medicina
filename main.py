@@ -31,19 +31,7 @@ def login(loginexitoso, usuario, clave):
                 st.warning('Login fallido, revise las credenciales de acceso son las mismas del Ghips')
         return loginexitoso
 # Create a calification page that shows the student info and a form that allows the teacher to calificate the student from 0.0 to 5.0
-def calification_page(student_id, usuario):
-    score = st.slider("Calificar el estdiente (0.0 - 5.0):", min_value=0.0, max_value=5.0, step=0.1,)
-    concepto= st.text_area('escriba un concepto sobre el estudiante')
-    st.button("Calificar")
-    if student_id is None:
-                  st.warning("el codigo QR no fue leido adecuadamente:")
-    else:
-                    student_ref = db.collection("students").document(student_id)
-                    student = student_ref.get().to_dict()
-                    st.write(f"Nombre: {student['name']}")
-                    st.write(f"E-mail: {student['email']}")
-                    st.write(f"Cédula: {student_id}")
-                    numero_calificaciones=student.get("calificaciones")
+def calification_page(student_ref, numero_calificaciones, score, concepto, usuario):
                     if numero_calificaciones == 4:
                       st.write("El estudiante ya tiene 4 calificaciones, no se puede calificar")
                     else:
@@ -95,10 +83,18 @@ def main():
   except Exception as e:
       st.warning(e)
   if loginexitoso==True:
-   try:
-          calification_page(student_id, usuario)
-   except Exception as e:
-       st.warning(e)
+           student_ref = db.collection("students").document(student_id)
+           student = student_ref.get().to_dict()
+           st.write(f"Nombre: {student['name']}")
+           st.write(f"E-mail: {student['email']}")
+           st.write(f"Cédula: {student_id}")
+           numero_calificaciones=student.get("calificaciones")
+           score = st.slider("Calificar el estdiente (0.0 - 5.0):", min_value=0.0, max_value=5.0, step=0.1,)
+           concepto= st.text_area('escriba un concepto sobre el estudiante')
+           if st.button("Calificar"):
+            calification_page(student_ref, numero_calificaciones, score, concepto, usuario)
+
+
 # Run the main function
 if __name__ == "__main__":
   main()
