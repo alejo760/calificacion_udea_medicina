@@ -76,7 +76,7 @@ def store_data_in_firestore(df,fecha):
       "profesor3": "",
       "calificacion3": 0.00,
       "concepto3": "",
-      "calificaciones": 0
+      "calificaciones": 0,
       "fecha": fecha,
     })
 
