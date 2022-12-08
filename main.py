@@ -102,38 +102,18 @@ def main():
                if numero_calificaciones == 4:
                       st.write("El estudiante ya tiene 4 calificaciones, no se puede calificar")
 
-               elif numero_calificaciones == 0 or numero_calificaciones == None:
-                            student_ref.update({"profesor": usuario})
-                            student_ref.update({"calificacion": score})
-                            student_ref.update({"concepto": concepto})
-                            student_ref.update({"calificaciones": 1})
-                            student_ref.update({"fecha": fecha})
-                            st.success("Estudiante calificado y nota guardada exitosamente")
-               elif numero_calificaciones == 1:
-                            student_ref.update({"profesor1": usuario})
-                            student_ref.update({"calificacion1": score})
-                            student_ref.update({"concepto1": concepto})
-                            student_ref.update({"calificaciones": 2})
-                            student_ref.update({"fecha1": fecha})
-                            st.success("Estudiante calificado y nota guardada exitosamente")
-               elif numero_calificaciones == 2:
-                            student_ref.update({"profesor2": usuario})
-                            student_ref.update({"calificacion2": score})
-                            student_ref.update({"concepto2": concepto})
-                            student_ref.update({"calificaciones": 3})
-                            student_ref.update({"fecha2": fecha})
-                            st.success("Estudiante calificado y nota guardada exitosamente")
-               elif numero_calificaciones == 3:
-                            student_ref.update({"profesor3": usuario})
-                            student_ref.update({"calificacion3": score})
-                            student_ref.update({"concepto3": concepto})
-                            student_ref.update({"calificaciones": 4})
-                            student_ref.update({"fecha3": fecha})
-                            st.success("Estudiante calificado y nota guardada exitosamente")
                else:
-                st.warning('error en la base de datos')
-                st.stop()       
-
+                        student_ref = db.collection("students").document(student_id[0])
+                        student_ref.set({
+                              'name': student['name'],
+                              'email': student['email'],  
+                              "profesor": usuario,
+                              "calificacion": score,
+                              "concepto": concepto,
+                              "calificaciones": student['calificaciones']+1,
+                              "fecha": fecha,
+                            })
+                        st.success("Estudiante calificado y nota guardada exitosamente")
             else:
                 st.warning('Login fallido, revise las credenciales de acceso son las mismas del Ghips')
                 st.stop()
