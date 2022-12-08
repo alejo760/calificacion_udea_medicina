@@ -90,7 +90,7 @@ def main():
   if st.button('Login'):
           login(loginexitoso, usuario, clave)
           if loginexitoso==True:
-             calification_page(student_id, usuario, loginexitoso)
+             calification_page(student_id, usuario)
           else:
              st.warning("error en el login, revise las credenciales de acceso son las mismas del Ghips")
 
