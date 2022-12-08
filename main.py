@@ -20,7 +20,7 @@ from firebase_admin import firestore
 
 
 # Create a calification page that shows the student info and a form that allows the teacher to calificate the student from 0.0 to 5.0
-def calification_page(student_ref, numero_calificaciones, score, concepto, usuario):
+def calification_page(student_ref, numero_calificaciones, score, concepto, usuario, student_id):
                   key_dict = json.loads(st.secrets["textkey"])
                   creds = service_account.Credentials.from_service_account_info(key_dict)
                   db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")  
@@ -64,42 +64,39 @@ def main():
   st.image("https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES", width=200)
   st.title("App de calificacion VIII Medicina Interna UdeA")
   st.write("hecha por Alejandro Hernández-Arango internista MD")
+  #tomar informacion del QR por el metodo experimental_get_query_params
   student_id = st.experimental_get_query_params().get("student_id")
+  if student_id is None:
+    st.warning("el codigo QR no fue leido adecuadamente:")
+    st.experimental_rerun()
+  #cargar la llave de firebase
+  key_dict = json.loads(st.secrets["textkey"])
+  creds = service_account.Credentials.from_service_account_info(key_dict)
+  db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")  
+  student_ref = db.collection("students").document(student_id[0])
+  student = student_ref.get().to_dict()
+  #mostrar la informacion del estudiante
+  numero_calificaciones=student.get("calificaciones")
+  st.write(f"Nombre: {student['name']}")
+  st.write(f"E-mail: {student['email']}")
+  st.write(f"Cédula: {student_id[0]}")
+  #calificar el estudiante
+  score = st.slider("Calificar el estdiente (0.0 - 5.0):", min_value=0.0, max_value=5.0, step=0.1,)
+  concepto= st.text_area('escriba un concepto sobre el estudiante')
   loginexitoso =0
   usuario= st.text_input('Usuario')
   clave= st.text_input('Clave',type="password")
-  
-  if student_id is None:
-    st.warning("el codigo QR no fue leido adecuadamente:")
-  if st.button('Login'):
+  if st.button('Calificar'):
             url = 'https://api.ghips.co/api/login/authenticate'
             password = {"Username": usuario, "Password": clave}
             x = requests.post(url, data = password)
             response_status = x.status_code
             if response_status == 200 or usuario=='roben1319@yahoo.com' or usuario=='dandres.velez@udea.edu.co':
                loginexitoso= 1
+               calification_page(student_ref, numero_calificaciones, score, concepto, usuario)
             else:
                 st.warning('Login fallido, revise las credenciales de acceso son las mismas del Ghips')
                 st.experimental_rerun()
-            if loginexitoso == 1:  
-                key_dict = json.loads(st.secrets["textkey"])
-                creds = service_account.Credentials.from_service_account_info(key_dict)
-                db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")  
-                student_ref = db.collection("students").document(student_id[0])
-                student = student_ref.get().to_dict()
-                numero_calificaciones=student.get("calificaciones")
-                st.write(f"Nombre: {student['name']}")
-                st.write(f"E-mail: {student['email']}")
-                st.write(f"Cédula: {student_id[0]}")
-                score = st.slider("Calificar el estdiente (0.0 - 5.0):", min_value=0.0, max_value=5.0, step=0.1,)
-                concepto= st.text_area('escriba un concepto sobre el estudiante')
-                if st.button("Calificar") and score is not None and concepto is not None:
-                  calification_page(student_ref, numero_calificaciones, score, concepto, usuario)
-                else:
-                  st.warning("Por favor califique al estudiante y escriba un concepto")
-            else:
-                st.warning(loginexitoso)
-                st.warning("aun sin login")
 
 # Run the main function
 if __name__ == "__main__":
