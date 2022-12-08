@@ -64,7 +64,7 @@ def main():
                if numero_calificaciones == 4:
                       st.write("El estudiante ya tiene 4 calificaciones, no se puede calificar")
 
-               elif numero_calificaciones == 0:
+               elif numero_calificaciones == 0 or numero_calificaciones == None:
                             student_ref.update({"profesor": usuario})
                             student_ref.update({"calificacion": score})
                             student_ref.update({"concepto": concepto})
