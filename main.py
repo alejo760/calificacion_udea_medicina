@@ -17,9 +17,6 @@ from google.cloud import firestore
 key_dict = json.loads(st.secrets["textkey"])
 creds = service_account.Credentials.from_service_account_info(key_dict)
 db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")
-student_id = st.experimental_get_query_params().get("student_id")
-student_ref = db.collection("students").document(student_id)
-student = student_ref.get().to_dict()
 
 
 # Create a calification page that shows the student info and a form that allows the teacher to calificate the student from 0.0 to 5.0
@@ -58,10 +55,13 @@ def calification_page(student_ref, numero_calificaciones, score, concepto, usuar
 def main():
   # Set the page layout
   st.set_page_config(page_title="Calificación VIII Medicina Interna UdeA", page_icon=":bar_chart:", layout="wide", initial_sidebar_state="expanded")
-
+  
   st.image("https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES", width=200)
   st.title("App de calificacion VIII Medicina Interna UdeA")
   st.write("hecha por Alejandro Hernández-Arango internista MD")
+  student_id = st.experimental_get_query_params().get("student_id")
+  student_ref = db.collection("students").document(student_id)
+  student = student_ref.get().to_dict()
   loginexitoso =0
   usuario= st.text_input('Usuario')
   clave= st.text_input('Clave',type="password")
@@ -87,9 +87,9 @@ def main():
                 st.write(f"Cédula: {student_id}")
                 if st.button("Calificar"):
                   calification_page(student_ref, numero_calificaciones, score, concepto, usuario)
-  else:
-      st.warning(loginexitoso)
-      st.warning("aun sin login")
+            else:
+                st.warning(loginexitoso)
+                st.warning("aun sin login")
 
 # Run the main function
 if __name__ == "__main__":
