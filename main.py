@@ -21,9 +21,14 @@ from firebase_admin import firestore
 
 # Create a calification page that shows the student info and a form that allows the teacher to calificate the student from 0.0 to 5.0
 def calification_page(student_ref, numero_calificaciones, score, concepto, usuario):
-                    if numero_calificaciones == 4:
+                  key_dict = json.loads(st.secrets["textkey"])
+                  creds = service_account.Credentials.from_service_account_info(key_dict)
+                  db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")  
+                  student_ref = db.collection("students").document(student_id[0])
+                  student = student_ref.get().to_dict()
+                  if numero_calificaciones == 4:
                       st.write("El estudiante ya tiene 4 calificaciones, no se puede calificar")
-                    else:
+                  else:
                         if numero_calificaciones == 0:
                             student_ref.update({"profesor": usuario})
                             student_ref.update({"calificacion": score})
