@@ -20,10 +20,10 @@ key_dict = json.loads(st.secrets["textkey"])
 creds = service_account.Credentials.from_service_account_info(key_dict)
 db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")
 
-def set_time():
-  tz_col = pytz.timezone('America/Bogota') 
-  fecha = datetime.now(tz_col).strftime('%a, %d %b %Y %I:%M %p')
-  return fecha
+#def set_time():
+  #tz_col = pytz.timezone('America/Bogota') 
+  #fecha = datetime.now(tz_col).strftime('%a, %d %b %Y %I:%M %p')
+  #return fecha
 
 #---------------------------------#
 
@@ -58,7 +58,7 @@ def generate_qr_codes(df):
   return qr_png
 
 # Create a function to store all the data in Firestore
-def store_data_in_firestore(df,fecha):
+def store_data_in_firestore(df):
   for i, row in df.iterrows():
     student_ref = db.collection("students").document(str(int(row['id'])))
     student_ref.set({
@@ -76,8 +76,7 @@ def store_data_in_firestore(df,fecha):
       "profesor3": "",
       "calificacion3": 0.00,
       "concepto3": "",
-      "calificaciones": 0,
-      "fecha": fecha,
+      "calificaciones": 0
     })
 
 #---------------------------------#
@@ -96,8 +95,8 @@ def main():
   df = upload_database()
 
   if df is not None:
-    set_time()
-    store_data_in_firestore(df,fecha)
+    #set_time()
+    store_data_in_firestore(df)
     st.success("Base de datos cargada exitosamente y guardada exitosamente")
 
     # Generate QR codes
