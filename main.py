@@ -63,6 +63,9 @@ def main():
   student_id = st.experimental_get_query_params().get("student_id")
   usuario= st.text_input('Usuario')
   clave= st.text_input('Clave',type="password")
+  numero_calificaciones=student.get("calificaciones")
+  score = st.slider("Calificar el estdiente (0.0 - 5.0):", min_value=0.0, max_value=5.0, step=0.1,)
+  concepto= st.text_area('escriba un concepto sobre el estudiante')
   if student_id is None:
     st.warning("el codigo QR no fue leido adecuadamente:")
   if st.button('Login'):
@@ -75,20 +78,18 @@ def main():
                loginexitoso= 1
             else:
                 st.warning('Login fallido, revise las credenciales de acceso son las mismas del Ghips')
-  if loginexitoso == 1:    
-           student_ref = db.collection("students").document(student_id)
-           student = student_ref.get().to_dict()
-           st.write(f"Nombre: {student['name']}")
-           st.write(f"E-mail: {student['email']}")
-           st.write(f"Cédula: {student_id}")
-           numero_calificaciones=student.get("calificaciones")
-           score = st.slider("Calificar el estdiente (0.0 - 5.0):", min_value=0.0, max_value=5.0, step=0.1,)
-           concepto= st.text_area('escriba un concepto sobre el estudiante')
-           if st.button("Calificar"):
-            calification_page(student_ref, numero_calificaciones, score, concepto, usuario)
+                st.experimental_rerun()
+            if loginexitoso == 1:    
+                student_ref = db.collection("students").document(student_id)
+                student = student_ref.get().to_dict()
+                st.write(f"Nombre: {student['name']}")
+                st.write(f"E-mail: {student['email']}")
+                st.write(f"Cédula: {student_id}")
+                if st.button("Calificar"):
+                  calification_page(student_ref, numero_calificaciones, score, concepto, usuario)
   else:
       st.warning(loginexitoso)
-      st.warning("corrio bien el login")
+      st.warning("aun sin login")
 
 # Run the main function
 if __name__ == "__main__":
