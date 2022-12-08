@@ -48,7 +48,7 @@ def main():
     st.subheader(f"Nombre: {student['name']}")
     st.write(f"E-mail: {student['email']}")
     st.write(f"Cédula: {student_id[0]}")
-    st.write(f" El estudiante ha sido calificado antes:{student.get('calificaciones')} veces")
+    st.write(f" El estudiante ha sido calificado antes {student.get('calificaciones')} veces")
     #mostrar las calificaciones anteriores
     if st.button('Mostrar calificaciones anteriores'):
       try:
