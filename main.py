@@ -55,7 +55,7 @@ def main():
       calificaciones = calificaciones.transpose()
       calificaciones = calificaciones.drop(columns=['name','email','calificaciones'])
       calificaciones = calificaciones.transpose()
-      calificaciones = calificaciones.rename(columns={0: "Calificación", 1: "Concepto", 2: "Profesor", 3: "Fecha"})
+      calificaciones = calificaciones.rename(columns={0: "Calificación", 1: "Concepto", 2: "Profesor", 3: "Fecha", 4: "Calificación", 5: "Concepto", 6: "Profesor", 7: "Fecha", 8: "Calificación", 9: "Concepto", 10: "Profesor", 11: "Fecha", 12: "Calificación", 13: "Concepto", 14: "Profesor", 15: "Fecha"})
       st.write("Calificaciones anteriores del estudiante")
       st.write(calificaciones)
 
