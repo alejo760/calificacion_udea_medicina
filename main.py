@@ -53,22 +53,19 @@ def main():
     numero_calificaciones=student.get("calificaciones")
     # write a line 
     st.write("")
-    st.write("")
     # write a line
     with st.expander("Información del estudiante",expanded=True):
       st.subheader(f"{student['name']}")
       st.write(f"{student['email']}")
       st.write(f" {student_id[0]}")
     st.write("")
-    st.write("")
-    with st.expander("Calificaciones previas",expanded=True):
+    with st.expander("Calificaciones previas",expanded=False):
      if numero_calificaciones==None:
         st.write("El estudiante **NO** ha sido calificado antes")
      else:
       st.write(f" El estudiante ha sido calificado antes **{student.get('calificaciones')}** veces")
       #Show all the student's previous grades in firestore subcollection calificaciones in a table with multindex in calification column
      if st.button('Ver calificaciones anteriores')and numero_calificaciones!=None:
-      st.write("")
       st.write("")
       with st.container():
        try:
