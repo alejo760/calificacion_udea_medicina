@@ -69,22 +69,22 @@ def main():
       st.write("")
       st.write("")
       try:
-        calificaciones1 = pd.DataFrame(student[f"calificacion{numero_calificaciones-1}"])
-        calificaciones1.columns = pd.MultiIndex.from_product([[''], calificaciones1.columns])
+        calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-1}"])
+        calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
         #order columns
-        st.write(calificaciones1)
+        st.write(calificaciones)
         try:
-          calificaciones2 = pd.DataFrame(student[f"calificacion{numero_calificaciones-2}"])
-          calificaciones2.columns = pd.MultiIndex.from_product([[''], calificaciones2.columns])
-          st.write(calificaciones2)
+          calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-2}"])
+          calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
+          st.write(calificaciones)
           try:
-            calificaciones3 = pd.DataFrame(student[f"calificacion{numero_calificaciones-3}"])
-            calificaciones3.columns = pd.MultiIndex.from_product([[''], calificaciones3.columns])
-            st.write(calificaciones3)
+            calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-3}"])
+            calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
+            st.table(calificaciones)
             try:
-              calificaciones4 = pd.DataFrame(student[f"calificacion{numero_calificaciones-4}"])
-              calificaciones4.columns = pd.MultiIndex.from_product([[''], calificaciones4.columns])
-              st.write(calificaciones4)
+              calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-4}"])
+              calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
+              st.table(calificaciones)
             except Exception as e:
               st.warning("el estudiante no tien más calificaciones anteriores")
           except Exception as e:
