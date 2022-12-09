@@ -80,11 +80,11 @@ def main():
           try:
             calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-3}"])
             calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
-            st.table(calificaciones)
+            st.write(calificaciones)
             try:
               calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-4}"])
               calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
-              st.table(calificaciones)
+              st.write(calificaciones)
             except Exception as e:
               st.warning("el estudiante no tien más calificaciones anteriores")
           except Exception as e:
