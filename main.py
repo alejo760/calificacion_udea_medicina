@@ -59,7 +59,7 @@ def main():
       st.write(f"{student['email']}")
       st.write(f" {student_id[0]}")
     st.write("")
-    with st.expander("Calificaciones previas",expanded=False):
+    with st.expander("Calificaciones de otros profesores",expanded=False):
      if numero_calificaciones==None:
         st.write("El estudiante **NO** ha sido calificado antes")
      else:
