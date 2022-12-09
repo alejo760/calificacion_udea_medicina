@@ -48,12 +48,12 @@ def main():
     st.subheader(f"Nombre del estudiante: {student['name']}")
     st.write(f"E-mail: {student['email']}")
     st.write(f"Cédula: {student_id[0]}")
-    if numero_calificaciones==0:
+    if numero_calificaciones==None:
       st.write("El estudiante no ha sido calificado antes")
     else:
      st.write(f" El estudiante ha sido calificado antes {student.get('calificaciones')} veces")
     #Show all the student's previous grades in firestore subcollection calificaciones in a table with multindex in calification column
-    if st.button('Ver calificaciones anteriores'):
+    if st.button('Ver calificaciones anteriores') and numero_calificaciones!= None: 
       try:
         calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones}"])
         calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
