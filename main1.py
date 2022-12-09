@@ -31,7 +31,7 @@ def set_time():
 
 # Function to upload a database in xlsx format with the list of students name, e-mail, and id
 def upload_database():
-  data = st.file_uploader("Subir base de datos de estudiantes, debe tener", type="xlsx")
+  data = st.file_uploader("Subir base de datos de estudiantes, debe tener id, nombre, email", type="xlsx")
   if data is not None:
     df = pd.read_excel(data)
     return df
