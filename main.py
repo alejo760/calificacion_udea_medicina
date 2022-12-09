@@ -31,7 +31,7 @@ def main():
   
   st.image("https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES", width=200)
   st.title("PRÁCTICAS CLÍNICAS - ADULTEZ 1 (3037013) SEMESTRE 2022- II UdeA")
-  st.write("Elaborado por Alejandro Hernández-Arango internista")
+  st.caption("Elaborado por Alejandro Hernández-Arango internista")
   urlcalificacion="https://docs.google.com/document/d/1V-xFwZ8KkcUuASTTL3BiJcNfoLUm2Kge/edit?usp=sharing&ouid=100347739923869585504&rtpof=true&sd=true"
   st.write("[Instrucciones de calificación de la UdeA para Adultez](%s)" % urlcalificacion, unsafe_allow_html=True)
   #tomar informacion del QR por el metodo experimental_get_query_params
@@ -55,11 +55,11 @@ def main():
     st.write(f"E-mail: {student['email']}")
     st.write(f"Cédula: {student_id[0]}")
     if numero_calificaciones==None:
-      st.write("El estudiante no ha sido calificado antes")
+      st.write("El estudiante **no** ha sido calificado antes")
     else:
-     st.write(f" El estudiante ha sido calificado antes {student.get('calificaciones')} veces")
+     st.write(f" El estudiante ha sido calificado antes **{student.get('calificaciones')}** veces")
     #Show all the student's previous grades in firestore subcollection calificaciones in a table with multindex in calification column
-    if st.button('Ver calificaciones anteriores') and numero_calificaciones!= None: 
+    if st.button('Ver calificaciones anteriores'): 
       try:
         calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones}"])
         calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
@@ -103,7 +103,7 @@ def main():
             x = requests.post(url, data = password)
             response_status = x.status_code
             if response_status == 200 or usuario=='roben1319@yahoo.com' or usuario=='dandres.velez@udea.edu.co' and concepto is not None:
-               st.success("Login exitoso")
+               #st.success("Login exitoso")
                if numero_calificaciones == 4:
                       st.write("El estudiante ya tiene 4 calificaciones, no se puede calificar")
 
