@@ -53,7 +53,6 @@ def main():
     numero_calificaciones=student.get("calificaciones")
     # write a line 
     st.write("")
-    st.caption("             _______________________________________           ")
     st.write("")
     # write a line
     with st.expander("**Información del estudiante**",expanded=True):
@@ -61,7 +60,6 @@ def main():
       st.write(f"{student['email']}")
       st.write(f" {student_id[0]}")
     st.write("")
-    st.caption("             _______________________________________           ")
     st.write("")
     with st.expander("**Calificaciones previas**",expanded=True):
      if numero_calificaciones==None:
@@ -71,7 +69,6 @@ def main():
       #Show all the student's previous grades in firestore subcollection calificaciones in a table with multindex in calification column
      if st.button('Ver calificaciones anteriores')and numero_calificaciones!=None:
       st.write("")
-      st.caption("             _______________________________________           ")
       st.write("")
       with st.container():
        try:
@@ -105,6 +102,8 @@ def main():
     st.warning(e)
     st.experimental_rerun()
   #calificar el estudiante
+  st.write("")
+  st.write("")
   with st.expander("**Ingreso de la calificación**",expanded=True):
     tz_col = pytz.timezone('America/Bogota') 
     fecha = datetime.now(tz_col).strftime('%a, %d %b %Y %I:%M %p')
