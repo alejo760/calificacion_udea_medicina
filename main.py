@@ -23,7 +23,12 @@ def main():
     page_title="Calificación VIII Medicina Interna UdeA", 
     page_icon=":bar_chart:", layout="wide", 
     initial_sidebar_state="expanded",
-    )
+    layout= "centered",
+    menu_items={
+        'Ayuda': 'alejandro.hernandeza@udea.edu.co',
+        'About': "# App de calificación creada para los estudiantes de Medicina Interna"
+    }
+)
   
   st.image("https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES", width=200)
   st.title("PRÁCTICAS CLÍNICAS - ADULTEZ 1 (3037013) SEMESTRE 2022- II UdeA")
@@ -47,7 +52,7 @@ def main():
     student = student_ref.get().to_dict()
     #mostrar la informacion del estudiante
     numero_calificaciones=student.get("calificaciones")
-    st.subheader(f"Nombre del estudiante: {student['name']}")
+    st.write(f"Nombre del estudiante: **{student['name']}**")
     st.write(f"E-mail: {student['email']}")
     st.write(f"Cédula: {student_id[0]}")
     if numero_calificaciones==None:
