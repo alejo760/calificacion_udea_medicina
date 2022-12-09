@@ -51,13 +51,34 @@ def main():
     st.write(f" El estudiante ha sido calificado antes {student.get('calificaciones')} veces")
     #Show all the student's previous grades in firestore subcollection calificaciones in a table with multindex in calification column
     if st.button('Ver calificaciones anteriores'):
-      for i in range(numero_calificaciones):
-        calificaciones = pd.DataFrame(student[f"calificacion{i}"])
+      try:
+        calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones}"])
         calificaciones.columns = pd.MultiIndex.from_product([['Calificación'], calificaciones.columns])
         st.table(calificaciones)
-
-
-
+        try:
+          calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-1}"])
+          calificaciones.columns = pd.MultiIndex.from_product([['Calificación'], calificaciones.columns])
+          st.table(calificaciones)
+          try:
+            calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-2}"])
+            calificaciones.columns = pd.MultiIndex.from_product([['Calificación'], calificaciones.columns])
+            st.table(calificaciones)
+            try:
+              calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-3}"])
+              calificaciones.columns = pd.MultiIndex.from_product([['Calificación'], calificaciones.columns])
+              st.table(calificaciones)
+            except Exception as e:
+              st.warning("el estudiante no tiene calificaciones anteriores")
+              st.warning(e)
+          except Exception as e:
+            st.warning("el estudiante no tiene calificaciones anteriores")
+            st.warning(e)
+        except Exception as e:
+          st.warning("el estudiante no tiene calificaciones anteriores")
+          st.warning(e)
+      except Exception as e:
+        st.warning("el estudiante no tiene calificaciones anteriores")
+        st.warning(e)
   except Exception as e:
     st.warning("error en la base de datos el estudiante no se encuentra habilitado")
     st.warning("por favor comuniquese con el administrador alejandro.hernandeza@udea.edu.co")
