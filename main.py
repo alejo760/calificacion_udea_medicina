@@ -51,9 +51,13 @@ def main():
     student = student_ref.get().to_dict()
     #mostrar la informacion del estudiante
     numero_calificaciones=student.get("calificaciones")
-    st.write(f"Nombre del estudiante: **{student['name']}**")
-    st.write(f"E-mail: {student['email']}")
-    st.write(f"Cédula: {student_id[0]}")
+    # show the student's name, email, and id as table
+    student_info = pd.DataFrame({"Nombre": [student.get("name")], "Email": [student.get("email")], "ID": [student.get("id")]})
+    student_info.columns = pd.MultiIndex.from_product([[''], student_info.columns])
+    st.table(student_info)
+
+
+
     if numero_calificaciones==None:
       st.write("El estudiante **no** ha sido calificado antes")
     else:
