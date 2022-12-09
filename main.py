@@ -25,7 +25,7 @@ def main():
     initial_sidebar_state="expanded",
     layout= "centered",
     menu_items={
-        'Ayuda': 'alejandro.hernandeza@udea.edu.co',
+        'Get help': 'alejandro.hernandeza@udea.edu.co',
         'About': "App de calificación creada para los estudiantes de Medicina Interna"
     }
 )
