@@ -26,9 +26,10 @@ def main():
     )
   
   st.image("https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES", width=200)
-  st.title("App de calificación PRÁCTICAS CLÍNICAS - ADULTEZ 1 (3037013) SEMESTRE 2022- II UdeA")
+  st.title("PRÁCTICAS CLÍNICAS - ADULTEZ 1 (3037013) SEMESTRE 2022- II UdeA")
   st.write("Elaborado por Alejandro Hernández-Arango internista")
-  st.write("Instrucciones de calificación [link] (https://docs.google.com/document/d/1V-xFwZ8KkcUuASTTL3BiJcNfoLUm2Kge/edit?usp=sharing&ouid=100347739923869585504&rtpof=true&sd=true)", unsafe_allow_html=True,)
+  urlcalificacion="https://docs.google.com/document/d/1V-xFwZ8KkcUuASTTL3BiJcNfoLUm2Kge/edit?usp=sharing&ouid=100347739923869585504&rtpof=true&sd=true"
+  st.write("Instrucciones de calificación [link](%s)" % urlcalificacion, unsafe_allow_html=True)
   #tomar informacion del QR por el metodo experimental_get_query_params
   try:
     student_id = st.experimental_get_query_params().get("student_id")
