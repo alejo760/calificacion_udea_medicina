@@ -131,6 +131,7 @@ def main():
                             }]
                             },merge=True)
                         st.success("Estudiante calificado y nota guardada exitosamente")
+                        st.balloons()
                
             else:
                 st.warning('Login fallido, revise las credenciales de acceso son las mismas del Ghips')
