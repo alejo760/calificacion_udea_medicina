@@ -55,7 +55,7 @@ def main():
     st.write("")
     st.write("")
     # write a line
-    st.header(f"**{student['name']}**")
+    st.write(f"*{student['name']}*")
     st.write(f"{student['email']}")
     st.write(f" {student_id[0]}")
     st.write("")
