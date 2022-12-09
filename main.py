@@ -69,24 +69,22 @@ def main():
       st.write("")
       st.write("")
       try:
-        calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-1}"])
-        calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
+        calificaciones1 = pd.DataFrame(student[f"calificacion{numero_calificaciones-1}"])
+        calificaciones1.columns = pd.MultiIndex.from_product([[''], calificaciones1.columns])
         #order columns
-        orden_columnas=[f"fecha{numero_calificaciones-1}",f"score{numero_calificaciones}",f"concepto{numero_calificaciones}",f"profesor{numero_calificaciones}"]
-        calificaciones=calificaciones[orden_columnas]
-        st.write(calificaciones)
+        st.write(calificaciones1)
         try:
-          calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-2}"])
-          calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
-          st.write(calificaciones)
+          calificaciones2 = pd.DataFrame(student[f"calificacion{numero_calificaciones-2}"])
+          calificaciones2.columns = pd.MultiIndex.from_product([[''], calificaciones2.columns])
+          st.write(calificaciones2)
           try:
-            calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-3}"])
-            calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
-            st.table(calificaciones)
+            calificaciones3 = pd.DataFrame(student[f"calificacion{numero_calificaciones-3}"])
+            calificaciones3.columns = pd.MultiIndex.from_product([[''], calificaciones3.columns])
+            st.write(calificaciones3)
             try:
-              calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-4}"])
-              calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
-              st.table(calificaciones)
+              calificaciones4 = pd.DataFrame(student[f"calificacion{numero_calificaciones-4}"])
+              calificaciones4.columns = pd.MultiIndex.from_product([[''], calificaciones4.columns])
+              st.write(calificaciones4)
             except Exception as e:
               st.warning("el estudiante no tien más calificaciones anteriores")
           except Exception as e:
