@@ -55,9 +55,9 @@ def main():
     st.write("")
     st.write("")
     # write a line
-    st.write(f"Nombre del estudiante: **{student['name']}**")
-    st.write(f"E-mail: {student['email']}")
-    st.write(f"Cédula: {student_id[0]}")
+    st.write(f"**{student['name']}**")
+    st.write(f"{student['email']}")
+    st.write(f" {student_id[0]}")
     st.write("")
     st.write("")
     if numero_calificaciones==None:
