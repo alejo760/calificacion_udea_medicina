@@ -68,7 +68,8 @@ def main():
     if st.button('Ver calificaciones anteriores')and numero_calificaciones!=None:
       st.write("")
       st.write("")
-      try:
+      with st.spinner("Cargando")
+       try:
         calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-1}"])
         calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
         #order columns
@@ -91,7 +92,7 @@ def main():
             st.warning("el estudiante no tiene más calificaciones anteriores")
         except Exception as e:
           st.warning("el estudiante no tiene más calificaciones anteriores")
-      except Exception as e:
+       except Exception as e:
         st.warning("el estudiante no tiene más calificaciones anteriores")
   except Exception as e:
     st.warning("error en la base de datos el estudiante no se encuentra habilitado")
