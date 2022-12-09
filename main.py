@@ -26,8 +26,8 @@ def main():
     )
   
   st.image("https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES", width=200)
-  st.title("App de calificacion VIII Medicina Interna UdeA")
-  st.write("hecha por Alejandro Hernández-Arango internista MD")
+  st.title("App de calificación VIII Medicina Interna UdeA")
+  st.write("Elaborado por Alejandro Hernández-Arango internista")
   #tomar informacion del QR por el metodo experimental_get_query_params
   try:
     student_id = st.experimental_get_query_params().get("student_id")
@@ -45,7 +45,7 @@ def main():
     student = student_ref.get().to_dict()
     #mostrar la informacion del estudiante
     numero_calificaciones=student.get("calificaciones")
-    st.subheader(f"Nombre: {student['name']}")
+    st.subheader(f"Nombre del estudiante: {student['name']}")
     st.write(f"E-mail: {student['email']}")
     st.write(f"Cédula: {student_id[0]}")
     st.write(f" El estudiante ha sido calificado antes {student.get('calificaciones')} veces")
@@ -53,8 +53,8 @@ def main():
     if st.button('Mostrar calificaciones anteriores') and numero_calificaciones > 0:
       try:
        df_student= pd.DataFrame.from_dict(student)
-       df_student= pd.DataFrame.from_dict(df_student["calificacion"])
-       st.dataframe(df_student)
+
+       st.dataframe(df_student["calificacion"])
        for i in range(1,numero_calificaciones):
           st.dataframe(df_student[f"calificacion{i}"])
       except Exception as e:
@@ -66,8 +66,9 @@ def main():
   #calificar el estudiante
   tz_col = pytz.timezone('America/Bogota') 
   fecha = datetime.now(tz_col).strftime('%a, %d %b %Y %I:%M %p')
-  score = st.slider("Calificar el estudiante (0.0 - 5.0):", min_value=0.0, max_value=5.0, step=0.1)
-  concepto= st.text_area('escriba un concepto sobre el estudiante')
+  score = st.number_input("Calificar el estudiante (0.0 - 5.0):", min_value=0.0, max_value=5.0, step=0.1)
+  concepto= st.text_area('Escriba un concepto sobre el estudiante')
+  st.write("Ingrese el usuario y la clave de Ghips")
   usuario= st.text_input('Usuario')
   clave= st.text_input('Clave',type="password")
   if st.button('Calificar'):
