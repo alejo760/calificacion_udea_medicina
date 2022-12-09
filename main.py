@@ -57,7 +57,7 @@ def main():
     with st.expander("Información del estudiante",expanded=True):
       st.subheader(f"{student['name']}")
       st.write(f"{student['email']}")
-      st.write(f"**Id:**{student_id[0]}")
+      st.write(f"CC:{student_id[0]}")
     st.write("")
     with st.expander("Otras calificaciones de esta rotación",expanded=False):
      if numero_calificaciones==None:
