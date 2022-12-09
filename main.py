@@ -50,13 +50,17 @@ def main():
     st.write(f"Cédula: {student_id[0]}")
     st.write(f" El estudiante ha sido calificado antes {student.get('calificaciones')} veces")
     #Show the student's previous grades in firestore subcollection calificaciones in a table
-    for i in range(0,numero_calificaciones):
-      calificacion = student.get(f"calificacion{i}")
-      st.write(f"Calificación {i+1}: {calificacion[0].get(f'score{i}')}")
-      st.write(f"Concepto {i+1}: {calificacion[0].get(f'concepto{i}')}")
-      st.write(f"Profesor {i+1}: {calificacion[0].get(f'profesor{i}')}")
-      st.write(f"Fecha {i+1}: {calificacion[0].get(f'fecha{i}')}")
-
+    if numero_calificaciones == 0:  
+      st.write("El estudiante no tiene calificaciones")
+    else:
+      calificaciones = pd.DataFrame.from_dict(student, orient='index')
+      calificaciones = calificaciones.transpose()
+      calificaciones = calificaciones.drop(columns=['name','email','calificaciones'])
+      calificaciones = calificaciones.transpose()
+      calificaciones = calificaciones.rename(columns={0: "Calificación", 1: "Concepto", 2: "Profesor", 3: "Fecha"})
+      st.write("Calificaciones anteriores del estudiante")
+      st.write(calificaciones)
+      
 
   except:
     st.warning("error en la base de datos el estudiante no se encuentra habilitado")
