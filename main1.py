@@ -76,8 +76,10 @@ def store_data_in_firestore(df,fecha):
 
 # Main function
 def main():
-  st.title("App de calificación VIII Medicina Interna UdeA")
-  st.write("prueba hecha por Alejandro Hernández-Arango MD")
+  st.image("https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES", width=200)
+  st.title("App de calificación Crear codigos y abrrir base de datos")
+  st.subheader("Medicina Interna UdeA-")
+  st.caption("hecha por Alejandro Hernández-Arango MD")
 
   # Upload the database
   df = upload_database()
