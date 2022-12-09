@@ -59,7 +59,7 @@ def main():
       st.write(f"{student['email']}")
       st.write(f" {student_id[0]}")
     st.write("")
-    with st.expander("Calificaciones de otros profesores",expanded=False):
+    with st.expander("Otras calificaciones de esta rotación",expanded=False):
      if numero_calificaciones==None:
         st.write("El estudiante **NO** ha sido calificado antes")
      else:
@@ -100,7 +100,7 @@ def main():
     st.experimental_rerun()
   #calificar el estudiante
   st.write("")
-  with st.expander("Ingreso de la calificación",expanded=True):
+  with st.expander("Ingreso de la calificación click aqui->",expanded=False):
     tz_col = pytz.timezone('America/Bogota') 
     fecha = datetime.now(tz_col).strftime('%a, %d %b %Y %I:%M %p')
     score = st.number_input("Calificar el estudiante (0.0 - 5.0):", min_value=0.0, max_value=5.0, step=0.1)
