@@ -78,8 +78,8 @@ def store_data_in_firestore(df,fecha):
 def main():
   st.image("https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES", width=200)
   st.title("App de calificación")
-  st.subheader("Crear codigos y abrir base de datos")
-  st.subheader("Medicina Interna UdeA-")
+  st.title("Crear codigos QR y abrir base de datos")
+  st.subheader("-Medicina Interna UdeA-")
   st.caption("hecha por Alejandro Hernández-Arango MD")
 
   # Upload the database
