@@ -71,6 +71,8 @@ def main():
       try:
         calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-1}"])
         calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
+        #order the columns in the table in this order: fecha, score, profesor  and concepto
+        calificaciones = calificaciones[['fecha', 'score', 'profesor', 'concepto']]
         st.table(calificaciones)
         try:
           calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-2}"])
