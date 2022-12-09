@@ -68,7 +68,7 @@ def main():
     if st.button('Ver calificaciones anteriores')and numero_calificaciones!=None:
       st.write("")
       st.write("")
-      with st.spinner("Cargando"):
+      with st.container():
        try:
         calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-1}"])
         calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
