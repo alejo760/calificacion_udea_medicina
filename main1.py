@@ -64,6 +64,7 @@ def store_data_in_firestore(df,fecha):
     student_ref.set({
       'name': row['name'],
       'email': row['email'],
+      'calificaciones': 0,
     })
 
 #---------------------------------#
