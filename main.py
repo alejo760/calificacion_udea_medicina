@@ -51,19 +51,23 @@ def main():
     student = student_ref.get().to_dict()
     #mostrar la informacion del estudiante
     numero_calificaciones=student.get("calificaciones")
-    # show the student's name, email, and id as table
-    student_info = pd.DataFrame({"Nombre": [student.get("name")], "Email": [student.get("email")], "ID": [student.get("id")]})
-    student_info.columns = pd.MultiIndex.from_product([[''], student_info.columns])
-    st.table(student_info)
-
-
-
+    # write a line 
+    st.write("")
+    st.write("")
+    # write a line
+    st.write(f"Nombre del estudiante: **{student['name']}**")
+    st.write(f"E-mail: {student['email']}")
+    st.write(f"Cédula: {student_id[0]}")
+    st.write("")
+    st.write("")
     if numero_calificaciones==None:
       st.write("El estudiante **no** ha sido calificado antes")
     else:
      st.write(f" El estudiante ha sido calificado antes **{student.get('calificaciones')}** veces")
     #Show all the student's previous grades in firestore subcollection calificaciones in a table with multindex in calification column
     if st.button('Ver calificaciones anteriores'): 
+      st.write("")
+      st.write("")
       try:
         calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones}"])
         calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
