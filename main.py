@@ -69,7 +69,7 @@ def main():
       st.write("")
       st.write("")
       try:
-        calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones}"])
+        calificaciones = pd.DataFrame(student[f"calificacion0"])
         calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
         st.table(calificaciones)
         try:
