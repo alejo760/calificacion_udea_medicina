@@ -64,20 +64,6 @@ def store_data_in_firestore(df,fecha):
     student_ref.set({
       'name': row['name'],
       'email': row['email'],
-      "profesor": "",
-      "calificacion": 0.00,
-      "concepto": "",
-      "profesor1": "",
-      "calificacion1": 0.00,
-      "concepto1": "",
-      "profesor2": "",
-      "calificacion2": 0.00,
-      "concepto2": "",
-      "profesor3": "",
-      "calificacion3": 0.00,
-      "concepto3": "",
-      "calificaciones": 0,
-      "fecha": fecha,
     })
 
 #---------------------------------#
