@@ -51,8 +51,8 @@ def main():
     st.write(f" El estudiante ha sido calificado antes {student.get('calificaciones')} veces")
     #Show all the student's previous grades in firestore subcollection calificaciones in a table with multindex in calification column
     if st.button('Ver calificaciones anteriores'):
-      for i in range(numero_calificaciones):
-        calificaciones = pd.DataFrame(student[f"calificacion{i}"])
+      #for i in range(numero_calificaciones):
+        calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-1}"])
         calificaciones.columns = pd.MultiIndex.from_product([['Calificación'], calificaciones.columns])
         st.table(calificaciones)
 
