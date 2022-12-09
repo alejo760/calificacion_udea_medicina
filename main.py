@@ -72,7 +72,7 @@ def main():
         calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-1}"])
         calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
         #order columns
-        orden_columnas=['calificacion','observaciones','fecha']
+        orden_columnas=[f"fecha{numero_calificaciones-1}"],[f"score{numero_calificaciones-1}"],[f"concepto{numero_calificaciones-1}"],[f"profesor{numero_calificaciones-1}"]
         calificaciones=calificaciones[orden_columnas]
         st.write(calificaciones)
         try:
