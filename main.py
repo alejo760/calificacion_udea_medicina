@@ -71,10 +71,9 @@ def main():
       try:
         calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-1}"])
         calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
-        #organize the table in the same order from the firestore database
-        calificaciones=calificaciones.reindex(['calificacion', 'observaciones', 'fecha', 'nombre'], axis=1)
-
-
+        #order columns
+        orden_columnas=['calificacion','observaciones','fecha']
+        calificaciones=calificaciones[orden_columnas]
         st.write(calificaciones)
         try:
           calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-2}"])
