@@ -71,6 +71,16 @@ def main():
       try:
         calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-1}"])
         calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
+        #add a row to show next calification stored in firebase database
+ 
+
+
+
+
+
+
+
+
         st.write(calificaciones)
         try:
           calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-2}"])
