@@ -56,14 +56,14 @@ def main():
     st.caption("             _______________________________________           ")
     st.write("")
     # write a line
-    with st.expander(" información del estudiante",expanded=True):
+    with st.expander("**Información del estudiante**",expanded=True):
       st.subheader(f"{student['name']}")
       st.write(f"{student['email']}")
       st.write(f" {student_id[0]}")
     st.write("")
     st.caption("             _______________________________________           ")
     st.write("")
-    with st.expander("Calificaciones previas",expanded=True):
+    with st.expander("**Calificaciones previas**",expanded=True):
      if numero_calificaciones==None:
         st.write("El estudiante **NO** ha sido calificado antes")
      else:
@@ -105,14 +105,15 @@ def main():
     st.warning(e)
     st.experimental_rerun()
   #calificar el estudiante
-  tz_col = pytz.timezone('America/Bogota') 
-  fecha = datetime.now(tz_col).strftime('%a, %d %b %Y %I:%M %p')
-  score = st.number_input("Calificar el estudiante (0.0 - 5.0):", min_value=0.0, max_value=5.0, step=0.1)
-  concepto= st.text_area('Escriba un concepto sobre el estudiante')
-  st.write("Ingrese el usuario y la clave de Ghips")
-  usuario= st.text_input('Usuario')
-  clave= st.text_input('Clave',type="password")
-  if st.button('Calificar'):
+  with st.expander("**Ingreso de la calificación**",expanded=True):
+    tz_col = pytz.timezone('America/Bogota') 
+    fecha = datetime.now(tz_col).strftime('%a, %d %b %Y %I:%M %p')
+    score = st.number_input("Calificar el estudiante (0.0 - 5.0):", min_value=0.0, max_value=5.0, step=0.1)
+    concepto= st.text_area('Escriba un concepto sobre el estudiante')
+    st.write("Ingrese el usuario y la clave de Ghips")
+    usuario= st.text_input('Usuario')
+    clave= st.text_input('Clave',type="password")
+    if st.button('Calificar'):
             url = 'https://api.ghips.co/api/login/authenticate'
             password = {"Username": usuario, "Password": clave}
             x = requests.post(url, data = password)
