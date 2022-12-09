@@ -113,7 +113,7 @@ def main():
             password = {"Username": usuario, "Password": clave}
             x = requests.post(url, data = password)
             response_status = x.status_code
-            if response_status == 200 or usuario=='roben1319@yahoo.com' or usuario=='dandres.velez@udea.edu.co' and concepto is not None:
+            if response_status == 200 or usuario=='roben1319@yahoo.es' or usuario=='dandres.velez@udea.edu.co' and concepto is not None:
                #st.success("Login exitoso")
                if numero_calificaciones == 4:
                       st.write("El estudiante ya tiene 4 calificaciones, no se puede calificar")
