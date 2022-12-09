@@ -29,7 +29,7 @@ def main():
   st.title("PRÁCTICAS CLÍNICAS - ADULTEZ 1 (3037013) SEMESTRE 2022- II UdeA")
   st.write("Elaborado por Alejandro Hernández-Arango internista")
   urlcalificacion="https://docs.google.com/document/d/1V-xFwZ8KkcUuASTTL3BiJcNfoLUm2Kge/edit?usp=sharing&ouid=100347739923869585504&rtpof=true&sd=true"
-  st.write("Instrucciones de calificación [link](%s)" % urlcalificacion, unsafe_allow_html=True)
+  st.write("[Instrucciones de calificación de la UdeA para Adultez](%s)" % urlcalificacion, unsafe_allow_html=True)
   #tomar informacion del QR por el metodo experimental_get_query_params
   try:
     student_id = st.experimental_get_query_params().get("student_id")
