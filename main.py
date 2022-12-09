@@ -21,7 +21,7 @@ def main():
   # Set the page layout
   st.set_page_config(
     page_title="Calificación VIII Medicina Interna UdeA", 
-    page_icon=":bar_chart:", layout="wide", 
+    page_icon=":bar_chart:",
     initial_sidebar_state="expanded",
     layout= "centered",
     menu_items={
