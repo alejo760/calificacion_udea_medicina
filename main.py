@@ -70,14 +70,12 @@ def main():
       st.write("")
       try:
         calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-1}"])
-        #order the columns in the table 
         calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
-        calificaciones = calificaciones[[f"fecha{numero_calificaciones-1}",f"calificacion{numero_calificaciones-1}",f"concepto{numero_calificaciones-1}",f"score{numero_calificaciones-1}"]]
-        st.table(calificaciones)
+        st.write(calificaciones)
         try:
           calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-2}"])
           calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
-          st.table(calificaciones)
+          st.write(calificaciones)
           try:
             calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-3}"])
             calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
