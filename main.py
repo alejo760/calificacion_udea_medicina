@@ -53,32 +53,28 @@ def main():
     if st.button('Ver calificaciones anteriores'):
       try:
         calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones}"])
-        calificaciones.columns = pd.MultiIndex.from_product([['Calificación'], calificaciones.columns])
+        calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
         st.table(calificaciones)
         try:
           calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-1}"])
-          calificaciones.columns = pd.MultiIndex.from_product([['Calificación'], calificaciones.columns])
+          calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
           st.table(calificaciones)
           try:
             calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-2}"])
-            calificaciones.columns = pd.MultiIndex.from_product([['Calificación'], calificaciones.columns])
+            calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
             st.table(calificaciones)
             try:
               calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-3}"])
-              calificaciones.columns = pd.MultiIndex.from_product([['Calificación'], calificaciones.columns])
+              calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
               st.table(calificaciones)
             except Exception as e:
-              st.warning("el estudiante no tiene calificaciones anteriores")
-              st.warning(e)
+              st.warning("el estudiante no tien más calificaciones anteriores")
           except Exception as e:
-            st.warning("el estudiante no tiene calificaciones anteriores")
-            st.warning(e)
+            st.warning("el estudiante no tiene más calificaciones anteriores")
         except Exception as e:
-          st.warning("el estudiante no tiene calificaciones anteriores")
-          st.warning(e)
+          st.warning("el estudiante no tiene más calificaciones anteriores")
       except Exception as e:
-        st.warning("el estudiante no tiene calificaciones anteriores")
-        st.warning(e)
+        st.warning("el estudiante no tiene más calificaciones anteriores")
   except Exception as e:
     st.warning("error en la base de datos el estudiante no se encuentra habilitado")
     st.warning("por favor comuniquese con el administrador alejandro.hernandeza@udea.edu.co")
