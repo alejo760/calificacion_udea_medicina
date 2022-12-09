@@ -49,15 +49,15 @@ def main():
     st.write(f"E-mail: {student['email']}")
     st.write(f"Cédula: {student_id[0]}")
     st.write(f" El estudiante ha sido calificado antes {student.get('calificaciones')} veces")
-    #mostrar las calificaciones anteriores
-    if st.button('Mostrar calificaciones anteriores') and numero_calificaciones > 0:
-      try:
-       df_student= pd.DataFrame.from_dict(student_ref.collection("calificacion"))
-       st.dataframe(df_student)
-       for i in range(1,numero_calificaciones):
-          st.dataframe(df_student[f"calificacion{i}"])
-      except Exception as e:
-        st.write(e)
+    #Show the student's previous grades in firestore subcollection calificaciones in a table
+    for i in range(0,numero_calificaciones):
+      calificacion = student.get(f"calificacion{i}")
+      st.write(f"Calificación {i+1}: {calificacion[0].get(f'score{i}')}")
+      st.write(f"Concepto {i+1}: {calificacion[0].get(f'concepto{i}')}")
+      st.write(f"Profesor {i+1}: {calificacion[0].get(f'profesor{i}')}")
+      st.write(f"Fecha {i+1}: {calificacion[0].get(f'fecha{i}')}")
+
+
   except:
     st.warning("error en la base de datos el estudiante no se encuentra habilitado")
     st.warning("por favor comuniquese con el administrador alejandro.hernandeza@udea.edu.co")
