@@ -31,7 +31,7 @@ def main():
   
   st.image("https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES", width=200)
   st.title("PRÁCTICAS CLÍNICAS - ADULTEZ 1 (3037013) SEMESTRE 2022- II UdeA")
-  st.write("Elaborado por Alejandro Hernández-Arango internista", layaout="centered")
+  st.write("Elaborado por Alejandro Hernández-Arango internista")
   urlcalificacion="https://docs.google.com/document/d/1V-xFwZ8KkcUuASTTL3BiJcNfoLUm2Kge/edit?usp=sharing&ouid=100347739923869585504&rtpof=true&sd=true"
   st.write("[Instrucciones de calificación de la UdeA para Adultez](%s)" % urlcalificacion, unsafe_allow_html=True)
   #tomar informacion del QR por el metodo experimental_get_query_params
