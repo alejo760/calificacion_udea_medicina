@@ -26,7 +26,7 @@ def main():
     layout= "centered",
     menu_items={
         'Ayuda': 'alejandro.hernandeza@udea.edu.co',
-        'About': "# App de calificación creada para los estudiantes de Medicina Interna"
+        'About': "App de calificación creada para los estudiantes de Medicina Interna"
     }
 )
   
