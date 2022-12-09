@@ -52,11 +52,10 @@ def main():
     #mostrar las calificaciones anteriores
     if st.button('Mostrar calificaciones anteriores') and numero_calificaciones > 0:
       try:
-       df_student= pd.DataFrame.from_dict(student)
-
-       st.dataframe(df_student["calificacion"])
+       df_student= pd.DataFrame(student_ref.collection("calificacion"))
+       st.dataframe(df_student)
        for i in range(1,numero_calificaciones):
-          st.dataframe(df_student[f"calificacion{i}"])
+          st.dataframe(student_ref.collection[f"calificacion{i}"])
       except Exception as e:
         st.write(e)
   except:
