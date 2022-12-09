@@ -81,7 +81,7 @@ def main():
             calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
             st.table(calificaciones)
             try:
-              calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-4}"])
+              calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-5}"])
               calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
               st.table(calificaciones)
             except Exception as e:
