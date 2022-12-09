@@ -71,14 +71,8 @@ def main():
       try:
         calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-1}"])
         calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
-        #add a row to show next calification stored in firebase database
- 
-
-
-
-
-
-
+        #organize the table in the same order from the firestore database
+        calificaciones=calificaciones.reindex(['calificacion', 'observaciones', 'fecha', 'nombre'], axis=1)
 
 
         st.write(calificaciones)
