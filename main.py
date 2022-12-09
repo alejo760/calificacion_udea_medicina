@@ -55,9 +55,9 @@ def main():
     st.write("")
     # write a line
     with st.expander("Información del estudiante",expanded=True):
-      st.subheader(f"{student['name']}")
-      st.write(f"{student['email']}")
-      st.write(f" {student_id[0]}")
+      st.subheader(f" .     {student['name']}")
+      st.write(f" .         {student['email']}")
+      st.write(f" Id:       {student_id[0]}")
     st.write("")
     with st.expander("Otras calificaciones de esta rotación",expanded=False):
      if numero_calificaciones==None:
@@ -100,7 +100,7 @@ def main():
     st.experimental_rerun()
   #calificar el estudiante
   st.write("")
-  with st.expander("Ingreso de la calificación click aqui->",expanded=False):
+  with st.expander("Ingreso de la calificación",expanded=False):
     tz_col = pytz.timezone('America/Bogota') 
     fecha = datetime.now(tz_col).strftime('%a, %d %b %Y %I:%M %p')
     score = st.number_input("Calificar el estudiante (0.0 - 5.0):", min_value=0.0, max_value=5.0, step=0.1)
