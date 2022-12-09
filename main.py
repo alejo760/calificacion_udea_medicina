@@ -49,16 +49,17 @@ def main():
     st.write(f"E-mail: {student['email']}")
     st.write(f"Cédula: {student_id[0]}")
     st.write(f" El estudiante ha sido calificado antes {student.get('calificaciones')} veces")
-    #Show all the student's previous grades in firestore subcollection calificaciones in a table with multindex iun calification column
+    #Show all the student's previous grades in firestore subcollection calificaciones in a table with multindex in calification column
     calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones}"])
     calificaciones.columns = pd.MultiIndex.from_product([['Calificación'], calificaciones.columns])
     st.table(calificaciones)
-    
 
 
-  except:
+
+  except Exception as e:
     st.warning("error en la base de datos el estudiante no se encuentra habilitado")
     st.warning("por favor comuniquese con el administrador alejandro.hernandeza@udea.edu.co")
+    st.warning(e)
     st.experimental_rerun()
   #calificar el estudiante
   tz_col = pytz.timezone('America/Bogota') 
