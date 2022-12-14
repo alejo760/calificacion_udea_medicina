@@ -28,8 +28,8 @@ def main():
         'About': "App de calificación creada para los estudiantes de Medicina Interna"
     }
 )
-  st.image("https://almamater.hospital/wp-content/uploads/2022/09/Almamaterhospital.png", width=300)
-  st.image("https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES", width=200)
+  st.image("https://almamater.hospital/wp-content/uploads/2022/09/Almamaterhospital.png", width=400)
+  st.image("https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES", width=100)
   st.title("PRÁCTICAS CLÍNICAS - ADULTEZ 1 (3037013) SEMESTRE 2022- II UdeA")
   st.caption("Elaborado por Alejandro Hernández-Arango internista")
   urlcalificacion="https://docs.google.com/document/d/1V-xFwZ8KkcUuASTTL3BiJcNfoLUm2Kge/edit?usp=sharing&ouid=100347739923869585504&rtpof=true&sd=true"
