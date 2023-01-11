@@ -20,23 +20,23 @@ import pytz
 def main():
   # Set the page layout
   st.set_page_config(
-    page_title="Calificación VIII Medicina Interna UdeA", 
+    page_title="Calificación Estudiantes UdeA", 
     page_icon=":bar_chart:",
     initial_sidebar_state="expanded",
     layout= "centered",
     menu_items={
-        'About': "App de calificación creada para los estudiantes de Medicina Interna"
+        'About': "App de calificación creada para los estudiantes de Medicina UdeA"
     }
 )
-  st.image("https://almamater.hospital/wp-content/uploads/2022/09/Almamaterhospital.png", width=350)
+  st.image("https://almamater.hospital/wp-content/uploads/2022/09/Almamaterhospital.png", width=300)
   st.image("https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES", width=100)
-  st.title("PRÁCTICAS CLÍNICAS - ADULTEZ 1 (3037013) SEMESTRE 2022- II UdeA")
+  st.title("CALIFICACIÓN")
   st.caption("Elaborado por Alejandro Hernández-Arango internista")
-  urlcalificacion="https://docs.google.com/document/d/1V-xFwZ8KkcUuASTTL3BiJcNfoLUm2Kge/edit?usp=sharing&ouid=100347739923869585504&rtpof=true&sd=true"
-  st.caption("[Instrucciones de calificación de la UdeA para Adultez](%s)" % urlcalificacion, unsafe_allow_html=True)
+ 
   #tomar informacion del QR por el metodo experimental_get_query_params
   try:
     student_id = st.experimental_get_query_params().get("student_id")
+    materia= st.experimental_get_query_params().get("materia")
   except:
     st.warning("el codigo QR no fue leido adecuadamente:")
     st.warning("por favor escanee el codigo QR nuevamente")
@@ -101,9 +101,59 @@ def main():
   #calificar el estudiante
   st.write("")
   with st.expander("Ingreso de la calificación",expanded=False):
+    if materia=="vejez":
+      if nucleo is not None:
+        nucleos=['Rotación Hospitalaria', 'Living lab', 'Consulta externa', 'Atención domiciliaria (ambulatoria)']
+        nucleo=st.select_slider( "seleccione el nucleo de la rotación",nucleos)
+      else:
+        st.warning("el estudiante no tiene asignado un nucleo") 
+      st.write("Calificación de la rotación de **Vejez**")
+      st.image("https://lh6.googleusercontent.com/jrgDxu8U0Z9H_kl09g8vnuYoeFlxGtNeZ1hRRVRn0qKcYitViZj04Xe-deQMq_4gmQ7amoSw2o9nJtW8tDt6rmoT7i42RvDAe6Dkp5ilRDoKg6KD5cR61IkQdgVTeaimjK7qn7YPLVWiDQm3wCEIiaCovw2PVoapAcP1SjNIZfn_tVOR0ThZIq1cvElShsbrZAo0",width=200)
+      item1=st.slider("40% Academico", min_value=0.0, max_value=5.0, step=0.1)
+      st.image("https://lh5.googleusercontent.com/niGf3eCwkrIDFwIHwSO8AsGuTnBptssKmg99NGwquiDxbeuv3vG18A9Aa_4ySzF-eh0gcjcgSGshEemmwwrh3dLZoEL87iT90NUGNSzPTSY_2r33qaT8UkQR71lYRSe7PSFogLVkmzW6akSwO7n38QY530cHoZ5KnEdOLX_oRHWaZs-B57kk_xxrPMsXdqLILVe2",width=200)
+      item2=st.slider("40% Practico", min_value=0.0, max_value=5.0, step=0.1)
+      st.image("https://lh3.googleusercontent.com/VQ7qWA5H8jLdUIuwup35xHEJcNficeEPsb9xurvRlYQcFIfpr6OzoXgssnAPGM3NWAFhF2mhvDJzFJTrsRt5b1ogyt2-V898oTYo4I1rvF9vvrCusIAlGXYnoDCJ7xisILpGjq2yv3a5NyJ1y2l5I6PBpxMYk-phVFS_wtc6cPYt0Ke4xnoZoV8j39jOXweMG4DX",width=200)
+      item3=st.slider("20% Profesionalismo", min_value=0.0, max_value=5.0, step=0.1)
+      score=round((item1*0.4+item2*0.4+item3*0.2),2)
+      st.header("Calificación final",score)
+    elif materia=="adultez":
+      st.subheader("Calificación de la rotación de **adultez_I**")
+      st.write("Lee acerca de los problemas de los pacientes discutidos en la ronda. \n Estudia los temas asignados y los vistos durante el componente teórico del curso.\n Reconoce sus vacíos de conocimiento y hace esfuerzos por llenarlos. **ASPECTOS ACADÉMICOS (60%)*")
+      item1=st.slider( "60% Academico", min_value=0.0, max_value=5.0, step=0.1)
+      st.write("Completa, clara y precisa. **HISTORIA CLÍNICA (10%)**")
+      item2=st.slider( "10% Historia clínica", min_value=0.0, max_value=5.0, step=0.1)
+      st.write("Sabe iniciar un tratamiento y es capaz de justificar su elección. \n Ordena los exámenes diagnósticos necesarios.\n Mide riesgo/beneficio de los exámenes y los \n esquemas terapéuticos. **PLAN DE MANEJO (10%)**")
+      item3=st.slider( "10% Plan de manejo", min_value=0.0, max_value=5.0, step=0.1)
+      st.write("Le habla al paciente con un lenguaje que él comprende. Coopera con sus compañeros. \n Es cortés con el personal que labora en el área.\n Busca como mejorar. Responde positivamente a la crítica.\n Llega a tiempo a las actividades acordadas. Cumple con el trabajo que se le asigna \n Sabe escuchar al otro. Entiende y acepta las diferencias religiosas, culturales,\n raciales, económicas y políticas. **CUALIDADES HUMANAS (20%)**")
+      item4=st.slider( "20% Cualidades humanas", min_value=0.0, max_value=5.0, step=0.1)
+      score=round((item1*0.6+item2*0.1+item3*0.1+item4*0.2),2)
+      st.header("Calificación final ",score)
+    elif materia=="internado":
+      st.write("Calificación de la rotación de **Internado**")
+      st.image("https://lh6.googleusercontent.com/jrgDxu8U0Z9H_kl09g8vnuYoeFlxGtNeZ1hRRVRn0qKcYitViZj04Xe-deQMq_4gmQ7amoSw2o9nJtW8tDt6rmoT7i42RvDAe6Dkp5ilRDoKg6KD5cR61IkQdgVTeaimjK7qn7YPLVWiDQm3wCEIiaCovw2PVoapAcP1SjNIZfn_tVOR0ThZIq1cvElShsbrZAo0",width=200)
+      item1=st.slider("40% Academico", min_value=0.0, max_value=5.0, step=0.1)
+      st.image("https://lh5.googleusercontent.com/niGf3eCwkrIDFwIHwSO8AsGuTnBptssKmg99NGwquiDxbeuv3vG18A9Aa_4ySzF-eh0gcjcgSGshEemmwwrh3dLZoEL87iT90NUGNSzPTSY_2r33qaT8UkQR71lYRSe7PSFogLVkmzW6akSwO7n38QY530cHoZ5KnEdOLX_oRHWaZs-B57kk_xxrPMsXdqLILVe2",width=200)
+      item2=st.slider("40% Practico", min_value=0.0, max_value=5.0, step=0.1)
+      st.image("https://lh3.googleusercontent.com/VQ7qWA5H8jLdUIuwup35xHEJcNficeEPsb9xurvRlYQcFIfpr6OzoXgssnAPGM3NWAFhF2mhvDJzFJTrsRt5b1ogyt2-V898oTYo4I1rvF9vvrCusIAlGXYnoDCJ7xisILpGjq2yv3a5NyJ1y2l5I6PBpxMYk-phVFS_wtc6cPYt0Ke4xnoZoV8j39jOXweMG4DX",width=200)
+      item3=st.slider("20% Profesionalismo", min_value=0.0, max_value=5.0, step=0.1)
+      score=round((item1*0.4+item2*0.4+item3*0.2),2)
+      st.header("Calificación final",score)
+    elif materia=="cancer":
+      st.write("Calificación de la rotación de **cancer**")
+      st.image("https://lh6.googleusercontent.com/jrgDxu8U0Z9H_kl09g8vnuYoeFlxGtNeZ1hRRVRn0qKcYitViZj04Xe-deQMq_4gmQ7amoSw2o9nJtW8tDt6rmoT7i42RvDAe6Dkp5ilRDoKg6KD5cR61IkQdgVTeaimjK7qn7YPLVWiDQm3wCEIiaCovw2PVoapAcP1SjNIZfn_tVOR0ThZIq1cvElShsbrZAo0",width=200)
+      item1=st.slider("40% Academico", min_value=0.0, max_value=5.0, step=0.1)
+      st.image("https://lh5.googleusercontent.com/niGf3eCwkrIDFwIHwSO8AsGuTnBptssKmg99NGwquiDxbeuv3vG18A9Aa_4ySzF-eh0gcjcgSGshEemmwwrh3dLZoEL87iT90NUGNSzPTSY_2r33qaT8UkQR71lYRSe7PSFogLVkmzW6akSwO7n38QY530cHoZ5KnEdOLX_oRHWaZs-B57kk_xxrPMsXdqLILVe2",width=200)
+      item2=st.slider("40% Practico", min_value=0.0, max_value=5.0, step=0.1)
+      st.image("https://lh3.googleusercontent.com/VQ7qWA5H8jLdUIuwup35xHEJcNficeEPsb9xurvRlYQcFIfpr6OzoXgssnAPGM3NWAFhF2mhvDJzFJTrsRt5b1ogyt2-V898oTYo4I1rvF9vvrCusIAlGXYnoDCJ7xisILpGjq2yv3a5NyJ1y2l5I6PBpxMYk-phVFS_wtc6cPYt0Ke4xnoZoV8j39jOXweMG4DX",width=200)
+      item3=st.slider("20% Profesionalismo", min_value=0.0, max_value=5.0, step=0.1)
+      score=round((item1*0.4+item2*0.4+item3*0.2),2)
+      st.header("Calificación final",score)
+    else:
+      st.warning("el estudiante no tiene asignado una materia") 
+
     tz_col = pytz.timezone('America/Bogota') 
     fecha = datetime.now(tz_col).strftime('%a, %d %b %Y %I:%M %p')
-    score = st.number_input("Calificar el estudiante (0.0 - 5.0):", min_value=0.0, max_value=5.0, step=0.1)
+    #score = st.number_input("Calificar el estudiante (0.0 - 5.0):", min_value=0.0, max_value=5.0, step=0.1)
     concepto= st.text_area('Escriba un concepto sobre el estudiante')
     st.write("Ingrese el usuario y la clave de Ghips")
     usuario= st.text_input('Usuario')

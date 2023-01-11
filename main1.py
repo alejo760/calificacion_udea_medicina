@@ -37,10 +37,10 @@ def upload_database():
     return df
 
 # Function to generate a QR code for each student
-def generate_qr_codes(df):
+def generate_qr_codes(df, materia):
   qr_png={}
   for i, row in df.iterrows():
-    url = f"https://qrudeamedicina.streamlit.app/?student_id={int(row['id'])}"
+    url = f"https://qrudeamedicina.streamlit.app/?student_id={int(row['id'])}?materia={materia}"
     qr = pyqrcode.create(url)
     # Download png image of the QR code with student name and id caption
     qr.png(f"{row['name']}_{row['id']}.png", scale=6)
@@ -58,13 +58,14 @@ def generate_qr_codes(df):
   return qr_png
 
 # Create a function to store all the data in Firestore
-def store_data_in_firestore(df,fecha):
+def store_data_in_firestore(df,fecha, materia):
   for i, row in df.iterrows():
     student_ref = db.collection("students").document(str(int(row['id'])))
     student_ref.set({
       'name': row['name'],
       'email': row['email'],
       'calificaciones': 0,
+      'materia':materia
     })
 
 #---------------------------------#
@@ -79,21 +80,37 @@ def main():
   st.image("https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES", width=200)
   st.title("App Crear codigos QR y abrir base de datos de estudiantes")
   st.subheader("-Medicina Interna UdeA-")
-  st.caption("hecha por Alejandro Hernández-Arango MD")
-
+  st.caption ("hecha por Alejandro Hernández-Arango MD")
+  materias=['vejez', 'internado', 'adultez_I', 'cancer']
+  materia=st.selectbox("Seleccione la materia", materias)
   # Upload the database
   df = upload_database()
 
   if df is not None:
     #set_time()
     fecha = set_time()
-    store_data_in_firestore(df, fecha)
+    store_data_in_firestore(df, fecha, materia)
     st.success("Base de datos cargada exitosamente y guardada exitosamente")
-
     # Generate QR codes
     if st.button("Generar códigos QR"):
-      generate_qr_codes(df)
+      generate_qr_codes(df, materia)
       st.success("códigos QR generados exitosamente")
+  if st.button("bajar todas las notas calificaciones de una materia en xlsx"):
+    materia=st.text_input("Ingrese la materia")
+    docs = db.collection("students").where("materia", "==", materia).stream()
+    df = pd.DataFrame(columns=['id', 'name', 'email', 'calificaciones'])
+    for doc in docs:
+      df = df.append(doc.to_dict(), ignore_index=True)
+    df=df.drop(columns=['materia'])
+    st.dataframe(df)
+    writer = pd.ExcelWriter('notas.xlsx', engine='xlsxwriter')
+    df.to_excel(writer, sheet_name=materia)
+    b64 = base64.b64encode(open('notas.xlsx', 'rb').read()).decode()  # some strings
+    href = f'<a href="data:file/xlsx;base64,{b64}" download="notas.xlsx">Download xlsx file</a>'
+    st.markdown(href, unsafe_allow_html=True)
+    st.success("calificaciones descargadas exitosamente")
+
+
 
 
 # Run the app
