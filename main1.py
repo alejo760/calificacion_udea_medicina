@@ -96,11 +96,18 @@ def main():
       generate_qr_codes(df, materia)
       st.success("códigos QR generados exitosamente")
   if st.button("bajar todas las notas calificaciones de una materia en xlsx"):
-    docs = db.collection("students").where("materia", "==", materia).stream()
+    docs = db.collection("students")
+    try:
+      docs = docs.where("materia", "==", materia).stream()
+    except:
+      pass
     df = pd.DataFrame(columns=['id', 'name', 'email', 'calificaciones'])
     for doc in docs:
       df = df.append(doc.to_dict(), ignore_index=True)
-    df=df.drop(columns=['materia'])
+    try:
+       df=df.drop(columns=['materia'])
+    except:
+      pass
     st.dataframe(df)
     writer = pd.ExcelWriter('notas.xlsx', engine='xlsxwriter')
     df.to_excel(writer, sheet_name=materia)
