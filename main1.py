@@ -14,6 +14,8 @@ from google.oauth2 import service_account
 import firebase_admin
 from datetime import datetime
 import pytz 
+from firebase_admin import credentials
+
 
 
 key_dict = json.loads(st.secrets["textkey"])
@@ -96,7 +98,8 @@ def main():
       generate_qr_codes(df, materia)
       st.success("códigos QR generados exitosamente")
   if st.button("bajar todas las notas calificaciones de una materia en xlsx"):
-    docs = db.collection("students")
+    student_ref = db.collection("students")
+    docs = student_ref.get().to_dict()
     try:
       docs = docs.where("materia", "==", materia).stream()
     except:
