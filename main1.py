@@ -96,7 +96,6 @@ def main():
       generate_qr_codes(df, materia)
       st.success("códigos QR generados exitosamente")
   if st.button("bajar todas las notas calificaciones de una materia en xlsx"):
-    materia=st.text_input("Ingrese la materia")
     docs = db.collection("students").where("materia", "==", materia).stream()
     df = pd.DataFrame(columns=['id', 'name', 'email', 'calificaciones'])
     for doc in docs:
