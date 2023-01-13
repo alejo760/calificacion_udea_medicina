@@ -99,7 +99,7 @@ def main():
       st.success("códigos QR generados exitosamente")
   if st.button("bajar todas las notas calificaciones de una materia en xlsx"):
     student_ref = db.collection("students")
-    docs = student_ref.where('materia', '==', materia).where("calificacion0").where("calificacion1").where("calificacion2").where("calificacion3").where("calificacion4").get()
+    docs = student_ref.where('materia', '==', materia).where("calificacion0", "array_contains", "0").where("calificacion1", "array_contains", "0").where("calificacion2", "array_contains", "0").where("calificacion3", "array_contains", "0").where("calificacion4", "array_contains", "0").get()
     df = pd.DataFrame(columns=['id', 'name', 'email', 'calificaciones'])
     for doc in docs:
         df = pd.concat([df, pd.DataFrame({'id': doc.id, 'name': doc.to_dict().get('name', None), 'email': doc.to_dict().get('email', None), 'calificaciones': doc.to_dict().get('calificaciones', None)}, index=[0])], ignore_index=True)
