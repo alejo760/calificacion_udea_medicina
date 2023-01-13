@@ -99,26 +99,16 @@ def main():
       st.success("códigos QR generados exitosamente")
   if st.button("bajar todas las notas calificaciones de una materia en xlsx"):
     student_ref = db.collection("students")
-    docs = student_ref.get()
-    try:
-      df=df.drop(columns=['materia'])
-    except:
-      pass
+    docs = student_ref.where('materia', '==', materia).get()
     df = pd.DataFrame(columns=['id', 'name', 'email', 'calificaciones'])
     for doc in docs:
-      doc = db.collection("students").document(doc.id)
-      df = df.append(doc, ignore_index=True)
-    try:
-       df=df.drop(columns=['materia'])
-    except:
-      pass
-    st.dataframe(df)
-    writer = pd.ExcelWriter('notas.xlsx', engine='xlsxwriter')
-    df.to_excel(writer, sheet_name=materia)
-    b64 = base64.b64encode(open('notas.xlsx', 'rb').read()).decode()  # some strings
-    href = f'<a href="data:file/xlsx;base64,{b64}" download="notas.xlsx">Download xlsx file</a>'
+      df = df.append({'id': doc.id, 'name': doc.to_dict()['name'], 'email': doc.to_dict()['email'], 'calificaciones': doc.to_dict()['calificaciones']}, ignore_index=True)
+    df.to_excel(f"notas_{materia}.xlsx", index=False)
+    b64 = base64.b64encode(open(f"notas_{materia}.xlsx", 'rb').read()).decode()
+    href = f'<a href="data:file/xlsx;base64,{b64}" download="notas_{materia}.xlsx">Download xlsx file</a>'
     st.markdown(href, unsafe_allow_html=True)
-    st.success("calificaciones descargadas exitosamente")
+    st.success("notas descargadas exitosamente")
+
 
   #if st.button("asignar la materia adultez_I a los estudiantes existentes en la base de datos"):
     #student_ref = db.collection("students")
