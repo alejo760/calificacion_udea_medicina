@@ -119,7 +119,15 @@ def main():
     st.markdown(href, unsafe_allow_html=True)
     st.success("calificaciones descargadas exitosamente")
 
-
+  if st.button("asignar la materia adultez_I a los estudiantes existentes en la base de datos"):
+    student_ref = db.collection("students")
+    docs = student_ref.get()
+    for doc in docs:
+      doc_ref = db.collection("students").document(doc.id)
+      doc_ref.update({
+      'materia': 'adultez_I'
+    })
+    st.success("materia asignada exitosamente")
 
 
 # Run the app
