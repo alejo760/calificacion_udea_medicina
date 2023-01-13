@@ -107,7 +107,7 @@ def main():
     df = pd.DataFrame(columns=['id', 'name', 'email', 'calificaciones'])
     for doc in docs:
       doc = db.collection("students").document(doc.id)
-      df = df.append(doc.to_dict(), ignore_index=True)
+      df = df.append(doc, ignore_index=True)
     try:
        df=df.drop(columns=['materia'])
     except:
