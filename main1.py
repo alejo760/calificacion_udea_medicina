@@ -98,8 +98,6 @@ def main():
       generate_qr_codes(df, materia)
       st.success("códigos QR generados exitosamente")
   if st.button("bajar todas las notas calificaciones de una materia en xlsx"):
-    student_ref = db.collection("students")
-    docs = student_ref.get().to_dict()
     try:
       df=df.drop(columns=['materia'])
     except:
