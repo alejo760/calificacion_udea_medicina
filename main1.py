@@ -40,6 +40,7 @@ def upload_database():
 
 # Function to generate a QR code for each student
 def generate_qr_codes(df, materia,fecha):
+  fecha=set_time()
   qr_png={}
   for i, row in df.iterrows():
     url = f"https://qrudeamedicina.streamlit.app/?student_id={int(row['id'])}&materia={materia}"
