@@ -39,7 +39,7 @@ def upload_database():
     return df
 
 # Function to generate a QR code for each student
-def generate_qr_codes(df, materia,fecha):
+def generate_qr_codes(df, materia):
   fecha=set_time()
   qr_png={}
   for i, row in df.iterrows():
