@@ -28,17 +28,7 @@ def main():
         'About': "App de calificación creada para los estudiantes de Medicina UdeA"
     }
 )
-  materia= st.experimental_get_query_params().get("materia")
-  if materia is None:
-    key_dict = json.loads(st.secrets["textkey"])
-    creds = service_account.Credentials.from_service_account_info(key_dict)
-    db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")  
-    student_id = st.experimental_get_query_params().get("student_id")
-    student_ref = db.collection("students").document(student_id[0])
-    materia= student_ref.get().to_dict().get("materia")
-    nucleo= student_ref.get().to_dict().get("nucleo")
-  else:
-    pass
+
   with st.container():
     col1, col2= st.columns(2)
     col1.image("https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES", width=200)
@@ -49,6 +39,7 @@ def main():
   #tomar informacion del QR por el metodo experimental_get_query_params
   try:
     student_id = st.experimental_get_query_params().get("student_id")
+    materia= st.experimental_get_query_params().get("materia")
   except:
     st.warning("el codigo QR no fue leido adecuadamente:")
     st.warning("por favor escanee el codigo QR nuevamente")
@@ -63,6 +54,7 @@ def main():
     student = student_ref.get().to_dict()
     #mostrar la informacion del estudiante
     numero_calificaciones=student.get("calificaciones")
+    nucleobd=student.get("nucleo")
     # write a line 
     st.write("")
     # write a line
@@ -201,14 +193,9 @@ def main():
             if response_status == 200 or usuario=='roben1319@yahoo.es' or usuario=='dandres.velez@udea.edu.co' and concepto is not None:
                #st.success("Login exitoso")
                 try:        
-                        
-                        student_ref = db.collection("students").document(student_id[0])
-                        if student_ref.get('nucleo').exists:
-                            nucleobd = student_ref.get().to_dict().get("nucleo")
+                        if nucleobd==nucleo
+                             st.warning("El estudiante ya tiene una calificación en este nucleo")
                         else:
-                          if nucleo == nucleobd:
-                            st.warning("El estudiante ya tiene una calificación en este nucleo")
-                          else:
                             pass
                         student_ref.set({
                               'name': student['name'],
