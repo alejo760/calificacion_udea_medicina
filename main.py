@@ -102,7 +102,7 @@ def main():
   with st.expander("Ingreso de la calificación",expanded=False):
     materia= st.experimental_get_query_params().get("materia")
     
-    st.header(str(materia))
+    st.header(type(materia))
     if materia=="['vejez']":
       if nucleo is not None:
         nucleos=['Rotación Hospitalaria', 'Living lab', 'Consulta externa', 'Atención domiciliaria (ambulatoria)']
