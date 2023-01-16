@@ -146,13 +146,13 @@ def main():
       
     elif materia[0]=="adultez_I":
       st.subheader("Calificación de la rotación de **adultez_I**")
-      st.write("Lee acerca de los problemas de los pacientes discutidos en la ronda. \n Estudia los temas asignados y los vistos durante el componente teórico del curso.\n Reconoce sus vacíos de conocimiento y hace esfuerzos por llenarlos. **ASPECTOS ACADÉMICOS (60%)*")
+      st.write("**ASPECTOS ACADÉMICOS (60%)** \n Lee acerca de los problemas de los pacientes discutidos en la ronda. \n Estudia los temas asignados y los vistos durante el componente teórico del curso.\n Reconoce sus vacíos de conocimiento y hace esfuerzos por llenarlos. ")
       item1=st.slider( "Deslizar para calificar el 60%", min_value=0.0, max_value=5.0, step=0.1)
-      st.write("Completa, clara y precisa. **HISTORIA CLÍNICA (10%)**")
+      st.write("**HISTORIA CLÍNICA (10%)** \n Completa, clara y precisa. ")
       item2=st.slider( "Deslizar para calificar el 10%", min_value=0.0, max_value=5.0, step=0.1)
-      st.write("Sabe iniciar un tratamiento y es capaz de justificar su elección. \n Ordena los exámenes diagnósticos necesarios.\n Mide riesgo/beneficio de los exámenes y los \n esquemas terapéuticos. **PLAN DE MANEJO (10%)**")
+      st.write("**PLAN DE MANEJO (10%)** \n Sabe iniciar un tratamiento y es capaz de justificar su elección. \n Ordena los exámenes diagnósticos necesarios.\n Mide riesgo/beneficio de los exámenes y los \n esquemas terapéuticos. ")
       item3=st.slider( "Deslizar para calificar (plan de manejo) 10%", min_value=0.0, max_value=5.0, step=0.1)
-      st.write("Le habla al paciente con un lenguaje que él comprende. Coopera con sus compañeros. \n Es cortés con el personal que labora en el área.\n Busca como mejorar. Responde positivamente a la crítica.\n Llega a tiempo a las actividades acordadas. Cumple con el trabajo que se le asigna \n Sabe escuchar al otro. Entiende y acepta las diferencias religiosas, culturales,\n raciales, económicas y políticas. **CUALIDADES HUMANAS (20%)**")
+      st.write(" **CUALIDADES HUMANAS (20%)** \n  Le habla al paciente con un lenguaje que él comprende. Coopera con sus compañeros. \n Es cortés con el personal que labora en el área.\n Busca como mejorar. Responde positivamente a la crítica.\n Llega a tiempo a las actividades acordadas. Cumple con el trabajo que se le asigna \n Sabe escuchar al otro. Entiende y acepta las diferencias religiosas, culturales,\n raciales, económicas y políticas.")
       item4=st.slider( "Deslizar para calificar cualidades humanas 20%:", min_value=0.0, max_value=5.0, step=0.1)
       score=round((item1*0.6+item2*0.1+item3*0.1+item4*0.2),2)
       st.metric(f"Calificación final ",score)
