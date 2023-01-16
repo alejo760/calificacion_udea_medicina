@@ -144,7 +144,7 @@ def main():
     elif materia[0]=="adultez_I":
       st.subheader("Calificación de la rotación de **adultez_I**")
       st.write("Lee acerca de los problemas de los pacientes discutidos en la ronda. \n Estudia los temas asignados y los vistos durante el componente teórico del curso.\n Reconoce sus vacíos de conocimiento y hace esfuerzos por llenarlos. **ASPECTOS ACADÉMICOS (60%)*")
-      item1=st.slider( "Deslizar para calificar:", min_value=0.0, max_value=5.0, step=0.1,help="deslizar para calififcar")
+      item1=st.slider( "Deslizar para calificar:", min_value=0.0, max_value=5.0, step=0.1)
       st.write("Completa, clara y precisa. **HISTORIA CLÍNICA (10%)**")
       item2=st.slider( "Deslizar para calificar:", min_value=0.0, max_value=5.0, step=0.1)
       st.write("Sabe iniciar un tratamiento y es capaz de justificar su elección. \n Ordena los exámenes diagnósticos necesarios.\n Mide riesgo/beneficio de los exámenes y los \n esquemas terapéuticos. **PLAN DE MANEJO (10%)**")
