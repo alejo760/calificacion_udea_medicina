@@ -222,8 +222,10 @@ def main():
                             },merge=True)
                         st.success("Estudiante calificado y nota guardada exitosamente")
                         st.balloons()
-                except:
+                except Exception as e:
                     st.warning("Error al guardar la calificación")
+                    st.warning(e)
+                    
             else:
                 st.warning('Login fallido, revise las credenciales de acceso son las mismas del Ghips')
                 st.stop()
