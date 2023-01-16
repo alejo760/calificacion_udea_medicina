@@ -36,7 +36,6 @@ def main():
   #tomar informacion del QR por el metodo experimental_get_query_params
   try:
     student_id = st.experimental_get_query_params().get("student_id")
-    materia= st.experimental_get_query_params().get("materia")
   except:
     st.warning("el codigo QR no fue leido adecuadamente:")
     st.warning("por favor escanee el codigo QR nuevamente")
@@ -101,6 +100,7 @@ def main():
   #calificar el estudiante
   st.write("")
   with st.expander("Ingreso de la calificación",expanded=False):
+    materia= st.experimental_get_query_params().get("materia")
     if materia=="vejez":
       if nucleo is not None:
         nucleos=['Rotación Hospitalaria', 'Living lab', 'Consulta externa', 'Atención domiciliaria (ambulatoria)']
@@ -138,7 +138,7 @@ def main():
       item3=st.slider("20% Profesionalismo", min_value=0.0, max_value=5.0, step=0.1)
       score=round((item1*0.4+item2*0.4+item3*0.2),2)
       st.header("Calificación final",score)
-    elif materia=="cancer":
+    elif materia="cancer":
       st.write("Calificación de la rotación de **cancer**")
       st.image("https://lh6.googleusercontent.com/jrgDxu8U0Z9H_kl09g8vnuYoeFlxGtNeZ1hRRVRn0qKcYitViZj04Xe-deQMq_4gmQ7amoSw2o9nJtW8tDt6rmoT7i42RvDAe6Dkp5ilRDoKg6KD5cR61IkQdgVTeaimjK7qn7YPLVWiDQm3wCEIiaCovw2PVoapAcP1SjNIZfn_tVOR0ThZIq1cvElShsbrZAo0",width=200)
       item1=st.slider("40% Academico", min_value=0.0, max_value=5.0, step=0.1)
