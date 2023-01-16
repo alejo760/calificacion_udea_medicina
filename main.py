@@ -29,9 +29,10 @@ def main():
     }
 )
     #tomar informacion del QR por el metodo experimental_get_query_params
+  student_id = st.experimental_get_query_params().get("student_id")
+  materia= st.experimental_get_query_params().get("materia")
   try:
-    student_id = st.experimental_get_query_params().get("student_id")
-    materia= st.experimental_get_query_params().get("materia")
+
     with st.container():
       col1, col2= st.columns(2)
       col1.image("https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES", width=200)
