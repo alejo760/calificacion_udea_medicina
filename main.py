@@ -193,7 +193,7 @@ def main():
             if response_status == 200 or usuario=='roben1319@yahoo.es' or usuario=='dandres.velez@udea.edu.co' and concepto is not None:
                #st.success("Login exitoso")
                 try:        
-                        if nucleobd[0]==nucleo:
+                        if nucleobd==nucleo:
                              st.warning("El estudiante ya tiene una calificación en este nucleo")
                         else:
                             pass
