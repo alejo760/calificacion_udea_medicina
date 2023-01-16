@@ -33,6 +33,7 @@ def main():
     key_dict = json.loads(st.secrets["textkey"])
     creds = service_account.Credentials.from_service_account_info(key_dict)
     db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")  
+    student_id = st.experimental_get_query_params().get("student_id")
     student_ref = db.collection("students").document(student_id[0])
     materia= student_ref.get().to_dict().get("materia")
   else:
