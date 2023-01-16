@@ -178,6 +178,7 @@ def main():
                               "calificaciones": student['calificaciones']+1,  
                               f"calificacion{numero_calificaciones}": [{
                                 f"score{numero_calificaciones}":score,
+                                f"nucleo{numero_calificaciones}":nucleo,
                                 f"concepto{numero_calificaciones}": concepto,
                                 f"profesor{numero_calificaciones}": usuario,
                                 f"fecha{numero_calificaciones}": fecha,
