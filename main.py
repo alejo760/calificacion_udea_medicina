@@ -28,8 +28,10 @@ def main():
         'About': "App de calificación creada para los estudiantes de Medicina UdeA"
     }
 )
-  st.image("https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES", width=200)
-  st.image("https://almamater.hospital/wp-content/uploads/2022/09/Almamaterhospital.png", width=300)
+  with st.container():
+    col1, col2= st.columns(2)
+    col1.image("https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES", width=200)
+    col2.image("https://almamater.hospital/wp-content/uploads/2022/09/Almamaterhospital.png", width=300)
   st.title("CALIFICACIÓN")
   st.caption("Elaborado por Alejandro Hernández-Arango internista")
  
@@ -127,7 +129,7 @@ def main():
     if materia[0]=="vejez":
       try: 
         nucleos=['Rotación Hospitalaria', 'Living lab', 'Consulta externa', 'Atención domiciliaria (ambulatoria)']
-        nucleo=st.set_option( "seleccione el nucleo de la rotación",nucleos)
+        nucleo=st.radio( "seleccione el nucleo de la rotación",nucleos)
       except:
         st.warning("el estudiante no tiene asignado un nucleo") 
       st.write("Calificación de la rotación de **Vejez**")
