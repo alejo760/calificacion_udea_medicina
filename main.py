@@ -123,12 +123,11 @@ def main():
   
     materia= st.experimental_get_query_params().get("materia")
 
-    #COLORR DE LOS SLIDERSSSS
 
     if materia[0]=="vejez":
       try: 
         nucleos=['Rotación Hospitalaria', 'Living lab', 'Consulta externa', 'Atención domiciliaria (ambulatoria)']
-        nucleo=st.selectbox( "seleccione el nucleo de la rotación",nucleos)
+        nucleo=st.set_option( "seleccione el nucleo de la rotación",nucleos)
       except:
         st.warning("el estudiante no tiene asignado un nucleo") 
       st.write("Calificación de la rotación de **Vejez**")
@@ -139,7 +138,7 @@ def main():
       st.image("https://lh3.googleusercontent.com/VQ7qWA5H8jLdUIuwup35xHEJcNficeEPsb9xurvRlYQcFIfpr6OzoXgssnAPGM3NWAFhF2mhvDJzFJTrsRt5b1ogyt2-V898oTYo4I1rvF9vvrCusIAlGXYnoDCJ7xisILpGjq2yv3a5NyJ1y2l5I6PBpxMYk-phVFS_wtc6cPYt0Ke4xnoZoV8j39jOXweMG4DX",width=350)
       item3=st.slider("20% Profesionalismo:", min_value=0.0, max_value=5.0, step=0.1)
       score=round((item1*0.4+item2*0.4+item3*0.2),2)
-      st.write(f"Calificación final del nucleo {nucleo}",score)
+      st.metric(f"Calificación final del nucleo {nucleo}",score)
       
     elif materia[0]=="adultez":
       st.subheader("Calificación de la rotación de **adultez_I**")
@@ -152,7 +151,7 @@ def main():
       st.write("Le habla al paciente con un lenguaje que él comprende. Coopera con sus compañeros. \n Es cortés con el personal que labora en el área.\n Busca como mejorar. Responde positivamente a la crítica.\n Llega a tiempo a las actividades acordadas. Cumple con el trabajo que se le asigna \n Sabe escuchar al otro. Entiende y acepta las diferencias religiosas, culturales,\n raciales, económicas y políticas. **CUALIDADES HUMANAS (20%)**")
       item4=st.slider( "20% Cualidades humanas", min_value=0.0, max_value=5.0, step=0.1)
       score=round((item1*0.6+item2*0.1+item3*0.1+item4*0.2),2)
-      st.write(f"Calificación final del nucleo {nucleo}",score)
+      st.metric(f"Calificación final del nucleo {nucleo}",score)
     elif materia=="internado":
       st.write("Calificación de la rotación de **Internado**")
       st.image("https://lh6.googleusercontent.com/jrgDxu8U0Z9H_kl09g8vnuYoeFlxGtNeZ1hRRVRn0qKcYitViZj04Xe-deQMq_4gmQ7amoSw2o9nJtW8tDt6rmoT7i42RvDAe6Dkp5ilRDoKg6KD5cR61IkQdgVTeaimjK7qn7YPLVWiDQm3wCEIiaCovw2PVoapAcP1SjNIZfn_tVOR0ThZIq1cvElShsbrZAo0",width=350)
@@ -162,7 +161,7 @@ def main():
       st.image("https://lh3.googleusercontent.com/VQ7qWA5H8jLdUIuwup35xHEJcNficeEPsb9xurvRlYQcFIfpr6OzoXgssnAPGM3NWAFhF2mhvDJzFJTrsRt5b1ogyt2-V898oTYo4I1rvF9vvrCusIAlGXYnoDCJ7xisILpGjq2yv3a5NyJ1y2l5I6PBpxMYk-phVFS_wtc6cPYt0Ke4xnoZoV8j39jOXweMG4DX",width=350)
       item3=st.slider("20% Profesionalismo", min_value=0.0, max_value=5.0, step=0.1)
       score=round((item1*0.4+item2*0.4+item3*0.2),2)
-      st.write(f"Calificación final del nucleo {nucleo}",score)
+      st.metric(f"Calificación final del nucleo {nucleo}",score)
     elif materia[0]=="cancer":
       st.write("Calificación de la rotación de **cancer**")
       st.image("https://lh6.googleusercontent.com/jrgDxu8U0Z9H_kl09g8vnuYoeFlxGtNeZ1hRRVRn0qKcYitViZj04Xe-deQMq_4gmQ7amoSw2o9nJtW8tDt6rmoT7i42RvDAe6Dkp5ilRDoKg6KD5cR61IkQdgVTeaimjK7qn7YPLVWiDQm3wCEIiaCovw2PVoapAcP1SjNIZfn_tVOR0ThZIq1cvElShsbrZAo0",width=350)
@@ -172,7 +171,7 @@ def main():
       st.image("https://lh3.googleusercontent.com/VQ7qWA5H8jLdUIuwup35xHEJcNficeEPsb9xurvRlYQcFIfpr6OzoXgssnAPGM3NWAFhF2mhvDJzFJTrsRt5b1ogyt2-V898oTYo4I1rvF9vvrCusIAlGXYnoDCJ7xisILpGjq2yv3a5NyJ1y2l5I6PBpxMYk-phVFS_wtc6cPYt0Ke4xnoZoV8j39jOXweMG4DX",width=350)
       item3=st.slider("20% Profesionalismo", min_value=0.0, max_value=5.0, step=0.1)
       score=round((item1*0.4+item2*0.4+item3*0.2),2)
-      st.write(f"Calificación final del nucleo {nucleo}",score)
+      st.metric(f"Calificación final del nucleo {nucleo}",score)
     else:
       st.warning("el estudiante no tiene asignado una materia") 
 
