@@ -149,3 +149,12 @@ def main():
 if __name__ == "__main__":
   main()
 
+
+
+
+    student_ref = db.collection("students")
+    docs = student_ref.where('materia', '==', materia).get()
+    df = pd.DataFrame(columns=['id', 'name', 'email', 'calificaciones'])
+    for doc in docs:
+      df = pd.concat([df, pd.DataFrame({'id': doc.id, 'name': doc.to_dict().get('name', None), 'email': doc.to_dict().get('email', None), 
+      'calificaciones': doc.to_dict().get('calificaciones', None)}, index=[0])], ignore_index=True)

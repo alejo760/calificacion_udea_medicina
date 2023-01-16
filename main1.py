@@ -49,13 +49,13 @@ def generate_qr_codes(df, materia):
     qr.png(f"{row['name']}_{row['id']}.png", scale=6)
     qr_png[row['name']]=f"{row['name']}_{row['id']}.png"
     # button to download all the QR codes
-  zipObj = ZipFile(f'todos_qr_codes_{materia}_{fecha}.zip', 'w')
+  zipObj = ZipFile(f'todos_qr_codes.zip', 'w')
   for key in qr_png:
         zipObj.write(qr_png[key])
   zipObj.close()
   #download zip in streamlit
-  b64 = base64.b64encode(open(f'todos_qr_codes_{materia}_{fecha}.zip', 'rb').read()).decode()
-  href = f'<a href="data:file/zip;base64,{b64}" download=f"todos_qr_codes_{materia}_{fecha}.zip">Download zip file</a>'
+  b64 = base64.b64encode(open(f'todos_qr_codes.zip', 'rb').read()).decode()
+  href = f'<a href="data:file/zip;base64,{b64}" download="todos_qr_codes.zip">Download zip file</a>'
   st.markdown(href, unsafe_allow_html=True)
 
   return qr_png
