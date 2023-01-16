@@ -102,9 +102,6 @@ def main():
   with st.expander("Ingreso de la calificación",expanded=False):
 
    #COLORR DE LOS SLIDERSSSS
-    NB = st.sidebar.select_slider('', options = [1,10,20,30,40,50,60,70,80,90,100], value = 1)
-
-
     ColorMinMax = st.markdown(''' <style> div.stSlider > div[data-baseweb = "slider"] > div[data-testid="stTickBar"] > div {
      background: rgb(1 1 1 / 0%); } </style>''', unsafe_allow_html = True)
 
