@@ -29,6 +29,11 @@ def main():
     }
 )
   materia= st.experimental_get_query_params().get("materia")
+  if materia is None:
+    student_ref = db.collection("students").document(student_id[0])
+    materia= student_ref.get().to_dict().get("materia")
+  else:
+    pass
   with st.container():
     col1, col2= st.columns(2)
     col1.image("https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES", width=200)
