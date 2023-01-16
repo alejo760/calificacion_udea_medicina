@@ -104,10 +104,10 @@ def main():
     
     st.header(materia[0])
     if materia[0]=="vejez":
-      if nucleo is not None:
+      try: 
         nucleos=['Rotación Hospitalaria', 'Living lab', 'Consulta externa', 'Atención domiciliaria (ambulatoria)']
         nucleo=st.select_slider( "seleccione el nucleo de la rotación",nucleos)
-      else:
+      except:
         st.warning("el estudiante no tiene asignado un nucleo") 
       st.write("Calificación de la rotación de **Vejez**")
       st.image("https://lh6.googleusercontent.com/jrgDxu8U0Z9H_kl09g8vnuYoeFlxGtNeZ1hRRVRn0qKcYitViZj04Xe-deQMq_4gmQ7amoSw2o9nJtW8tDt6rmoT7i42RvDAe6Dkp5ilRDoKg6KD5cR61IkQdgVTeaimjK7qn7YPLVWiDQm3wCEIiaCovw2PVoapAcP1SjNIZfn_tVOR0ThZIq1cvElShsbrZAo0",width=200)
