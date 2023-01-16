@@ -36,6 +36,7 @@ def main():
     student_id = st.experimental_get_query_params().get("student_id")
     student_ref = db.collection("students").document(student_id[0])
     materia= student_ref.get().to_dict().get("materia")
+    nucleo= student_ref.get().to_dict().get("nucleo")
   else:
     pass
   with st.container():
@@ -200,10 +201,10 @@ def main():
             if response_status == 200 or usuario=='roben1319@yahoo.es' or usuario=='dandres.velez@udea.edu.co' and concepto is not None:
                #st.success("Login exitoso")
                 try:        
-                            
+                        
                         student_ref = db.collection("students").document(student_id[0])
                         if student_ref.get('nucleo').exists:
-                            nucleobd = student_ref.get('nucleo').to_dict()
+                            nucleobd = student_ref.get().to_dict().get("nucleo")
                         else:
                           if nucleo == nucleobd:
                             st.warning("El estudiante ya tiene una calificación en este nucleo")
