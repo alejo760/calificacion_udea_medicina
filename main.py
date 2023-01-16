@@ -106,7 +106,7 @@ def main():
     if materia[0]=="vejez":
       try: 
         nucleos=['Rotación Hospitalaria', 'Living lab', 'Consulta externa', 'Atención domiciliaria (ambulatoria)']
-        nucleo=st.select_slider( "seleccione el nucleo de la rotación",nucleos)
+        nucleo=st.selectbox( "seleccione el nucleo de la rotación",nucleos)
       except:
         st.warning("el estudiante no tiene asignado un nucleo") 
       st.write("Calificación de la rotación de **Vejez**")
