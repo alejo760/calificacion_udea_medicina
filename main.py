@@ -100,6 +100,20 @@ def main():
   #calificar el estudiante
   st.write("")
   with st.expander("Ingreso de la calificación",expanded=False):
+    #change the colors of  sliders to green
+    st.markdown("""
+    <style>
+    .stSlider .stSlider-rail {
+    background-color: #00ff00;
+    }
+    .stSlider .stSlider-track {
+    background-color: #00ff00;
+    }
+    .stSlider .stSlider-mark-text {
+    color: #00ff00;
+    }
+    </style>
+    """, unsafe_allow_html=True)
     materia= st.experimental_get_query_params().get("materia")
     
     st.header(materia[0])
@@ -168,11 +182,7 @@ def main():
             response_status = x.status_code
             if response_status == 200 or usuario=='roben1319@yahoo.es' or usuario=='dandres.velez@udea.edu.co' and concepto is not None:
                #st.success("Login exitoso")
-               if numero_calificaciones == 4:
-                      st.write("El estudiante ya tiene 4 calificaciones, no se puede calificar")
-
-               else:
-                        
+                try:        
                             
                         student_ref = db.collection("students").document(student_id[0])
                         if student_ref.get('nucleo').exists:
@@ -197,7 +207,8 @@ def main():
                             },merge=True)
                         st.success("Estudiante calificado y nota guardada exitosamente")
                         st.balloons()
-               
+                except:
+                    st.warning("Error al guardar la calificación")
             else:
                 st.warning('Login fallido, revise las credenciales de acceso son las mismas del Ghips')
                 st.stop()
