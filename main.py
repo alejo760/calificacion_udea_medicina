@@ -33,7 +33,7 @@ def main():
     col1, col2= st.columns(2)
     col1.image("https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES", width=200)
     col2.image("https://almamater.hospital/wp-content/uploads/2022/09/Almamaterhospital.png", width=300)
-  st.subheader(f"App de calificación UdeA {materia[0]}")
+  st.subheader(f"App de calificación UdeA, Materia: {materia[0]}")
   st.caption("Elaborado por Alejandro Hernández-Arango internista")
  
   #tomar informacion del QR por el metodo experimental_get_query_params
