@@ -33,7 +33,7 @@ def main():
     col1, col2= st.columns(2)
     col1.image("https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES", width=200)
     col2.image("https://almamater.hospital/wp-content/uploads/2022/09/Almamaterhospital.png", width=300)
-  st.title(f"CALIFICACIÓN MASTERIA{materia[0]}")
+  st.subheader(f"App de calificación UdeA.   Materia ingresada:  {materia[0]}")
   st.caption("Elaborado por Alejandro Hernández-Arango internista")
  
   #tomar informacion del QR por el metodo experimental_get_query_params
@@ -144,7 +144,7 @@ def main():
     elif materia[0]=="adultez":
       st.subheader("Calificación de la rotación de **adultez_I**")
       st.write("Lee acerca de los problemas de los pacientes discutidos en la ronda. \n Estudia los temas asignados y los vistos durante el componente teórico del curso.\n Reconoce sus vacíos de conocimiento y hace esfuerzos por llenarlos. **ASPECTOS ACADÉMICOS (60%)*")
-      item1=st.slider( "60% Academico", min_value=0.0, max_value=5.0, step=0.1)
+      item1=st.slider( "60% Academico", min_value=0.0, max_value=5.0, step=0.1,help="deslizar para calififcar")
       st.write("Completa, clara y precisa. **HISTORIA CLÍNICA (10%)**")
       item2=st.slider( "10% Historia clínica", min_value=0.0, max_value=5.0, step=0.1)
       st.write("Sabe iniciar un tratamiento y es capaz de justificar su elección. \n Ordena los exámenes diagnósticos necesarios.\n Mide riesgo/beneficio de los exámenes y los \n esquemas terapéuticos. **PLAN DE MANEJO (10%)**")
@@ -195,7 +195,6 @@ def main():
                         student_ref = db.collection("students").document(student_id[0])
                         if student_ref.get('nucleo').exists:
                             nucleobd = student_ref.get('nucleo').to_dict()
-                            nucleobd.append(nucleo)
                         else:
                           if nucleo == nucleobd:
                             st.warning("El estudiante ya tiene una calificación en este nucleo")
