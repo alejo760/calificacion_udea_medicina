@@ -84,7 +84,7 @@ def main():
   st.title("App Crear codigos QR y abrir base de datos de estudiantes")
   st.subheader("-Medicina Interna UdeA-")
   st.caption ("hecha por Alejandro Hernández-Arango MD")
-  materias=['vejez', 'internado', 'adultez_I', 'cancer']
+  materias=['vejez', 'internado', 'adultez_I']
   materia=st.selectbox("Seleccione la materia", materias)
   # Upload the database
   df = upload_database()
