@@ -130,7 +130,7 @@ def main():
 
     if materia[0]=="vejez":
       try: 
-        nucleos=['Rotación Hospitalaria', 'Living lab', 'Consulta externa', 'Atención domiciliaria (ambulatoria)']
+        nucleos=['Rotación Hospitalaria', 'Living lab', 'Consulta externa', 'Atención domiciliaria (ambulatoria)','cancer']
         nucleo=st.radio( "seleccione el nucleo de la rotación",nucleos)
       except:
         st.warning("el estudiante no tiene asignado un nucleo") 
