@@ -130,7 +130,6 @@ def main():
 
     if materia[0]=="vejez":
       try: 
-        nucleo=materia[0]
         nucleos=['Rotación Hospitalaria', 'Living lab', 'Consulta externa', 'Atención domiciliaria (ambulatoria)','cancer']
         nucleo=st.radio( "seleccione el nucleo de la rotación",nucleos)
       except:
@@ -159,7 +158,9 @@ def main():
       item4=st.slider( "Deslizar para calificar cualidades humanas 20%:", min_value=0.0, max_value=5.0, step=0.1)
       score=round((item1*0.6+item2*0.1+item3*0.1+item4*0.2),2)
       st.metric(f"Calificación final ",score)
+      nucleo=materia[0]
     elif materia[0]=="internado":
+      nucleo=materia[0]
       st.write("Calificación de la rotación de **Internado**")
       st.image("https://lh6.googleusercontent.com/jrgDxu8U0Z9H_kl09g8vnuYoeFlxGtNeZ1hRRVRn0qKcYitViZj04Xe-deQMq_4gmQ7amoSw2o9nJtW8tDt6rmoT7i42RvDAe6Dkp5ilRDoKg6KD5cR61IkQdgVTeaimjK7qn7YPLVWiDQm3wCEIiaCovw2PVoapAcP1SjNIZfn_tVOR0ThZIq1cvElShsbrZAo0",width=400)
       item1=st.slider("Deslizar para calificar**Internado**:", min_value=0.0, max_value=5.0, step=0.1)
