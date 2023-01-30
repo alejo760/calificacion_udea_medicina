@@ -101,7 +101,7 @@ def main():
   if st.button("bajar todas las notas calificaciones de una materia en xlsx"):
     student_ref = db.collection("students")
     # First query for students with calificacion0 of 0
-    docs1 = student_ref.where("calificacion0", "array_contains", "0").get()
+    docs1 = student_ref.where("calificacion0").get()
     # Second query for students with calificacion1 of 0
     docs2 = student_ref.where("calificacion1", "array_contains", "0").get()
     # Third query for students with calificacion2 of 0
