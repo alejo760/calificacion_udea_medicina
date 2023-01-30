@@ -190,7 +190,6 @@ def main():
     st.write("Ingrese el usuario y la clave de Ghips")
     usuario= st.text_input('Usuario')
     clave= st.text_input('Clave',type="password")
-    st.warning(nucleo)
     if st.button('Calificar'):
             url = 'https://api.ghips.co/api/login/authenticate'
             password = {"Username": usuario, "Password": clave}
