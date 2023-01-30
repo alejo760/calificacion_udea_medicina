@@ -100,7 +100,26 @@ def main():
       st.success("códigos QR generados exitosamente")
   if st.button("bajar todas las notas calificaciones de una materia en xlsx"):
     student_ref = db.collection("students")
-    docs = student_ref.where('materia', '==', materia).where("calificacion0", "array_contains", "0").where("calificacion1", "array_contains", "0").where("calificacion2", "array_contains", "0").where("calificacion3", "array_contains", "0").where("calificacion4", "array_contains", "0").get()
+    student_ref = db.collection("students")
+
+    # First query for students with calificacion0 of 0
+    docs1 = student_ref.where("materia", "==", materia).where("calificacion0", "array_contains", "0").get()
+
+    # Second query for students with calificacion1 of 0
+    docs2 = student_ref.where("materia", "==", materia).where("calificacion1", "array_contains", "0").get()
+
+    # Third query for students with calificacion2 of 0
+    docs3 = student_ref.where("materia", "==", materia).where("calificacion2", "array_contains", "0").get()
+
+    # Fourth query for students with calificacion3 of 0
+    docs4 = student_ref.where("materia", "==", materia).where("calificacion3", "array_contains", "0").get()
+
+    # Fifth query for students with calificacion4 of 0
+    docs5 = student_ref.where("materia", "==", materia).where("calificacion4", "array_contains", "0").get()
+
+    # Combine the results from all queries into a single list of documents
+    docs = docs1 + docs2 + docs3 + docs4 + docs5
+
     df = pd.DataFrame(columns=['id', 'name', 'email', 'calificaciones'])
     for doc in docs:
         df = pd.concat([df, pd.DataFrame({'id': doc.id, 'name': doc.to_dict().get('name', None), 'email': doc.to_dict().get('email', None), 'calificaciones': doc.to_dict().get('calificaciones', None)}, index=[0])], ignore_index=True)
@@ -111,16 +130,6 @@ def main():
     st.success("notas descargadas exitosamente")
 
 
-
-  #if st.button("asignar la materia adultez_I a los estudiantes existentes en la base de datos"):
-    #student_ref = db.collection("students")
-    #docs = student_ref.get()
-    #for doc in docs:
-      #doc_ref = db.collection("students").document(doc.id)
-      #doc_ref.update({
-      #'materia': 'adultez_I'
-    #})
-    #st.success("materia asignada exitosamente")
 
 
 # Run the app
