@@ -134,6 +134,8 @@ def main():
         nucleo=st.radio( "seleccione el nucleo de la rotación",nucleos)
       except:
         st.warning("el estudiante no tiene asignado un nucleo") 
+    else:
+      núcleo=materia[0]
       st.write("Calificación de la rotación de **Vejez**")
       st.image("https://lh6.googleusercontent.com/jrgDxu8U0Z9H_kl09g8vnuYoeFlxGtNeZ1hRRVRn0qKcYitViZj04Xe-deQMq_4gmQ7amoSw2o9nJtW8tDt6rmoT7i42RvDAe6Dkp5ilRDoKg6KD5cR61IkQdgVTeaimjK7qn7YPLVWiDQm3wCEIiaCovw2PVoapAcP1SjNIZfn_tVOR0ThZIq1cvElShsbrZAo0",width=400)
       item1=st.slider("Deslizar para calificar el 40%:", min_value=0.0, max_value=5.0, step=0.1)
