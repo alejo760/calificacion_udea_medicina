@@ -159,11 +159,11 @@ def main():
     elif materia[0]=="internado":
       st.write("Calificación de la rotación de **Internado**")
       st.image("https://lh6.googleusercontent.com/jrgDxu8U0Z9H_kl09g8vnuYoeFlxGtNeZ1hRRVRn0qKcYitViZj04Xe-deQMq_4gmQ7amoSw2o9nJtW8tDt6rmoT7i42RvDAe6Dkp5ilRDoKg6KD5cR61IkQdgVTeaimjK7qn7YPLVWiDQm3wCEIiaCovw2PVoapAcP1SjNIZfn_tVOR0ThZIq1cvElShsbrZAo0",width=400)
-      item1=st.slider("Deslizar para calificar:", min_value=0.0, max_value=5.0, step=0.1)
+      item1=st.slider("Deslizar para calificar**Internado**:", min_value=0.0, max_value=5.0, step=0.1)
       st.image("https://lh5.googleusercontent.com/niGf3eCwkrIDFwIHwSO8AsGuTnBptssKmg99NGwquiDxbeuv3vG18A9Aa_4ySzF-eh0gcjcgSGshEemmwwrh3dLZoEL87iT90NUGNSzPTSY_2r33qaT8UkQR71lYRSe7PSFogLVkmzW6akSwO7n38QY530cHoZ5KnEdOLX_oRHWaZs-B57kk_xxrPMsXdqLILVe2",width=400)
-      item2=st.slider("Deslizar para calificar:", min_value=0.0, max_value=5.0, step=0.1)
+      item2=st.slider("Deslizar para calificar   **Internado**:", min_value=0.0, max_value=5.0, step=0.1)
       st.image("https://lh3.googleusercontent.com/VQ7qWA5H8jLdUIuwup35xHEJcNficeEPsb9xurvRlYQcFIfpr6OzoXgssnAPGM3NWAFhF2mhvDJzFJTrsRt5b1ogyt2-V898oTYo4I1rvF9vvrCusIAlGXYnoDCJ7xisILpGjq2yv3a5NyJ1y2l5I6PBpxMYk-phVFS_wtc6cPYt0Ke4xnoZoV8j39jOXweMG4DX",width=400)
-      item3=st.slider("Deslizar para calificar:", min_value=0.0, max_value=5.0, step=0.1)
+      item3=st.slider("Deslizar para calificar     **Internado**:", min_value=0.0, max_value=5.0, step=0.1)
       score=round((item1*0.4+item2*0.4+item3*0.2),2)
       st.metric(f"Calificación final ",score)
     elif materia[0]=="cancer":
