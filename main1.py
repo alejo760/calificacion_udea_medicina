@@ -121,13 +121,15 @@ def main():
     docs = docs1 + docs2 + docs3 + docs4 + docs5
 
     df = pd.DataFrame(columns=['id', 'name', 'email', 'calificaciones'])
+    
     for doc in docs:
         df = pd.concat([df, pd.DataFrame({'id': doc.id, 'name': doc.to_dict().get('name', None), 'email': doc.to_dict().get('email', None), 'calificaciones': doc.to_dict().get('calificaciones', None)}, index=[0])], ignore_index=True)
-    df.to_excel(f"notas_{materia}.xlsx", index=False)
-    b64 = base64.b64encode(open(f"notas_{materia}.xlsx", 'rb').read()).decode()
-    href = f'<a href="data:file/xlsx;base64,{b64}" download="notas_{materia}.xlsx">Download xlsx file</a>'
+    df.to_excel(f"notas_{materia}_fecha{fecha}.xlsx", index=False)
+    b64 = base64.b64encode(open(f"notas_{materia}_fecha{fecha}.xlsx", 'rb').read()).decode()
+    href = f'<a href="data:file/xlsx;base64,{b64}" download="notas_{materia}_fecha{fecha}.xlsx">Download xlsx file</a>'
     st.markdown(href, unsafe_allow_html=True)
     st.success("notas descargadas exitosamente")
+    st.dataframe(df)
 
 
 
