@@ -100,7 +100,6 @@ def main():
       st.success("códigos QR generados exitosamente")
   if st.button("bajar todas las notas calificaciones de una materia en xlsx"):
     student_ref = db.collection("students")
-    student_ref = db.collection("students")
 
     # First query for students with calificacion0 of 0
     docs1 = student_ref.where("materia", "==", materia).where("calificacion0", "array_contains", "0").get()
