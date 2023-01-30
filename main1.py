@@ -115,7 +115,7 @@ def main():
 
     # Fifth query for students with calificacion4 of 0
     docs5 = student_ref.where("materia", "==", materia).where("calificacion4", "array_contains", "0").get()
-
+    st.write(docs1)
     # Combine the results from all queries into a single list of documents
     docs = docs1 + docs2 + docs3 + docs4 + docs5
 
