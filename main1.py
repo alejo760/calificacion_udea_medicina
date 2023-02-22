@@ -98,20 +98,22 @@ def main():
     if st.button("Generar códigos QR"):
       generate_qr_codes(df, materia)
       st.success("códigos QR generados exitosamente")
-# generate a json from firestore database
+# generate a xlsx from firestore database
   if st.button("Generar base de datos de estudiantes"):
       fecha = set_time()
       db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")
       docs = db.collection("students").stream()
       data = []
       for doc in docs:
-        data.append(doc.to_dict(),ignore_index=False)
-      df = pd.DataFrame(data)
-      #download json in streamlit
-      b64 = base64.b64encode(df.to_json().encode()).decode()
-      href = f'<a href="data:file/json;base64,{b64}" download="students.json">Download json file</a>'
-      st.markdown(href, unsafe_allow_html=True)
+        data.append(doc.to_dict())
+      df = pd.DataFrame(data,index="email")
+      df.to_excel(f"base_de_datos_{fecha}.xlsx")
       st.success("Base de datos de estudiantes generada exitosamente")
+      #download xlsx in streamlit
+      b64 = base64.b64encode(open(f'base_de_datos_{fecha}.xlsx', 'rb').read()).decode()
+      href = f'<a href="data:file/xlsx;base64,{b64}" download="base_de_datos_{fecha}.xlsx">Download xlsx file</a>'
+      st.markdown(href, unsafe_allow_html=True)
+      
 
 
 
