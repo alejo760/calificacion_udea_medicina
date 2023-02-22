@@ -99,7 +99,7 @@ def main():
       generate_qr_codes(df, materia)
       st.success("códigos QR generados exitosamente")
       #strcture the subcollections data in a dataframe and download the database from firestore 
-if st.button("Descargar base de datos de estudiantes"):
+  if st.button("Descargar base de datos de estudiantes"):
     students_ref = db.collection("students")
     docs = students_ref.stream()
     items = []
