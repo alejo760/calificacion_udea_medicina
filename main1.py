@@ -107,6 +107,7 @@ def main():
         df = df.append(doc.to_dict(), ignore_index=True)
       output = io.BytesIO()
       writer = pd.ExcelWriter(output, engine='xlsxwriter')
+      df.to_json('base_de_datos.json')
       df.to_excel(writer, sheet_name='Sheet1')
       writer.save()
       processed_data = output.getvalue()
@@ -114,11 +115,12 @@ def main():
       href = f'<a href="data:file/xlsx;base64,{b64}" download="base_de_datos.xlsx">Download xlsx file</a>'
       st.markdown(href, unsafe_allow_html=True)
       st.success("Base de datos descargada exitosamente")
-      #download json in streamlit
-      b64 = base64.b64encode(open(f'base_de_datos.json', 'rb').read()).decode()
+      #download json
+      b64 = base64.b64encode(open('base_de_datos.json', 'rb').read()).decode()
       href = f'<a href="data:file/json;base64,{b64}" download="base_de_datos.json">Download json file</a>'
       st.markdown(href, unsafe_allow_html=True)
       st.success("Base de datos descargada exitosamente")
+      
 
 
 
