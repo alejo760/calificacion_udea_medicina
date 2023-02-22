@@ -99,7 +99,7 @@ def main():
       generate_qr_codes(df, materia)
       st.success("códigos QR generados exitosamente")
 # generate a json from firestore database
-    if st.button("Generar base de datos de estudiantes"):
+  if st.button("Generar base de datos de estudiantes"):
       db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")
       docs = db.collection("students").stream()
       data = []
@@ -112,7 +112,7 @@ def main():
       b64 = base64.b64encode(open(f'base_datos_estudiantes_{fecha}.xlsx', 'rb').read()).decode()
       href = f'<a href="data:file/xlsx;base64,{b64}" download="base_datos_estudiantes_{fecha}.xlsx">Download excel file</a>'
       st.markdown(href, unsafe_allow_html=True)
-      
+
 
 
 
