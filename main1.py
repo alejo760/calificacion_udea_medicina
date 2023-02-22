@@ -98,22 +98,26 @@ def main():
     if st.button("Generar códigos QR"):
       generate_qr_codes(df, materia)
       st.success("códigos QR generados exitosamente")
-  # given this data strcuture student_ref.set({'name': student['name'],'email': student['email'], "calificaciones": student['calificaciones']+1,   f"calificacion{numero_calificaciones}": [{ f"score{numero_calificaciones}":score,f"nucleo{numero_calificaciones}":nucleo, f"concepto{numero_calificaciones}": concepto,f"profesor{numero_calificaciones}": usuario,f"fecha{numero_calificaciones}": fecha,
-  #download all the data stored in Firestore and order in a multi-index dataframe
-  if st.button("Descargar base de datos"):
-    students_ref = db.collection("students")
-    docs = students_ref.stream()
+  #convert all data stored in firestore to a json
+  if st.button("Convertir base de datos a json"):
+    docs = db.collection("students").stream()
     data = []
     for doc in docs:
       data.append(doc.to_dict())
-    df = pd.DataFrame(data)
-    df = df.set_index(['id', 'name', 'email', 'materia'])
-    df = df.sort_index()
-    df.to_excel('base_de_datos.xlsx')
-    b64 = base64.b64encode(open('base_de_datos.xlsx', 'rb').read()).decode()
-    href = f'<a href="data:file/xlsx;base64,{b64}" download="base_de_datos.xlsx">Download xlsx file</a>'
+    with open('students.json', 'w') as outfile:
+      json.dump(data, outfile)
+    st.success("Base de datos convertida exitosamente")
+    #convert json to xlsx
+    df = pd.read_json('students.json')
+    df.to_excel('students.xlsx', index=False)
+    st.success("Base de datos convertida exitosamente")
+      #download xlsx in streamlit
+    b64 = base64.b64encode(open('students.xlsx', 'rb').read()).decode()
+    href = f'<a href="data:file/xlsx;base64,{b64}" download="students.xlsx">Download xlsx file</a>'
     st.markdown(href, unsafe_allow_html=True)
     st.success("Base de datos descargada exitosamente")
+    
+
 
 
 
