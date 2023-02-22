@@ -100,6 +100,7 @@ def main():
       st.success("códigos QR generados exitosamente")
 # generate a json from firestore database
   if st.button("Generar base de datos de estudiantes"):
+      fecha = set_time()
       db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")
       docs = db.collection("students").stream()
       data = []
