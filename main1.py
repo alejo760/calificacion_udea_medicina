@@ -98,19 +98,22 @@ def main():
     if st.button("Generar códigos QR"):
       generate_qr_codes(df, materia)
       st.success("códigos QR generados exitosamente")
-  #strcture the subcollections data in a dataframe and download the database from firestore in csv format
+  #strcture the subcollections data in a dataframe and download the database from firestore in excel format
   if st.button("Descargar base de datos"):
     docs = db.collection("students").stream()
     df = pd.DataFrame(columns=['id', 'name', 'email', 'calificaciones', 'materia'])
     for doc in docs:
       df = df.append(doc.to_dict(), ignore_index=True)
     df.to_json("students.json", orient="records")
-    pd.json_normalize(d,max_level=3)
-    df.to_csv("students.csv", index=False)
-    b64 = base64.b64encode(open('students.csv', 'rb').read()).decode()
-    href = f'<a href="data:file/csv;base64,{b64}" download="students.csv">Download csv file</a>'
+    pd.json_normalize(max_level=3, errors='ignore')
+    df.to_excel("students.xlsx", index=False)
+    b64 = base64.b64encode(open("students.xlsx", 'rb').read()).decode()
+    href = f'<a href="data:file/xlsx;base64,{b64}" download="students.xlsx">Download excel file</a>'
     st.markdown(href, unsafe_allow_html=True)
     st.success("Base de datos descargada exitosamente")
+    
+
+
 
 
 
