@@ -98,29 +98,22 @@ def main():
     if st.button("Generar códigos QR"):
       generate_qr_codes(df, materia)
       st.success("códigos QR generados exitosamente")
-# generate a json from firestore database with selected materia and download it in xlsx format
-  if st.button("Descargar base de datos de estudiantes"):
-      students_ref = db.collection("students").where("materia", "==", materia)
-      docs = students_ref.stream()
-      df = pd.DataFrame(columns=['id', 'name', 'email', 'calificaciones'])
+# generate a json from firestore database
+    if st.button("Generar base de datos de estudiantes"):
+      db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")
+      docs = db.collection("students").stream()
+      data = []
       for doc in docs:
-        df = df.append(doc.to_dict(), ignore_index=True)
-      output = io.BytesIO()
-      writer = pd.ExcelWriter(output, engine='xlsxwriter')
-      df.to_json('base_de_datos.json')
-      df.to_excel(writer, sheet_name='Sheet1')
-      writer.save()
-      processed_data = output.getvalue()
-      b64 = base64.b64encode(processed_data).decode()
-      href = f'<a href="data:file/xlsx;base64,{b64}" download="base_de_datos.xlsx">Download xlsx file</a>'
+        data.append(doc.to_dict())
+      df = pd.DataFrame(data)
+      df.to_excel(f"base_datos_estudiantes_{fecha}.xlsx")
+      st.success("base de datos de estudiantes generada exitosamente")
+      #download excel in streamlit
+      b64 = base64.b64encode(open(f'base_datos_estudiantes_{fecha}.xlsx', 'rb').read()).decode()
+      href = f'<a href="data:file/xlsx;base64,{b64}" download="base_datos_estudiantes_{fecha}.xlsx">Download excel file</a>'
       st.markdown(href, unsafe_allow_html=True)
-      st.success("Base de datos descargada exitosamente")
-      #download json
-      b64 = base64.b64encode(open('base_de_datos.json', 'rb').read()).decode()
-      href = f'<a href="data:file/json;base64,{b64}" download="base_de_datos.json">Download json file</a>'
-      st.markdown(href, unsafe_allow_html=True)
-      st.success("Base de datos descargada exitosamente")
       
+
 
 
 
