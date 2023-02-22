@@ -102,7 +102,7 @@ def main():
   if st.button("Descargar base de datos de estudiantes"):
       students_ref = db.collection("students")
       docs = students_ref.stream()
-      items = list(map(lambda x: {**x.to_dict(), 'id': x.id}, docs)
+      items = list(map(lambda x: {**x.to_dict(), 'id': x.id}, docs))
       df = pd.DataFrame(items)
       df.to_excel("students.xlsx", index=False)
       b64 = base64.b64encode(open("students.xlsx", 'rb').read()).decode()
