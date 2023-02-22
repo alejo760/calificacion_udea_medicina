@@ -103,7 +103,7 @@ def main():
     docs = db.collection("students").stream()
     df = pd.DataFrame(columns=['id', 'name', 'email', 'calificaciones', 'materia'])
     for doc in docs:
-      df = df.append(doc.to_dict(), ignore_index=False)
+      df = df.append(doc.to_dict(), ignore_index=True)
     df.to_json("students.json", orient="records")
     df = pd.json_normalize(df)
     #download in json and excel
