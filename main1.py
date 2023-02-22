@@ -104,7 +104,7 @@ def main():
       data = []
       for doc in docs:
         data.append(doc.to_dict())
-      pd.json_normalize(data, max_level=20)
+      pd.json_normalize(data, max_level=40)
       df = pd.DataFrame(data)
       st.dataframe(df)
       #df.to_excel("students.xlsx", index=False)
