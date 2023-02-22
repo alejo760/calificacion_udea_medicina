@@ -103,7 +103,7 @@ def main():
     docs = db.collection("students").stream()
     df = pd.DataFrame(columns=['id', 'name', 'email', 'calificaciones', 'materia'])
     for doc in docs:
-      df = df.append(doc.to_dict(), ignore_index=True)
+      df = df.append(doc.to_dict(), ignore_index=True).astype(str)
     df.to_json("students.json", orient="records")
     pd.json_normalize(df)
     df.to_excel('students.xlsx', index=False)
@@ -111,7 +111,9 @@ def main():
     b64 = base64.b64encode(open('students.xlsx', 'rb').read()).decode()
     href = f'<a href="data:file/xlsx;base64,{b64}" download="students.xlsx">Download excel file</a>'
     st.markdown(href, unsafe_allow_html=True)
-    #download df in json
+    #correct this error: ValueError: Excel does not support datetimes with timezones. Please ensure that datetimes are timezone unaware before writing to Excel.
+
+
 
 
 
