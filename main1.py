@@ -109,10 +109,12 @@ def main():
     df.to_json(f'notas_de_{materia}_{fecha}.json', orient="records")
     pd.json_normalize(df)
     b64 = base64.b64encode(open(f'notas_de_{materia}_{fecha}.json', 'rb').read()).decode()
-    href = f'<a href="data:file/json;base64,{b64}" download=f"notas_de_{materia}_{fecha}.json">Download json file</a>'
+    href = f'<a href="data:file/json;base64,{b64}" download="notas_de_{materia}_{fecha}.json">Download json file</a>'
     st.markdown(href, unsafe_allow_html=True)
     st.success("Base de datos descargada exitosamente")
 
+    
+ 
 
 
 
