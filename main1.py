@@ -99,27 +99,38 @@ def main():
       generate_qr_codes(df, materia)
       st.success("códigos QR generados exitosamente")
       #strcture the subcollections data in a dataframe and download the database from firestore in json format
-  if st.button("Descargar base de datos"):
-        #download the database from firestore in json format
-        docs = db.collection("students").stream()
-        for doc in docs:
-          with open(f'{doc.id}.json', 'w') as f:
-            json.dump(doc.to_dict(), f)
-        #structure the subcollections data in a dataframe
-        docs = db.collection("students").stream()
-        for doc in docs:
-          df = pd.DataFrame(doc.to_dict(), index=[0])
-          df.to_excel(f'{doc.id}.xlsx')
-        #download zip in streamlit
-        zipObj = ZipFile(f'todos_los_estudiantes.zip', 'w')
-        for i, row in df.iterrows():
-          zipObj.write(f'{row["id"]}.xlsx')
-          zipObj.write(f'{row["id"]}.json')
-        zipObj.close()
-        b64 = base64.b64encode(open(f'todos_los_estudiantes.zip', 'rb').read()).decode()
-        href = f'<a href="data:file/zip;base64,{b64}" download="todos_los_estudiantes.zip">Download zip file</a>'
-        st.markdown(href, unsafe_allow_html=True)
-        st.success("Base de datos descargada exitosamente")
+import json
+from datetime import datetime
+from google.cloud.firestore_v1 import DatetimeWithNanoseconds
+
+class FirestoreEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, DatetimeWithNanoseconds):
+            return obj.to_datetime().strftime('%Y-%m-%d %H:%M:%S')
+        return json.JSONEncoder.default(self, obj)
+
+if st.button("Descargar base de datos"):
+    #download the database from firestore in json format
+    docs = db.collection("students").stream()
+    for doc in docs:
+        with open(f'{doc.id}.json', 'w') as f:
+            json.dump(doc.to_dict(), f, cls=FirestoreEncoder)
+    #structure the subcollections data in a dataframe
+    docs = db.collection("students").stream()
+    for doc in docs:
+        df = pd.DataFrame(doc.to_dict(), index=[0])
+        df.to_excel(f'{doc.id}.xlsx')
+    #download zip in streamlit
+    zipObj = ZipFile(f'todos_los_estudiantes.zip', 'w')
+    for i, row in df.iterrows():
+        zipObj.write(f'{row["id"]}.xlsx')
+        zipObj.write(f'{row["id"]}.json')
+    zipObj.close()
+    b64 = base64.b64encode(open(f'todos_los_estudiantes.zip', 'rb').read()).decode()
+    href = f'<a href="data:file/zip;base64,{b64}" download="todos_los_estudiantes.zip">Download zip file</a>'
+    st.markdown(href, unsafe_allow_html=True)
+    st.success("Base de datos descargada exitosamente")
+
 
 
 #---------------------------------
