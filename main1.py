@@ -98,22 +98,6 @@ def main():
     if st.button("Generar códigos QR"):
       generate_qr_codes(df, materia)
       st.success("códigos QR generados exitosamente")
-
-    if st.button('Calificar'):
-                        student_ref.set({
-                              'name': student['name'],
-                              'email': student['email'],
-                              "calificaciones": student['calificaciones']+1,  
-                              f"calificacion{numero_calificaciones}": [{
-                                f"score{numero_calificaciones}":score,
-                                f"nucleo{numero_calificaciones}":nucleo,
-                                f"concepto{numero_calificaciones}": concepto,
-                                f"profesor{numero_calificaciones}": usuario,
-                                f"fecha{numero_calificaciones}": fecha,
-                            }]
-                            },merge=True)
-                        st.success("Estudiante calificado y nota guardada exitosamente")
-                        st.balloons()
       #strcture the subcollections data in a dataframe and download the database from firestore 
     if st.button("Descargar base de datos de estudiantes"):
       students_ref = db.collection("students")
@@ -128,7 +112,7 @@ def main():
       st.markdown(href, unsafe_allow_html=True)
       st.success("Base de datos descargada exitosamente")
 
-      
+
 
 
 
