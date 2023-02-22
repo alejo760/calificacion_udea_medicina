@@ -99,7 +99,7 @@ def main():
       generate_qr_codes(df, materia)
       st.success("códigos QR generados exitosamente")
       #strcture the subcollections data in a dataframe and download the database from firestore in json format
-      if st.button("Descargar base de datos"):
+    if st.button("Descargar base de datos"):
         #download the database from firestore in json format
         docs = db.collection("students").stream()
         for doc in docs:
@@ -121,19 +121,6 @@ def main():
         st.markdown(href, unsafe_allow_html=True)
         st.success("Base de datos descargada exitosamente")
 
-
-
-
-
-
-
-
-
-
-
-
-
-  
 
 #---------------------------------
   
