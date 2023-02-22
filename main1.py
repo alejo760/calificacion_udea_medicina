@@ -104,7 +104,7 @@ def main():
       docs = students_ref.stream()
       df = pd.DataFrame(columns=['id', 'name', 'email', 'calificaciones'])
       for doc in docs:
-        df = df.append(doc, ignore_index=True)
+        df = df.append(doc.to_dict(), ignore_index=True)
       output = io.BytesIO()
       writer = pd.ExcelWriter(output, engine='xlsxwriter')
       df.to_excel(writer, sheet_name='Sheet1')
