@@ -105,13 +105,13 @@ def main():
     for doc in docs:
       df = df.append(doc.to_dict(), ignore_index=True)
     df.to_json("students.json", orient="records")
-    pd.json_normalize(df)
+    pd.json_normalize(d,max_level=3)
     df.to_csv("students.csv", index=False)
     b64 = base64.b64encode(open('students.csv', 'rb').read()).decode()
     href = f'<a href="data:file/csv;base64,{b64}" download="students.csv">Download csv file</a>'
     st.markdown(href, unsafe_allow_html=True)
     st.success("Base de datos descargada exitosamente")
-    
+
 
 
 
