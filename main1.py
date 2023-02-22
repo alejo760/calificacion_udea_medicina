@@ -98,36 +98,30 @@ def main():
     if st.button("Generar códigos QR"):
       generate_qr_codes(df, materia)
       st.success("códigos QR generados exitosamente")
-  if st.button("bajar todas las notas calificaciones de una materia en xlsx"):
-    student_ref = db.collection("students")
-    # First query for students with calificacion0 of 0
-    docs1 = student_ref.where("calificacion0","array_contains", "0").get() 
-
-    # Second query for students with calificacion1 of 0
-    docs2 = student_ref.where("calificacion1", "array_contains", "0").get()
-    # Third query for students with calificacion2 of 0
-    docs3 = student_ref.where("calificacion2", "array_contains", "0").get()
-    # Fourth query for students with calificacion3 of 0
-    docs4 = student_ref.where("calificacion3", "array_contains", "0").get()
-    # Fifth query for students with calificacion4 of 0
-    docs5 = student_ref.where("calificacion4", "array_contains", "0").get()
-    st.write(docs1)
-    # Combine the results from all queries into a single list of documents
-    docs = docs1 + docs2 + docs3 + docs4 + docs5
-
-    df = pd.DataFrame(columns=['id', 'name', 'email', 'calificaciones'])
-    
+  #download all the data stored in Firestore
+  if st.button("Descargar base de datos"):
+    # Create a reference to the cities collection
+    cities_ref = db.collection("students")
+    # Create a query against the collection
+    query_ref = cities_ref.where("materia", "==", materia)
+    # Get the documents
+    docs = query_ref.stream()
+    # Create a list of dictionaries
+    data = []
     for doc in docs:
-        df = pd.concat([df, pd.DataFrame({'id': doc.id, 'name': doc.to_dict().get('name', None), 'email': doc.to_dict().get('email', None), 'calificaciones': doc.to_dict().get('calificaciones', None)}, index=[0])], ignore_index=True)
-    df.to_excel(f"notas_{materia}.xlsx", index=False)
-    b64 = base64.b64encode(open(f"notas_{materia}.xlsx", 'rb').read()).decode()
-    href = f'<a href="data:file/xlsx;base64,{b64}" download="notas_{materia}.xlsx">Download xlsx file</a>'
+      data.append(doc.to_dict())
+    # Create a dataframe
+    df = pd.DataFrame(data)
+    # Download the data
+    output = io.BytesIO()
+    writer = pd.ExcelWriter(output, engine='xlsxwriter')
+    df.to_excel(writer, sheet_name='Sheet1')
+    writer.save()
+    processed_data = output.getvalue()
+    b64 = base64.b64encode(processed_data)
+    href = f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="base_de_datos.xlsx">Download Excel file</a>'
     st.markdown(href, unsafe_allow_html=True)
-    st.success("notas descargadas exitosamente")
-    st.dataframe(df)
-
-
-
+    st.success("Base de datos descargada exitosamente")
 
 # Run the app
 if __name__ == "__main__":
