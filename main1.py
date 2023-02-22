@@ -105,13 +105,13 @@ def main():
     for doc in docs:
       df = df.append(doc.to_dict(), ignore_index=True)
     df.to_json("students.json", orient="records")
-    pd.json_normalize(max_level=3, errors='ignore')
+    pd.json_normalize(df, max_level=3, errors='ignore')
     df.to_excel("students.xlsx", index=False)
     b64 = base64.b64encode(open("students.xlsx", 'rb').read()).decode()
     href = f'<a href="data:file/xlsx;base64,{b64}" download="students.xlsx">Download excel file</a>'
     st.markdown(href, unsafe_allow_html=True)
     st.success("Base de datos descargada exitosamente")
-    
+
 
 
 
