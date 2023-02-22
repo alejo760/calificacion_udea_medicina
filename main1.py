@@ -104,34 +104,24 @@ def main():
     df = pd.DataFrame(columns=['id', 'name', 'email', 'calificaciones', 'materia'])
     for doc in docs:
       df = df.append(doc.to_dict(), ignore_index=True)
-    df.to_json("students.json", orient="records")
+    df= df.to_json("students.json", orient="records")
     b64 = base64.b64encode(open('students.json', 'rb').read()).decode()
     href = f'<a href="data:file/json;base64,{b64}" download="students.json">Download json file</a>'
     st.markdown(href, unsafe_allow_html=True)
     st.success("Base de datos descargada exitosamente")
-
-#convert json to excel file
-  if st.button("Convertir base de datos a excel"):
-    df.to_excel("students.xlsx", index=False)
-    b64 = base64.b64encode(open('students.xlsx', 'rb').read()).decode()
-    href = f'<a href="data:file/xlsx;base64,{b64}" download="students.xlsx">Download xlsx file</a>'
-    st.markdown(href, unsafe_allow_html=True)
-    st.success("Base de datos convertida exitosamente")
-    #download the excel
+    #download df in excel
     output = io.BytesIO()
     writer = pd.ExcelWriter(output, engine='xlsxwriter')
     df.to_excel(writer, sheet_name='Sheet1')
     writer.save()
     processed_data = output.getvalue()
-    st.download_button(
-        label="Download Excel file",
-        data=processed_data,
-        file_name='students.xlsx',
-        mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-    )
+    b64 = base64.b64encode(processed_data)
+    href = f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="students.xlsx">Download excel file</a>'
+    st.markdown(href, unsafe_allow_html=True)
     st.success("Base de datos descargada exitosamente")
-
     
+
+
 
 
 
