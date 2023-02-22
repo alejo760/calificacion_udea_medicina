@@ -104,9 +104,10 @@ def main():
       docs = students_ref.stream()
       items = list(map(lambda x: {**x.to_dict(), 'id': x.id}, docs))
       df = pd.DataFrame(items)
-          # Convert timezone-aware datetimes to timezone-naive datetimes
-      for col in df.select_dtypes(include=['datetime64[ns, tz]']).columns:
-        df[col] = df[col].dt.tz_convert(None)
+    # Convert timestamp fields to timezone unaware datetime objects
+      for item in items:
+        if 'timestamp' in item:
+            item['timestamp'] = item['timestamp'].replace(tzinfo=None)
       df.to_excel("students.xlsx", index=False)
       b64 = base64.b64encode(open("students.xlsx", 'rb').read()).decode()
       href = f'<a href="data:file/xlsx;base64,{b64}" download="students.xlsx">Download excel file</a>'
