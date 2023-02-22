@@ -106,10 +106,8 @@ def main():
       df = df.append(doc.to_dict(), ignore_index=True)
     df.to_json("students.json", orient="records")
     df = pd.json_normalize(df)
+    df.to_excel('students.xlsx', index=False)
     #download in json and excel
-    b64 = base64.b64encode(open('students.json', 'rb').read()).decode()
-    href = f'<a href="data:file/json;base64,{b64}" download="students.json">Download json file</a>'
-    st.markdown(href, unsafe_allow_html=True)
     b64 = base64.b64encode(open('students.xlsx', 'rb').read()).decode()
     href = f'<a href="data:file/xlsx;base64,{b64}" download="students.xlsx">Download excel file</a>'
     st.markdown(href, unsafe_allow_html=True)
