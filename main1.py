@@ -98,24 +98,43 @@ def main():
     if st.button("Generar códigos QR"):
       generate_qr_codes(df, materia)
       st.success("códigos QR generados exitosamente")
-  #download a copy of the database stored in Firestore
-  if st.button("Descargar base de datos"):
-    db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")
-    docs = db.collection("students").where("materia", "==", materia).stream()
-    df = pd.DataFrame(columns=['id', 'name', 'email', 'calificaciones', 'materia'])
-    for doc in docs:
-      df = df.append(doc.to_dict(), ignore_index=True)
-    df = df.sort_values(by=['id'])
-    df = df.reset_index(drop=True)
-    output = io.BytesIO()
-    writer = pd.ExcelWriter(output, engine='xlsxwriter')
-    df.to_excel(writer, sheet_name='Sheet1')
-    writer.save()
-    processed_data = output.getvalue()
-    b64 = base64.b64encode(processed_data)
-    href = f'<a href="data:file/xlsx;base64,{b64.decode()}" download="estudiantes.xlsx">Descargar base de datos</a>'
-    st.markdown(href, unsafe_allow_html=True)
-    st.success("Base de datos descargada exitosamente")
+
+    if st.button('Calificar'):
+                        student_ref.set({
+                              'name': student['name'],
+                              'email': student['email'],
+                              "calificaciones": student['calificaciones']+1,  
+                              f"calificacion{numero_calificaciones}": [{
+                                f"score{numero_calificaciones}":score,
+                                f"nucleo{numero_calificaciones}":nucleo,
+                                f"concepto{numero_calificaciones}": concepto,
+                                f"profesor{numero_calificaciones}": usuario,
+                                f"fecha{numero_calificaciones}": fecha,
+                            }]
+                            },merge=True)
+                        st.success("Estudiante calificado y nota guardada exitosamente")
+                        st.balloons()
+      #strcture the subcollections data in a dataframe and download the database from firestore 
+    if st.button("Descargar base de datos de estudiantes"):
+      students_ref = db.collection("students")
+      docs = students_ref.stream()
+      students = []
+      for doc in docs:
+        students.append(doc.to_dict())
+      df = pd.DataFrame(students)
+      df.to_excel("students.xlsx", index=False)
+      b64 = base64.b64encode(open("students.xlsx", 'rb').read()).decode()
+      href = f'<a href="data:file/xlsx;base64,{b64}" download="students.xlsx">Download excel file</a>'
+      st.markdown(href, unsafe_allow_html=True)
+      st.success("Base de datos descargada exitosamente")
+
+      
+
+
+
+
+
+
 
 
 
