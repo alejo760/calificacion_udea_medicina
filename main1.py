@@ -102,10 +102,7 @@ def main():
   if st.button("Descargar base de datos de estudiantes"):
       students_ref = db.collection("students").where("materia", "==", materia)
       docs = students_ref.stream()
-      data = []
-      for doc in docs:
-        data.append(doc.to_dict())
-      df = pd.DataFrame(data)
+      df = pd.DataFrame(docs)
       df.to_json('estudiantes.json')
       b64 = base64.b64encode(open('estudiantes.json', 'rb').read()).decode()
       href = f'<a href="data:file/json;base64,{b64}" download="estudiantes.json">Download json file</a>'
