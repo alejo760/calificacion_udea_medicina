@@ -101,20 +101,14 @@ def main():
       #strcture the subcollections data in a dataframe and download the database from firestore in json format
 import json
 from datetime import datetime
-from google.cloud.firestore_v1 import DatetimeWithNanoseconds
 
-class FirestoreEncoder(json.JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, DatetimeWithNanoseconds):
-            return obj.to_datetime().strftime('%Y-%m-%d %H:%M:%S')
-        return json.JSONEncoder.default(self, obj)
 
 if st.button("Descargar base de datos"):
     #download the database from firestore in json format
     docs = db.collection("students").stream()
     for doc in docs:
         with open(f'{doc.id}.json', 'w') as f:
-            json.dump(doc.to_dict(), f, cls=FirestoreEncoder)
+            json.dump(doc.to_dict(), f)
     #structure the subcollections data in a dataframe
     docs = db.collection("students").stream()
     for doc in docs:
