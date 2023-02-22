@@ -98,30 +98,37 @@ def main():
     if st.button("Generar códigos QR"):
       generate_qr_codes(df, materia)
       st.success("códigos QR generados exitosamente")
-  #download all the data stored in Firestore
-  if st.button("Descargar base de datos"):
-    # Create a reference to the cities collection
-    cities_ref = db.collection("students")
-    # Create a query against the collection
-    query_ref = cities_ref.where("materia", "==", materia)
-    # Get the documents
-    docs = query_ref.stream()
-    # Create a list of dictionaries
-    data = []
-    for doc in docs:
-      data.append(doc.to_dict())
-    # Create a dataframe
-    df = pd.DataFrame(data)
-    # Download the data
-    output = io.BytesIO()
-    writer = pd.ExcelWriter(output, engine='xlsxwriter')
-    df.to_excel(writer, sheet_name='Sheet1')
-    writer.save()
-    processed_data = output.getvalue()
-    b64 = base64.b64encode(processed_data)
-    href = f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="base_de_datos.xlsx">Download Excel file</a>'
-    st.markdown(href, unsafe_allow_html=True)
-    st.success("Base de datos descargada exitosamente")
+  # given this data strcuture student_ref.set({'name': student['name'],'email': student['email'], "calificaciones": student['calificaciones']+1,   f"calificacion{numero_calificaciones}": [{ f"score{numero_calificaciones}":score,f"nucleo{numero_calificaciones}":nucleo, f"concepto{numero_calificaciones}": concepto,f"profesor{numero_calificaciones}": usuario,f"fecha{numero_calificaciones}": fecha,
+  #download all the data stored in Firestore and order in a multi-index dataframe
+  students_ref = db.collection("students")
+  docs = students_ref.stream()
+  data = []
+  for doc in docs:
+    data.append(doc.to_dict())
+  df = pd.DataFrame(data)
+  df = df.set_index(['id'])
+  df = df.sort_index()
+  df = df.sort_values(by=['materia'])
+  df = df.reset_index()
+# Function to download the database in xlsx format
+  output = io.BytesIO()
+  writer = pd.ExcelWriter(output, engine='xlsxwriter')
+  df.to_excel(writer, sheet_name='Sheet1')
+  writer.save()
+  processed_data = output.getvalue()
+  b64 = base64.b64encode(processed_data)
+  href = f'<a href="data:file/xlsx;base64,{b64.decode()}" download="students.xlsx">Download xlsx file</a>'
+  st.markdown(href, unsafe_allow_html=True)
+  st.dataframe(df)
+  st.success("Base de datos descargada exitosamente")
+
+  
+
+
+  
+
+#---------------------------------
+  
 
 # Run the app
 if __name__ == "__main__":
