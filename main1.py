@@ -105,14 +105,14 @@ def main():
       docs = db.collection("students").stream()
       data = []
       for doc in docs:
-        data.append(doc.to_dict())
+        data.append(doc.to_dict(),ignore_index=False)
       df = pd.DataFrame(data)
       #download json in streamlit
       b64 = base64.b64encode(df.to_json().encode()).decode()
       href = f'<a href="data:file/json;base64,{b64}" download="students.json">Download json file</a>'
       st.markdown(href, unsafe_allow_html=True)
       st.success("Base de datos de estudiantes generada exitosamente")
-      
+
 
 
 
