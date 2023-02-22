@@ -103,7 +103,7 @@ def main():
     docs = db.collection("students").stream()
     lista=[]
     for doc in docs:
-      lista = lista.append(doc.to_dict(), ignore_index=True)
+      lista = lista.append(doc.to_dict())
     pd.json_normalize(df, max_level=1, errors='ignore')
     df.to_json("students.json", orient="records")
     df.to_excel("students.xlsx", index=False)
