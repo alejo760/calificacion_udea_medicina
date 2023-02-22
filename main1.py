@@ -107,12 +107,13 @@ def main():
       for doc in docs:
         data.append(doc.to_dict())
       df = pd.DataFrame(data)
-      df.to_excel(f"base_datos_estudiantes_{fecha}.xlsx")
-      st.success("base de datos de estudiantes generada exitosamente")
-      #download excel in streamlit
-      b64 = base64.b64encode(open(f'base_datos_estudiantes_{fecha}.xlsx', 'rb').read()).decode()
-      href = f'<a href="data:file/xlsx;base64,{b64}" download="base_datos_estudiantes_{fecha}.xlsx">Download excel file</a>'
+      #download json in streamlit
+      b64 = base64.b64encode(df.to_json().encode()).decode()
+      href = f'<a href="data:file/json;base64,{b64}" download="students.json">Download json file</a>'
       st.markdown(href, unsafe_allow_html=True)
+      st.success("Base de datos de estudiantes generada exitosamente")
+      
+
 
 
 
