@@ -105,7 +105,6 @@ def main():
     df = pd.DataFrame(columns=['id', 'name', 'email', 'calificaciones', 'materia'])
     for doc in docs:
       df = df.append(doc.to_dict(), ignore_index=True)
-    df['id'] = df['id'].astype(int)
     df = df.sort_values(by=['id'])
     df = df.reset_index(drop=True)
     output = io.BytesIO()
