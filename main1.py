@@ -100,18 +100,13 @@ def main():
       st.success("códigos QR generados exitosamente")
 # generate a xlsx from firestore database
   if st.button("Descargar base de datos"):
-    docs = db.collection("students").stream()
+    #select documents from firestore materia 
+    docs = db.collection("students").where("materia", "==", materia).stream()
     df = pd.DataFrame(columns=['id', 'name', 'email', 'calificaciones', 'materia'])
     for doc in docs:
       df = df.append(doc.to_dict(), ignore_index=True)
     df.to_json("students.json", orient="records")
     pd.json_normalize(df)
-    #df.to_excel('students.xlsx', index=False)
-    #download df in excel
-    #b64 = base64.b64encode(open('students.xlsx', 'rb').read()).decode()
-    #href = f'<a href="data:file/xlsx;base64,{b64}" download="students.xlsx">Download excel file</a>'
-    #st.markdown(href, unsafe_allow_html=True)
-    #download ion json
     b64 = base64.b64encode(open('students.json', 'rb').read()).decode()
     href = f'<a href="data:file/json;base64,{b64}" download="students.json">Download json file</a>'
     st.markdown(href, unsafe_allow_html=True)
