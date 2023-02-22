@@ -104,22 +104,20 @@ def main():
     df = pd.DataFrame(columns=['id', 'name', 'email', 'calificaciones', 'materia'])
     for doc in docs:
       df = df.append(doc.to_dict(), ignore_index=True)
-    df= df.to_json("students.json", orient="records")
+    df.to_json("students.json", orient="records")
+    #download in json and excel
     b64 = base64.b64encode(open('students.json', 'rb').read()).decode()
     href = f'<a href="data:file/json;base64,{b64}" download="students.json">Download json file</a>'
     st.markdown(href, unsafe_allow_html=True)
-    st.success("Base de datos descargada exitosamente")
-    #download df in excel
-    output = io.BytesIO()
-    writer = pd.ExcelWriter(output, engine='xlsxwriter')
-    df.to_excel(writer, sheet_name='Sheet1')
-    writer.save()
-    processed_data = output.getvalue()
-    b64 = base64.b64encode(processed_data)
-    href = f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="students.xlsx">Download excel file</a>'
+    b64 = base64.b64encode(open('students.xlsx', 'rb').read()).decode()
+    href = f'<a href="data:file/xlsx;base64,{b64}" download="students.xlsx">Download excel file</a>'
     st.markdown(href, unsafe_allow_html=True)
     st.success("Base de datos descargada exitosamente")
     
+
+
+
+
 
 
 
