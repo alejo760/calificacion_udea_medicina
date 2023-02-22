@@ -98,27 +98,25 @@ def main():
     if st.button("Generar códigos QR"):
       generate_qr_codes(df, materia)
       st.success("códigos QR generados exitosamente")
-  #convert all data stored in firestore to a json
-  if st.button("Convertir base de datos a json"):
-    docs = db.collection("students").stream()
-    data = []
+  #download a copy of the database stored in Firestore
+  if st.button("Descargar base de datos"):
+    db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")
+    docs = db.collection("students").where("materia", "==", materia).stream()
+    df = pd.DataFrame(columns=['id', 'name', 'email', 'calificaciones', 'materia'])
     for doc in docs:
-      data.append(doc.to_dict())
-    with open('students.json', 'w') as outfile:
-      json.dump(data, outfile)
-    st.success("Base de datos convertida exitosamente")
-    #convert json to xlsx
-    df = pd.read_json('students.json')
-    df.to_excel('students.xlsx', index=False)
-    st.success("Base de datos convertida exitosamente")
-      #download xlsx in streamlit
-    b64 = base64.b64encode(open('students.xlsx', 'rb').read()).decode()
-    href = f'<a href="data:file/xlsx;base64,{b64}" download="students.xlsx">Download xlsx file</a>'
+      df = df.append(doc.to_dict(), ignore_index=True)
+    df['id'] = df['id'].astype(int)
+    df = df.sort_values(by=['id'])
+    df = df.reset_index(drop=True)
+    output = io.BytesIO()
+    writer = pd.ExcelWriter(output, engine='xlsxwriter')
+    df.to_excel(writer, sheet_name='Sheet1')
+    writer.save()
+    processed_data = output.getvalue()
+    b64 = base64.b64encode(processed_data)
+    href = f'<a href="data:file/xlsx;base64,{b64.decode()}" download="estudiantes.xlsx">Descargar base de datos</a>'
     st.markdown(href, unsafe_allow_html=True)
     st.success("Base de datos descargada exitosamente")
-    
-
-
 
 
 
