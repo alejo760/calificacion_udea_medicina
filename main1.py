@@ -98,22 +98,20 @@ def main():
     if st.button("Generar códigos QR"):
       generate_qr_codes(df, materia)
       st.success("códigos QR generados exitosamente")
-# generate a json from firestore database AND DOWNLOAD IT
-  if st.button("Descargar base de datos de estudiantes"):
-      docs = db.collection("students").stream()
+# generate a json from firestore database with selected materia and download it in json format
+    if st.button("Descargar base de datos de estudiantes"):
+      students_ref = db.collection("students").where("materia", "==", materia)
+      docs = students_ref.stream()
       data = []
       for doc in docs:
         data.append(doc.to_dict())
-      pd.json_normalize(data, max_level=40)
       df = pd.DataFrame(data)
-      st.dataframe(df)
-      #df.to_excel("students.xlsx", index=False)
-      #b64 = base64.b64encode(open("students.xlsx", 'rb').read()).decode()
-      #href = f'<a href="data:file/xlsx;base64,{b64}" download="students.xlsx">Download xlsx file</a>'
-      #st.markdown(href, unsafe_allow_html=True)
-      #st.success("Base de datos de estudiantes descargada exitosamente")
-
-
+      df.to_json('estudiantes.json')
+      b64 = base64.b64encode(open('estudiantes.json', 'rb').read()).decode()
+      href = f'<a href="data:file/json;base64,{b64}" download="estudiantes.json">Download json file</a>'
+      st.markdown(href, unsafe_allow_html=True)
+      st.success("Base de datos de estudiantes descargada exitosamente")
+      
 
 
 
