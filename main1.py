@@ -105,7 +105,7 @@ def main():
       docs = db.collection("students").stream()
       df.DataFrame(columns=['id', 'name', 'email', 'calificaciones', 'materia'])
       for doc in docs:
-          df = df.append(doc.to_dict(), ignore_index=False)
+          df = df.append(doc.to_dict(), ignore_index=True)
       
       df.to_excel(f"base_de_datos_{fecha}.xlsx")
       st.success("Base de datos de estudiantes generada exitosamente")
