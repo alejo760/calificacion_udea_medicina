@@ -101,14 +101,15 @@ def main():
 # generate a xlsx from firestore database
   if st.button("Descargar base de datos"):
     #select documents from firestore materia 
+    fecha=set_time()
     docs = db.collection("students").where("materia", "==", materia).stream()
     df = pd.DataFrame(columns=['id', 'name', 'email', 'calificaciones', 'materia'])
     for doc in docs:
       df = df.append(doc.to_dict(), ignore_index=True)
-    df.to_json("students.json", orient="records")
+    df.to_json(f'notas_de_{materia}_{fecha}.json', orient="records")
     pd.json_normalize(df)
-    b64 = base64.b64encode(open('students.json', 'rb').read()).decode()
-    href = f'<a href="data:file/json;base64,{b64}" download="students.json">Download json file</a>'
+    b64 = base64.b64encode(open(f'notas_de_{materia}_{fecha}.json', 'rb').read()).decode()
+    href = f'<a href="data:file/json;base64,{b64}" download=f"notas_de_{materia}_{fecha}.json">Download json file</a>'
     st.markdown(href, unsafe_allow_html=True)
     st.success("Base de datos descargada exitosamente")
 
