@@ -98,16 +98,29 @@ def main():
     if st.button("Generar códigos QR"):
       generate_qr_codes(df, materia)
       st.success("códigos QR generados exitosamente")
-# generate a json from firestore database with selected materia and download it in json format
-  if st.button("Descargar base de datos de estudiantes"):
+# generate a json from firestore database with selected materia and download it in xlsx format
+    if st.button("Descargar base de datos de estudiantes"):
       students_ref = db.collection("students").where("materia", "==", materia)
       docs = students_ref.stream()
-      df = pd.DataFrame(docs)
-      df.to_json('estudiantes.json')
-      b64 = base64.b64encode(open('estudiantes.json', 'rb').read()).decode()
-      href = f'<a href="data:file/json;base64,{b64}" download="estudiantes.json">Download json file</a>'
+      df = pd.DataFrame(columns=['id', 'name', 'email', 'calificaciones'])
+      for doc in docs:
+        df = df.append({'id': doc.id, 'name': doc.to_dict()['name'], 'email': doc.to_dict()['email'], 'calificaciones': doc.to_dict()['calificaciones']}, ignore_index=True)
+      output = io.BytesIO()
+      writer = pd.ExcelWriter(output, engine='xlsxwriter')
+      df.to_excel(writer, sheet_name='Sheet1')
+      writer.save()
+      processed_data = output.getvalue()
+      b64 = base64.b64encode(processed_data).decode()
+      href = f'<a href="data:file/xlsx;base64,{b64}" download="base_de_datos.xlsx">Download xlsx file</a>'
       st.markdown(href, unsafe_allow_html=True)
-      st.success("Base de datos de estudiantes descargada exitosamente")
+      st.success("Base de datos descargada exitosamente")
+      #download json in streamlit
+      b64 = base64.b64encode(open(f'base_de_datos.json', 'rb').read()).decode()
+      href = f'<a href="data:file/json;base64,{b64}" download="base_de_datos.json">Download json file</a>'
+      st.markdown(href, unsafe_allow_html=True)
+      st.success("Base de datos descargada exitosamente")
+      
+
 
 
 
