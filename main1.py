@@ -101,10 +101,9 @@ def main():
   #strcture the subcollections data in a dataframe and download the database from firestore in excel format
   if st.button("Descargar base de datos"):
     docs = db.collection("students").stream()
-    df = pd.DataFrame(columns=['id', 'name', 'email', 'calificaciones', 'materia'])
+    lista=[]
     for doc in docs:
-      df = df.append(doc.to_dict(), ignore_index=True)
-    
+      lista = lista.append(doc.to_dict(), ignore_index=True)
     pd.json_normalize(df, max_level=1, errors='ignore')
     df.to_json("students.json", orient="records")
     df.to_excel("students.xlsx", index=False)
