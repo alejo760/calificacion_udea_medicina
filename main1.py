@@ -99,7 +99,7 @@ def main():
       generate_qr_codes(df, materia)
       st.success("códigos QR generados exitosamente")
 # generate a json from firestore database AND DOWNLOAD IT
-    if st.button("Descargar base de datos de estudiantes"):
+  if st.button("Descargar base de datos de estudiantes"):
       docs = db.collection("students").stream()
       data = []
       for doc in docs:
