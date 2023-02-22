@@ -103,10 +103,10 @@ def main():
       fecha = set_time()
       db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")
       docs = db.collection("students").stream()
-      data = []
+      df.DataFrame(columns=['id', 'name', 'email', 'calificaciones', 'materia'])
       for doc in docs:
-        data.append(doc.to_dict())
-      df = pd.DataFrame(data,index="id")
+          df = df.append(doc.to_dict(), ignore_index=True)
+      
       df.to_excel(f"base_de_datos_{fecha}.xlsx")
       st.success("Base de datos de estudiantes generada exitosamente")
       #download xlsx in streamlit
