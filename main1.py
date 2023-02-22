@@ -99,20 +99,24 @@ def main():
       generate_qr_codes(df, materia)
       st.success("códigos QR generados exitosamente")
       #strcture the subcollections data in a dataframe and download the database from firestore 
-  if st.button("Descargar base de datos de estudiantes"):
-      students_ref = db.collection("students")
-      docs = students_ref.stream()
-      items = list(map(lambda x: {**x.to_dict(), 'id': x.id}, docs))
-      df = pd.DataFrame(items)
-    # Convert timestamp fields to timezone unaware datetime objects
-      for item in items:
-        if 'timestamp' in item:
-            item['timestamp'] = item['timestamp'].replace(tzinfo=None)
-      df.to_excel("students.xlsx", index=False)
-      b64 = base64.b64encode(open("students.xlsx", 'rb').read()).decode()
-      href = f'<a href="data:file/xlsx;base64,{b64}" download="students.xlsx">Download excel file</a>'
-      st.markdown(href, unsafe_allow_html=True)
-      st.success("Base de datos descargada exitosamente")
+if st.button("Descargar base de datos de estudiantes"):
+    students_ref = db.collection("students")
+    docs = students_ref.stream()
+    items = []
+    for doc in docs:
+        item = doc.to_dict()
+        # Convert timestamp fields to timezone unaware datetime objects
+        for key in item.keys():
+            if isinstance(item[key], datetime):
+                item[key] = item[key].replace(tzinfo=None)
+        items.append({**item, 'id': doc.id})
+    df = pd.DataFrame(items)
+    df.to_excel("students.xlsx", index=False)
+    b64 = base64.b64encode(open("students.xlsx", 'rb').read()).decode()
+    href = f'<a href="data:file/xlsx;base64,{b64}" download="students.xlsx">Download excel file</a>'
+    st.markdown(href, unsafe_allow_html=True)
+    st.success("Base de datos descargada exitosamente")
+
 
 
 
