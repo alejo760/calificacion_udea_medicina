@@ -99,9 +99,6 @@ def main():
       generate_qr_codes(df, materia)
       st.success("códigos QR generados exitosamente")
       #strcture the subcollections data in a dataframe and download the database from firestore in json format
-import json
-from datetime import datetime
-
 
 if st.button("Descargar base de datos"):
     #download the database from firestore in json format
