@@ -98,29 +98,18 @@ def main():
     if st.button("Generar códigos QR"):
       generate_qr_codes(df, materia)
       st.success("códigos QR generados exitosamente")
-      #strcture the subcollections data in a dataframe and download the database from firestore in json format
-
-if st.button("Descargar base de datos"):
-    #download the database from firestore in json format
+  #strcture the subcollections data in a dataframe and download the database from firestore in json format
+  if st.button("Descargar base de datos"):
     docs = db.collection("students").stream()
+    df = pd.DataFrame(columns=['id', 'name', 'email', 'calificaciones', 'materia'])
     for doc in docs:
-        with open(f'{doc.id}.json', 'w') as f:
-            json.dump(doc.to_dict(), f)
-    #structure the subcollections data in a dataframe
-    docs = db.collection("students").stream()
-    for doc in docs:
-        df = pd.DataFrame(doc.to_dict(), index=[0])
-        df.to_excel(f'{doc.id}.xlsx')
-    #download zip in streamlit
-    zipObj = ZipFile(f'todos_los_estudiantes.zip', 'w')
-    for i, row in df.iterrows():
-        zipObj.write(f'{row["id"]}.xlsx')
-        zipObj.write(f'{row["id"]}.json')
-    zipObj.close()
-    b64 = base64.b64encode(open(f'todos_los_estudiantes.zip', 'rb').read()).decode()
-    href = f'<a href="data:file/zip;base64,{b64}" download="todos_los_estudiantes.zip">Download zip file</a>'
+      df = df.append(doc.to_dict(), ignore_index=True)
+    df.to_json("students.json", orient="records")
+    b64 = base64.b64encode(open('students.json', 'rb').read()).decode()
+    href = f'<a href="data:file/json;base64,{b64}" download="students.json">Download json file</a>'
     st.markdown(href, unsafe_allow_html=True)
     st.success("Base de datos descargada exitosamente")
+    
 
 
 
