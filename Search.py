@@ -65,18 +65,17 @@ def set_time():
 
 
 # Main function
-def main():
-  key_dict = json.loads(st.secrets["textkey"])
-  creds = service_account.Credentials.from_service_account_info(key_dict)
-  db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")
-  st.image("https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES", width=200)
-  st.title("App buscar y crear códigos QR de estudiantes")
-  st.subheader("-Medicina Interna UdeA-")
-  st.caption ("hecha por Alejandro Hernández-Arango MD")
-  materias=['vejez', 'internado', 'adultez_I']
-  materia=st.selectbox("Seleccione la materia", materias)
-  student_id=st.text_input("Ingrese el id del estudiante")
-  if st.button("Buscar"):
+key_dict = json.loads(st.secrets["textkey"])
+creds = service_account.Credentials.from_service_account_info(key_dict)
+db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")
+st.image("https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES", width=200)
+st.title("App buscar y crear códigos QR de estudiantes")
+st.subheader("-Medicina Interna UdeA-")
+st.caption ("hecha por Alejandro Hernández-Arango MD")
+materias=['vejez', 'internado', 'adultez_I']
+materia=st.selectbox("Seleccione la materia", materias)
+student_id=st.text_input("Ingrese el id del estudiante")
+if st.button("Buscar"):
     student = search_student(student_id)
     if student is not None:
       st.success(f"Estudiante encontrado: {student['name']}")
@@ -94,7 +93,6 @@ def main():
         st.success("Estudiante guardado")
         st.balloons()
 
-  return None
 
 
 
