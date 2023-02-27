@@ -78,25 +78,18 @@ def store_data_in_firestore(df,collection, materia):
 
 #create new collection in firestore from a json file
 def create_collection_from_json():
-  #input collection name
-  collection_name=st.text_input("Nombre de la colección")
-  #input json file
-  data = st.file_uploader("Subir base de datos de estudiantes, debe tener id, nombre, email", type="json")
-  if data is not None:
-    df = pd.read_json(data)
-    for i, row in df.iterrows():
-      student_ref = db.collection(collection_name).document(str(int(row['id'])))
-      student = student_ref.get()
-      if student.exists:
-        st.warning(f"El estudiante {row['name']} ya existe en la base de datos")
-      else:
-        student_ref.set({
-          'name': row['name'],
-          'email': row['email'],
-          'calificaciones': 0,
-          'materia':row['materia']
-        })
-        st.success(f"El estudiante {row['name']} fue agregado exitosamente a la base de datos")
+  with open('students.json', 'r') as f:
+    data = json.load(f)
+  for student in data:
+    student_ref = db.collection('students').document(str(student['id']))
+    student_ref.set({
+      'name': student['name'],
+      'email': student['email'],
+      'calificaciones': 0,
+      'materia': 'vejez'
+    })
+  return data
+
 
 #---------------------------------#
 
@@ -131,7 +124,7 @@ def main():
         generate_qr_codes(df, materia)
         st.success("códigos QR generados exitosamente")
 # generate a xlsx from firestore database
-  if st.button(f"Descargar base de datos{materia}del periodo {collection}"):
+  if st.button(f"Descargar base de datos {materia} del periodo {collection}"):
     #select documents from firestore materia 
     fecha=set_time()
     docs = db.collection(collection).where("materia", "==", materia).stream()
