@@ -15,6 +15,12 @@ import firebase_admin
 from datetime import datetime
 import pytz 
 from firebase_admin import credentials
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
+
+
 
 
 # function to search student in the database by id
@@ -38,12 +44,24 @@ def generate_qr_codes(materia,student_id):
   return qr_png
 
 
+def store_data_in_firestore(student_id,email,name, materia):
 
-#---------------------------------#
+    student_ref = db.collection("students").document(student_id)
+    student_ref.set({
+      'name': name,
+      'email': email,
+      'calificaciones': 0,
+      'materia':materia
+    })
+    return None
 
 
+def set_time():
+  tz_NY = pytz.timezone('America/Bogota') 
+  datetime_NY = datetime.now(tz_NY)
+  fecha=datetime_NY.strftime("%d/%m/%Y %H:%M:%S")
+  return fecha
 
-#---------------------------------....#
 
 
 # Main function
@@ -66,9 +84,16 @@ def main():
         st.image(qr_png[student['name']])
     else:
       st.error("Estudiante no encontrado")
-
-  # Generate a QR code for the student
-
+      name = st.text_input("Ingrese el nombre del estudiante")
+      email = st.text_input("Ingrese el email del estudiante")
+      if st.button("Guardar estudiante"):
+        store_data_in_firestore(student_id,email,name, materia)
+        st.success("Estudiante guardado")
+        st.balloons()
+        # Generate QR codes
+        if st.button("Generar códigos QR"):
+          qr_png = generate_qr_codes(materia)
+          st.image(qr_png[name])
 
 
 if __name__ == "__main__":
@@ -78,6 +103,7 @@ if __name__ == "__main__":
   creds = service_account.Credentials.from_service_account_info(key_dict)
   db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")
   main()
+  
 
 #---------------------------------#
 
