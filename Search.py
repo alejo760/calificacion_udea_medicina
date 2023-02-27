@@ -46,7 +46,7 @@ def generate_qr_codes(materia,student_id):
 
 def store_data_in_firestore(student_id,email,name, materia):
 
-    student_ref = db.collection("students").document(student_id)
+    student_ref = db.collection("students").document(str(int(student_id)))
     student_ref.set({
       'name': name,
       'email': email,
