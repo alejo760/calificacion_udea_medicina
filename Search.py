@@ -66,7 +66,6 @@ def set_time():
 
 # Main function
 def main():
-
   key_dict = json.loads(st.secrets["textkey"])
   creds = service_account.Credentials.from_service_account_info(key_dict)
   db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")
@@ -94,17 +93,12 @@ def main():
         store_data_in_firestore(student_id,email,name, materia)
         st.success("Estudiante guardado")
         st.balloons()
-        # Generate QR codes
-        if st.button("Generar códigos QR"):
-          qr_png = generate_qr_codes(materia)
-          st.image(qr_png[name])
+
+  return None
 
 
-if __name__ == "__main__":
-  main()
-  
 
-#---------------------------------#
+
 
 
 
