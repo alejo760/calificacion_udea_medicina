@@ -37,7 +37,12 @@ def upload_database():
   if data is not None:
     df = pd.read_excel(data)
     return df
-
+def upload_database_json():
+  data = st.file_uploader("Subir base de datos de estudiantes en json", type="json")
+  if data is not None:
+    df = pd.read_json(data)
+    return df
+  
 # Function to generate a QR code for each student
 def generate_qr_codes(df, materia):
   fecha=set_time()
@@ -78,19 +83,17 @@ def store_data_in_firestore(df,collection, materia):
 
 #create new collection in firestore from a json file
 def create_collection_from_json():
-  with open('students.json', 'r') as f:
-    data = json.load(f)
-  for student in data:
-    student_ref = db.collection('students').document(str(student['id']))
-    student_ref.set(student)
-  return data
-
-
-#---------------------------------#
-
-
-
-#---------------------------------....#
+  df=upload_database_json()
+  if df is not None:
+    fecha=set_time()
+    for i, row in df.iterrows():
+      student_ref = db.collection('students').document(str(int(row['id'])))
+      student = student_ref.get()
+      if student.exists:
+        st.warning(f"El estudiante {row['name']} ya existe en la base de datos")
+      else:
+        student_ref.set(student)
+        st.success(f"El estudiante {row['name']} fue agregado exitosamente a la base de datos")
 
 
 # Main function
@@ -105,6 +108,8 @@ def main():
   # Upload the database
   with st.expander("Crear colección desde json"):
    if st.button("Crear colección desde json"):
+
+
       create_collection_from_json()
       st.success("Colección creada exitosamente")
   with st.expander("Crear base de datos desde excel"):
