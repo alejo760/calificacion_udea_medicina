@@ -80,13 +80,23 @@ def store_data_in_firestore(df,collection, materia):
 def create_collection_from_json():
   #input collection name
   collection_name=st.text_input("Nombre de la colección")
-  #upload json file
-  data = st.file_uploader("Subir json", type="json")
-  with open(data) as f:
-    data = json.load(f)
-    for doc in data:
-      db.collection(collection_name).add(doc)
-  return data
+  #input json file
+  data = st.file_uploader("Subir base de datos de estudiantes, debe tener id, nombre, email", type="json")
+  if data is not None:
+    df = pd.read_json(data)
+    for i, row in df.iterrows():
+      student_ref = db.collection(collection_name).document(str(int(row['id'])))
+      student = student_ref.get()
+      if student.exists:
+        st.warning(f"El estudiante {row['name']} ya existe en la base de datos")
+      else:
+        student_ref.set({
+          'name': row['name'],
+          'email': row['email'],
+          'calificaciones': 0,
+          'materia':row['materia']
+        })
+        st.success(f"El estudiante {row['name']} fue agregado exitosamente a la base de datos")
 
 #---------------------------------#
 
