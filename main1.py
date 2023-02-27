@@ -61,9 +61,9 @@ def generate_qr_codes(df, materia):
   return qr_png
 
 # Create a function to store all the data in Firestore and check if the student exists and if exists dont update
-def store_data_in_firestore(df,fecha, materia):
+def store_data_in_firestore(df,collection, materia):
   for i, row in df.iterrows():
-    student_ref = db.collection("students").document(str(int(row['id'])))
+    student_ref = db.collection(collection).document(str(int(row['id'])))
     student = student_ref.get()
     if student.exists:
       st.warning(f"El estudiante {row['name']} ya existe en la base de datos")
@@ -75,7 +75,18 @@ def store_data_in_firestore(df,fecha, materia):
         'materia':materia
       })
       st.success(f"El estudiante {row['name']} fue agregado exitosamente a la base de datos")
-      
+
+#create new collection in firestore from a json file
+def create_collection_from_json():
+  #input collection name
+  collection_name=st.text_input("Nombre de la colección")
+  #upload json file
+  data = st.file_uploader("Subir json", type="json")
+  with open(data) as f:
+    data = json.load(f)
+    for doc in data:
+      db.collection(collection_name).add(doc)
+  return data
 
 #---------------------------------#
 
@@ -91,24 +102,29 @@ def main():
   st.subheader("-Medicina Interna UdeA-")
   st.caption ("hecha por Alejandro Hernández-Arango MD")
   materias=['vejez', 'internado', 'adultez_I']
+  collection=st.selectbox("Seleccione la colección", ['students', '2023-1'])
   materia=st.selectbox("Seleccione la materia", materias)
   # Upload the database
-  df = upload_database()
-
-  if df is not None:
-    #set_time()
-    fecha = set_time()
-    store_data_in_firestore(df, fecha, materia)
-    st.success("Base de datos cargada exitosamente y guardada exitosamente")
-    # Generate QR codes
-    if st.button("Generar códigos QR"):
-      generate_qr_codes(df, materia)
-      st.success("códigos QR generados exitosamente")
+  with st.expander("Crear colección desde json"):
+   if st.button("Crear colección desde json"):
+      create_collection_from_json()
+      st.success("Colección creada exitosamente")
+  with st.expander("Crear base de datos desde excel"):
+    df = upload_database()
+    if df is not None:
+      #set_time()
+      fecha = set_time()
+      store_data_in_firestore(df, fecha, materia)
+      st.success("Base de datos cargada exitosamente y guardada exitosamente")
+      # Generate QR codes
+      if st.button("Generar códigos QR"):
+        generate_qr_codes(df, materia)
+        st.success("códigos QR generados exitosamente")
 # generate a xlsx from firestore database
-  if st.button("Descargar base de datos"):
+  if st.button(f"Descargar base de datos{materia}del periodo {collection}"):
     #select documents from firestore materia 
     fecha=set_time()
-    docs = db.collection("students").where("materia", "==", materia).stream()
+    docs = db.collection(collection).where("materia", "==", materia).stream()
     df = pd.DataFrame(columns=['id', 'name', 'email', 'calificaciones', 'materia'])
     for doc in docs:
       df = df.append(doc.to_dict(), ignore_index=True)
@@ -118,6 +134,9 @@ def main():
     href = f'<a href="data:file/json;base64,{b64}" download="notas_de_{materia}_{fecha}.json">Download json file</a>'
     st.markdown(href, unsafe_allow_html=True)
     st.success("Base de datos descargada exitosamente")
+
+
+
 
     
  
