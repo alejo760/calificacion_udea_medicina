@@ -87,7 +87,7 @@ if st.button("Buscar"):
       # Generate QR codes
       if st.button("Generar códigos QR"):
         qr_png = generate_qr_codes(materia,student_id)
-        st.image(qr_png[student['name']])
+        st.image(qr_png)
     else:
       st.error("Estudiante no encontrado")
       if st.button("Guardar estudiante"):
@@ -95,7 +95,7 @@ if st.button("Buscar"):
           st.success("Estudiante guardado")
           st.balloons()
           qr_png = generate_qr_codes(materia,student_id)
-          st.image(qr_png[student['name']])
+          st.image(qr_png)
           st.write("Código QR generado")
 
 
