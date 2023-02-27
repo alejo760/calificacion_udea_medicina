@@ -104,7 +104,6 @@ if st.button("Buscar"):
           href = f'<a href="data:file/png;base64,{b64}" download="{student_id}.png">Download png file</a>'
           st.markdown(href, unsafe_allow_html=True)
           st.image(qr_png)
-          st.image(qr_png)
           st.write("Código QR generado")
 
 
