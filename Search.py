@@ -37,11 +37,11 @@ def search_student(student_id):
 
 # Function to generate a QR code for the student
 def generate_qr_codes(materia,student_id):
-
-  fecha=set_time()
-  qr_png={}
   url = f"https://qrudeamedicina.streamlit.app/?student_id={student_id}&materia={materia}"
   qr = pyqrcode.create(url)
+  # Download png image of the QR code with student name and id caption
+  qr.png(f"{student_id}.png", scale=6)
+  qr_png=f"{student_id}.png"
   return qr_png
 
 
