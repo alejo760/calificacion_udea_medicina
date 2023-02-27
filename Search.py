@@ -23,6 +23,7 @@ from email.mime.text import MIMEText
 
 
 
+
 # function to search student in the database by id
 def search_student(student_id):
   doc_ref = db.collection(u'Estudiantes').document(f'{student_id}')
@@ -45,15 +46,12 @@ def generate_qr_codes(materia,student_id):
 
 
 def store_data_in_firestore(student_id,email,name, materia):
-
-    student_ref = db.collection("students").document(str(int(student_id)))
-    student_ref.set({
-      'name': name,
-      'email': email,
-      'calificaciones': 0,
-      'materia':materia
-    })
-    return None
+  doc_ref = db.collection(u'estudiantes').document(f'{student_id}')
+  doc_ref.set({
+    u'nombre': f'{name}',
+    u'email': f'{email}',
+    u'materia': f'{materia}'
+  })
 
 
 def set_time():
@@ -64,7 +62,7 @@ def set_time():
 
 
 
-# Main function
+
 key_dict = json.loads(st.secrets["textkey"])
 creds = service_account.Credentials.from_service_account_info(key_dict)
 db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")
