@@ -42,6 +42,11 @@ def generate_qr_codes(materia,student_id):
   # Download png image of the QR code with student name and id caption
   qr.png(f"{student_id}.png", scale=6)
   qr_png=f"{student_id}.png"
+  # button to download all the QR codes
+  #download zip in streamlit
+  b64 = base64.b64encode(open(f'{student_id}.png', 'rb').read()).decode()
+  href = f'<a href="data:file/png;base64,{b64}" download="{student_id}.png">Download png file</a>'
+  st.markdown(href, unsafe_allow_html=True)
   return qr_png
 
 
