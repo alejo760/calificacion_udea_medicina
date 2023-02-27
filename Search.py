@@ -54,6 +54,10 @@ def store_data_in_firestore(student_id,email,name, materia):
   })
 
 
+
+
+
+
 def set_time():
   tz_NY = pytz.timezone('America/Bogota') 
   datetime_NY = datetime.now(tz_NY)
@@ -82,7 +86,7 @@ if st.button("Buscar"):
       st.write(student)
       # Generate QR codes
       if st.button("Generar códigos QR"):
-        qr_png = generate_qr_codes(materia)
+        qr_png = generate_qr_codes(materia,student_id)
         st.image(qr_png[student['name']])
     else:
       st.error("Estudiante no encontrado")
@@ -90,7 +94,7 @@ if st.button("Buscar"):
           store_data_in_firestore(student_id,email,name, materia)
           st.success("Estudiante guardado")
           st.balloons()
-          qr_png = generate_qr_codes(materia)
+          qr_png = generate_qr_codes(materia,student_id)
           st.image(qr_png[student['name']])
           st.write("Código QR generado")
 
