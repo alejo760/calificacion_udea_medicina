@@ -86,14 +86,16 @@ if st.button("Buscar"):
         st.image(qr_png[student['name']])
     else:
       st.error("Estudiante no encontrado")
-      name = st.text_input("Ingrese el nombre del estudiante", value="")
-      email = st.text_input("Ingrese el email del estudiante", value="")
-      if st.button("Guardar estudiante"):
-        store_data_in_firestore(student_id,email,name, materia)
-        st.success("Estudiante guardado")
-        st.balloons()
-        generate_qr_codes(materia,student_id)
-        st.image(qr_png[student['name']])
-        st.write("Código QR generado")
+      with st.beta_expander("Crear estudiante", expanded=True):
+        st.write("Por favor ingrese los datos del estudiante")
+        name = st.text_input("Ingrese el nombre del estudiante", value="")
+        email = st.text_input("Ingrese el email del estudiante", value="")
+        if st.button("Guardar estudiante"):
+          store_data_in_firestore(student_id,email,name, materia)
+          st.success("Estudiante guardado")
+          st.balloons()
+          generate_qr_codes(materia,student_id)
+          st.image(qr_png[student['name']])
+          st.write("Código QR generado")
 
 
