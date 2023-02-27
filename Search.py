@@ -88,12 +88,11 @@ if st.button("Buscar"):
         st.image(qr_png[student['name']])
     else:
       st.error("Estudiante no encontrado")
-      with st.expander("Crear estudiante", expanded=True):
-        if st.button("Guardar estudiante"):
+      if st.button("Guardar estudiante"):
           store_data_in_firestore(student_id,email,name, materia)
           st.success("Estudiante guardado")
           st.balloons()
-          generate_qr_codes(materia,student_id)
+          qr_png = generate_qr_codes(materia)
           st.image(qr_png[student['name']])
           st.write("Código QR generado")
 
