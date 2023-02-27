@@ -82,12 +82,7 @@ def create_collection_from_json():
     data = json.load(f)
   for student in data:
     student_ref = db.collection('students').document(str(student['id']))
-    student_ref.set({
-      'name': student['name'],
-      'email': student['email'],
-      'calificaciones': 0,
-      'materia': 'vejez'
-    })
+    student_ref.set(student)
   return data
 
 
