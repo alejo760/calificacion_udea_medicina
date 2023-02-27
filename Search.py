@@ -75,6 +75,8 @@ st.caption ("hecha por Alejandro Hernández-Arango MD")
 materias=['vejez', 'internado', 'adultez_I']
 materia=st.selectbox("Seleccione la materia", materias)
 student_id=st.text_input("Ingrese el id del estudiante")
+name = st.text_input("Ingrese el nombre del estudiante")
+email = st.text_input("Ingrese el email del estudiante")
 if st.button("Buscar"):
     student = search_student(student_id)
     if student is not None:
@@ -86,10 +88,7 @@ if st.button("Buscar"):
         st.image(qr_png[student['name']])
     else:
       st.error("Estudiante no encontrado")
-      with st.beta_expander("Crear estudiante", expanded=True):
-        st.write("Por favor ingrese los datos del estudiante")
-        name = st.text_input("Ingrese el nombre del estudiante", value="")
-        email = st.text_input("Ingrese el email del estudiante", value="")
+      with st.expander("Crear estudiante", expanded=True):
         if st.button("Guardar estudiante"):
           store_data_in_firestore(student_id,email,name, materia)
           st.success("Estudiante guardado")
