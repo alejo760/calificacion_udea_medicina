@@ -35,21 +35,6 @@ def search_student(student_id):
   
 
 
-# Function to generate a QR code for the student
-def generate_qr_codes(materia,student_id):
-  url = f"https://qrudeamedicina.streamlit.app/?student_id={student_id}&materia={materia}"
-  qr = pyqrcode.create(url)
-  # Download png image of the QR code with student name and id caption
-  qr.png(f"{student_id}.png", scale=6)
-  qr_png=f"{student_id}.png"
-  # button to download all the QR codes
-  #download zip in streamlit
-  b64 = base64.b64encode(open(f'{student_id}.png', 'rb').read()).decode()
-  href = f'<a href="data:file/png;base64,{b64}" download="{student_id}.png">Download png file</a>'
-  st.markdown(href, unsafe_allow_html=True)
-  return qr_png
-
-
 def store_data_in_firestore(student_id,email,name, materia):
   doc_ref = db.collection(u'estudiantes').document(f'{student_id}')
   doc_ref.set({
@@ -91,15 +76,34 @@ if st.button("Buscar"):
       st.write(student)
       # Generate QR codes
       if st.button("Generar códigos QR"):
-        qr_png = generate_qr_codes(materia,student_id)
-        st.image(qr_png)
+          url = f"https://qrudeamedicina.streamlit.app/?student_id={student_id}&materia={materia}"
+          qr = pyqrcode.create(url)
+          # Download png image of the QR code with student name and id caption
+          qr.png(f"{student_id}.png", scale=6)
+          qr_png=f"{student_id}.png"
+          # button to download all the QR codes
+          #download zip in streamlit
+          b64 = base64.b64encode(open(f'{student_id}.png', 'rb').read()).decode()
+          href = f'<a href="data:file/png;base64,{b64}" download="{student_id}.png">Download png file</a>'
+          st.markdown(href, unsafe_allow_html=True)
+          st.image(qr_png)
     else:
       st.error("Estudiante no encontrado")
       if st.button("Guardar estudiante"):
           store_data_in_firestore(student_id,email,name, materia)
           st.success("Estudiante guardado")
           st.balloons()
-          qr_png = generate_qr_codes(materia,student_id)
+          url = f"https://qrudeamedicina.streamlit.app/?student_id={student_id}&materia={materia}"
+          qr = pyqrcode.create(url)
+          # Download png image of the QR code with student name and id caption
+          qr.png(f"{student_id}.png", scale=6)
+          qr_png=f"{student_id}.png"
+          # button to download all the QR codes
+          #download zip in streamlit
+          b64 = base64.b64encode(open(f'{student_id}.png', 'rb').read()).decode()
+          href = f'<a href="data:file/png;base64,{b64}" download="{student_id}.png">Download png file</a>'
+          st.markdown(href, unsafe_allow_html=True)
+          st.image(qr_png)
           st.image(qr_png)
           st.write("Código QR generado")
 
