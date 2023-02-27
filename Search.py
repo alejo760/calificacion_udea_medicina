@@ -66,6 +66,10 @@ def set_time():
 
 # Main function
 def main():
+
+  key_dict = json.loads(st.secrets["textkey"])
+  creds = service_account.Credentials.from_service_account_info(key_dict)
+  db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")
   st.image("https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES", width=200)
   st.title("App buscar y crear códigos QR de estudiantes")
   st.subheader("-Medicina Interna UdeA-")
@@ -97,11 +101,6 @@ def main():
 
 
 if __name__ == "__main__":
-
-
-  key_dict = json.loads(st.secrets["textkey"])
-  creds = service_account.Credentials.from_service_account_info(key_dict)
-  db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")
   main()
   
 
