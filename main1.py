@@ -79,7 +79,6 @@ def store_data_in_firestore(df,collection, materia):
         'calificaciones': 0,
         'materia':materia
       })
-      st.success(f"El estudiante {row['name']} fue agregado exitosamente a la base de datos")
 
 #create new collection in firestore from a json file
 def create_collection_from_json():
