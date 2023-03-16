@@ -66,9 +66,9 @@ def generate_qr_codes(df, materia):
   return qr_png
 
 # Create a function to store all the data in Firestore and check if the student exists and if exists dont update
-def store_data_in_firestore(df,collection, materia):
+def store_data_in_firestore():
   for i, row in df.iterrows():
-    student_ref = db.collection(collection).document(str(int(row['id'])))
+    student_ref = db.collection('students').document(str(int(row['id'])))
     student = student_ref.get()
     student_ref.set({
         'name': row['name'],
@@ -113,7 +113,7 @@ def main():
     if df is not None:
       #set_time()
       fecha = set_time()
-      store_data_in_firestore(df, materia,collection)
+      store_data_in_firestore()
       st.success("Base de datos cargada exitosamente y guardada exitosamente")
       # Generate QR codes
       if st.button("Generar códigos QR"):
