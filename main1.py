@@ -70,10 +70,7 @@ def store_data_in_firestore(df,collection, materia):
   for i, row in df.iterrows():
     student_ref = db.collection(collection).document(str(int(row['id'])))
     student = student_ref.get()
-    if student.exists:
-      st.warning(f"El estudiante {row['name']} ya existe en la base de datos")
-    else:
-      student_ref.set({
+    student_ref.set({
         'name': row['name'],
         'email': row['email'],
         'calificaciones': 0,
@@ -81,7 +78,7 @@ def store_data_in_firestore(df,collection, materia):
       })
 
 #create new collection in firestore from a json file
-def create_collection_from_json():
+def create_collection_from_json(df, materia,collection):
   df=upload_database_json()
   if df is not None:
     fecha=set_time()
