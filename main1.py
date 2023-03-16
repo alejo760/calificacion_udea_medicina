@@ -133,8 +133,65 @@ def main():
       df = df.append(doc.to_dict(), ignore_index=True)
     df.to_json(f'notas_de_{materia}_{fecha}.json', orient="records")
     pd.json_normalize(df)
-    b64 = base64.b64encode(open(f'notas_de_{materia}_{fecha}.json', 'rb').read()).decode()
-    href = f'<a href="data:file/json;base64,{b64}" download="notas_de_{materia}_{fecha}.json">Download json file</a>'
+    with open(f'notas_de_{materia}_{fecha}.json') as f:
+
+      df = json.load(f)
+    #in this list of list extract name email nucelo and score
+    df = pd.DataFrame(df)
+    # iterate over the calificacion columns and extract the scores
+
+    # extract the required columns
+    result = df[['name', 'email', 'materia']]
+    for i in range(30):
+        try:
+            col_name = f'calificacion{i}'
+            scores = []
+            nucleos = []
+            for row in df[col_name]:
+                if row:
+                    for item in row:
+                        if f'score{i}' in item:
+                            scores.append(item[f'score{i}'])
+                        if f'nucleo{i}' in item:
+                            nucleos.append(item[f'nucleo{i}'])
+            if len(scores) == len(result.index):
+                try:
+                    result[f'score{i}'] = scores
+                except ValueError:
+                    print("Length of scores exceeds length of index")
+                    pass
+            elif len(scores) < len(result.index):
+                try:
+                    scores += [None] * (len(result.index) - len(scores))
+                    result[f'score{i}'] = scores
+                except ValueError:
+                    print("Length of scores exceeds length of index")
+                    pass
+            else:
+                raise ValueError("Length of scores exceeds length of index")
+            
+            if len(nucleos) == len(result.index):
+                try:
+                    result[f'nucleo{i}'] = nucleos
+                except ValueError:
+                    print("Length of nucleos exceeds length of index")
+                    pass
+            elif len(nucleos) < len(result.index):
+                try:
+                    nucleos += [None] * (len(result.index) - len(nucleos))
+                    result[f'nucleo{i}'] = nucleos
+                except ValueError:
+                    print("Length of nucleos exceeds length of index")
+                    pass
+            else:
+                raise ValueError("Length of nucleos exceeds length of index")
+        except:
+            pass
+    result.to_excel(f'notas_de_{materia}_{fecha}.xlsx', index=False)
+        
+    
+    b64 = base64.b64encode(open(f'notas_de_{materia}_{fecha}.xlsx', 'rb').read()).decode()
+    href = f'<a href="data:file/json;base64,{b64}" download="notas_de_{materia}_{fecha}.xlsx">Download xlsx file</a>'
     st.markdown(href, unsafe_allow_html=True)
     st.success("Base de datos descargada exitosamente")
 
