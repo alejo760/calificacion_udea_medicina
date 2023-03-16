@@ -116,7 +116,7 @@ def main():
     if df is not None:
       #set_time()
       fecha = set_time()
-      store_data_in_firestore(df, fecha, materia,collection)
+      store_data_in_firestore(df, materia,collection)
       st.success("Base de datos cargada exitosamente y guardada exitosamente")
       # Generate QR codes
       if st.button("Generar códigos QR"):
