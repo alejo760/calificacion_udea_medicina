@@ -102,7 +102,7 @@ def main():
   st.subheader("-Medicina Interna UdeA-")
   st.caption ("hecha por Alejandro Hernández-Arango MD")
   materias=['vejez', 'internado', 'adultez_I']
-  collection=st.selectbox("Seleccione la colección", ['students', '2023-1'])
+  collection='students'
   materia=st.selectbox("Seleccione la materia", materias)
   # Upload the database
   with st.expander("Crear colección desde json"):
@@ -116,7 +116,7 @@ def main():
     if df is not None:
       #set_time()
       fecha = set_time()
-      store_data_in_firestore(df, fecha, materia)
+      store_data_in_firestore(df, fecha, materia,collection)
       st.success("Base de datos cargada exitosamente y guardada exitosamente")
       # Generate QR codes
       if st.button("Generar códigos QR"):
