@@ -188,8 +188,34 @@ def main():
     
     b64 = base64.b64encode(open(f'notas_de_{materia}_{fecha}.xlsx', 'rb').read()).decode()
     href = f'<a href="data:file/json;base64,{b64}" download="notas_de_{materia}_{fecha}.xlsx">Download xlsx file</a>'
+
     st.markdown(href, unsafe_allow_html=True)
     st.success("Base de datos descargada exitosamente")
+
+        #download json file from firestore database
+  if st.button(f"Descargar base de datos {materia} del periodo {collection} en formato json"):
+    #select documents from firestore materia 
+    fecha=set_time()
+    docs = db.collection(collection).where("materia", "==", materia).stream()
+    df = pd.DataFrame(columns=['id', 'name', 'email', 'calificaciones', 'materia'])
+    for doc in docs:
+      df = df.append(doc.to_dict(), ignore_index=True)
+    df.to_json(f'notas_de_{materia}_{fecha}.json', orient="records")
+    pd.json_normalize(df)
+    with open(f'notas_de_{materia}_{fecha}.json') as f:
+
+      df = json.load(f)
+    #in this list of list extract name email nucelo and score
+    df = pd.DataFrame(df)
+    # iterate over the calificacion columns and extract the scores
+
+    df.to_json(f'notas_de_{materia}_{fecha}.json', orient="records")
+    
+    b64 = base64.b64encode(open(f'notas_de_{materia}_{fecha}.json', 'rb').read()).decode()
+    href = f'<a href="data:file/json;base64,{b64}" download="notas_de_{materia}_{fecha}.json">Download json file</a>'
+    st.markdown(href, unsafe_allow_html=True)
+    st.success("Base de datos descargada exitosamente")
+
 
 
 
