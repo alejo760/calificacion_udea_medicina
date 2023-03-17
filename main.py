@@ -104,7 +104,7 @@ def main():
     st.warning("por favor comuniquese con el administrador alejandro.hernandeza@udea.edu.co")
     st.warning(e)
     st.experimental_rerun()
-  #calificar el estudiante
+  #calificar el estudiante...
   st.write("")
   with st.expander("Ingreso de la calificación",expanded=False):
 
