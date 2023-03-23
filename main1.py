@@ -137,7 +137,7 @@ def main():
     # iterate over the calificacion columns and extract the scores
 
     # extract the required columns
-    result = df[['name', 'email', 'materia']]
+    result = df
     result.to_excel(f'notas_de_{materia}_{fecha}.xlsx', index=False)
         
     
