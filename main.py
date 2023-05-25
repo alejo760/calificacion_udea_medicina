@@ -119,24 +119,6 @@ def main():
      if st.button('Ver calificaciones anteriores')and numero_calificaciones!=None:
       st.write("")
       with st.container():
-       with st.container('Descargar calificaciones en PDF'):
-            try:
-              # Call the generate_pdf function
-              namepdf = {student['name']} 
-              idstupdf= {student_id[0]}
-              emailpdf={student['email']}
-              materiapdf={materia[0]}
-
-              generate_pdf(student_id, materia, calificaciones,emailpdf,idstupdf,namepdf, materiapdf)
-                  # Generate Base64-encoded link for downloading the PDF
-              b64 = base64.b64encode(open('Reporte de Calificaciones.pdf', 'rb').read()).decode()
-              href = f'<a href="data:application/pdf;base64,{b64}" download="Reporte de Calificaciones.pdf">Download PDF</a>'
-              st.markdown(href, unsafe_allow_html=True)
-              st.success("PDF downloaded successfully")
-            except Exception as e:
-              st.error(e)
-        # Display other student information like name, email, calificaciones, etc.
-
 
        try:
         calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-1}"])
@@ -163,6 +145,25 @@ def main():
           st.warning("el estudiante no tiene más calificaciones anteriores")
        except Exception as e:
         st.warning("el estudiante no tiene más calificaciones anteriores")
+
+  
+      try:
+              # Call the generate_pdf function
+              namepdf = {student['name']} 
+              idstupdf= {student_id[0]}
+              emailpdf={student['email']}
+              materiapdf={materia[0]}
+
+              generate_pdf(student_id, materia, calificaciones,emailpdf,idstupdf,namepdf, materiapdf)
+                  # Generate Base64-encoded link for downloading the PDF
+              b64 = base64.b64encode(open('Reporte de Calificaciones.pdf', 'rb').read()).decode()
+              href = f'<a href="data:application/pdf;base64,{b64}" download="Reporte de Calificaciones.pdf">Download PDF</a>'
+              st.markdown(href, unsafe_allow_html=True)
+              st.success("PDF downloaded successfully")
+      except Exception as e:
+              st.error(e)
+        # Display other student information like name, email, calificaciones, etc.
+
   except Exception as e:
     st.warning("error en la base de datos el estudiante no se encuentra habilitado")
     st.warning("por favor comuniquese con el administrador alejandro.hernandeza@udea.edu.co")
