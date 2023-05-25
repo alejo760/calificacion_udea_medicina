@@ -147,22 +147,21 @@ def main():
         st.warning("el estudiante no tiene más calificaciones anteriores")
 
   
-      try:
-              # Call the generate_pdf function
-              namepdf = str({student['name']} )
-              idstupdf= str({student_id[0]})
-              emailpdf=str({student['email']})
-              materiapdf=str({materia})
-              calificacionespdf= calificaciones
 
-              generate_pdf( calificacionespdf,emailpdf,idstupdf,namepdf, materiapdf)
+              # Call the generate_pdf function
+      namepdf = str({student['name']} )
+      idstupdf= str({student_id[0]})
+      emailpdf=str({student['email']})
+      materiapdf=str({materia})
+      calificacionespdf= calificaciones
+
+      generate_pdf( calificacionespdf,emailpdf,idstupdf,namepdf, materiapdf)
                   # Generate Base64-encoded link for downloading the PDF
-              b64 = base64.b64encode(open('Reporte de Calificaciones.pdf', 'rb').read()).decode()
-              href = f'<a href="data:application/pdf;base64,{b64}" download="Reporte de Calificaciones.pdf">Download PDF</a>'
-              st.markdown(href, unsafe_allow_html=True)
-              st.success("PDF downloaded successfully")
-      except Exception as e:
-              st.error(e)
+      b64 = base64.b64encode(open('Reporte de Calificaciones.pdf', 'rb').read()).decode()
+      href = f'<a href="data:application/pdf;base64,{b64}" download="Reporte de Calificaciones.pdf">Download PDF</a>'
+      st.markdown(href, unsafe_allow_html=True)
+      st.success("PDF downloaded successfully")
+
         # Display other student information like name, email, calificaciones, etc.
 
   except Exception as e:
