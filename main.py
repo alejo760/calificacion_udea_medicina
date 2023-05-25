@@ -119,7 +119,7 @@ def main():
      if st.button('Ver calificaciones anteriores')and numero_calificaciones!=None:
       st.write("")
       with st.container():
-       if st.container('Descargar calificaciones en PDF'):
+       with st.container('Descargar calificaciones en PDF'):
             try:
               # Call the generate_pdf function
               namepdf = {student['name']} 
