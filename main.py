@@ -20,19 +20,20 @@ def generate_pdf(student_id, materia):
             # Create the URL with parameters
             url = f"https://qrudeamedicina.streamlit.app/?student_id={int(student_id)}&materia={materia}"
 
-            # Generate the HTML content with the QR code and other data
+            # Generate the HTML content with the QR code and other data student_id, materia, calificaciones,emailpdf,idstupdf,namepdf, materiapdf
+
             html_content = f"""
             <html>
             <body>
                 <h1>QR Code URL:</h1>
                 <p>{url}</p>
                 <h2>Student Information:</h2>
-                <p>Name: {student['name']}</p>
-                <p>Email: {student['email']}</p>
-                <p>Calificaciones: {student['calificaciones']}</p>
-                <p>Materia: {student['materia']}</p>
-                <img src="logo_faculty.png" alt="Faculty Logo" width="100">
-                <img src="logo_hospital.png" alt="Hospital Logo" width="100">
+                <p>Name: namepdf</p>
+                <p>Email: emailpdf</p>
+                <p>Calificaciones: calificaciones</p>
+                <p>Materia: materia</p>
+                <img src="https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES" alt="Faculty Logo" width="100">
+                <img src="https://almamater.hospital/wp-content/uploads/2023/03/logo-hospital-alma-mater-1.png" alt="Hospital Logo" width="100">
             </body>
             </html>
             """
@@ -52,7 +53,7 @@ def generate_pdf(student_id, materia):
             pdfkit.from_string(html_content, 'Reporte de Calificaciones.pdf', options=options)
             with open('Reporte de Calificaciones.pdf', 'rb') as file:
               pdf_data = file.read()
-              st.download_button(label="Download PDF", data=pdf_data, file_name='Reporte de Calificaciones.pdf', mime='application/pdf')
+            st.download_button(label="Download PDF", data=pdf_data, file_name='Reporte de Calificaciones.pdf', mime='application/pdf')
 
 
 #_______________________________________________________________                 
@@ -103,11 +104,6 @@ def main():
     st.write("")
     # write a line
     #calificaciones en PDF
-    if st.button('Descargar calificaciones en PDF'):
-            # Call the generate_pdf function
-            generate_pdf(student_id, materia)
-        # Display other student information like name, email, calificaciones, etc.
-
 
     with st.expander("Información del estudiante",expanded=True):
       st.subheader(f"{student['name']}")
@@ -123,6 +119,17 @@ def main():
      if st.button('Ver calificaciones anteriores')and numero_calificaciones!=None:
       st.write("")
       with st.container():
+       if st.button('Descargar calificaciones en PDF'):
+            # Call the generate_pdf function
+            namepdf = {student['name']} 
+            idstupdf= {student_id[0]}
+            emailpdf={student['email']}
+            materiapdf={materia[0]}
+
+            generate_pdf(student_id, materia, calificaciones,emailpdf,idstupdf,namepdf, materiapdf)
+        # Display other student information like name, email, calificaciones, etc.
+
+
        try:
         calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-1}"])
         calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
