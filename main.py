@@ -13,9 +13,49 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 from datetime import datetime
 import pytz 
+import pdfkit
         
 
-                 
+def generate_pdf(student_id, materia):
+            # Create the URL with parameters
+            url = f"https://qrudeamedicina.streamlit.app/?student_id={int(student_id)}&materia={materia}"
+
+            # Generate the HTML content with the QR code and other data
+            html_content = f"""
+            <html>
+            <body>
+                <h1>QR Code URL:</h1>
+                <p>{url}</p>
+                <h2>Student Information:</h2>
+                <p>Name: {student['name']}</p>
+                <p>Email: {student['email']}</p>
+                <p>Calificaciones: {student['calificaciones']}</p>
+                <p>Materia: {student['materia']}</p>
+                <img src="logo_faculty.png" alt="Faculty Logo" width="100">
+                <img src="logo_hospital.png" alt="Hospital Logo" width="100">
+            </body>
+            </html>
+            """
+
+            # Set the options for pdfkit
+            options = {
+                'page-size': 'A4',
+                'margin-top': '0mm',
+                'margin-right': '0mm',
+                'margin-bottom': '0mm',
+                'margin-left': '0mm',
+                'encoding': "UTF-8",
+                'no-outline': None
+            }
+
+            # Generate the PDF using pdfkit
+            pdfkit.from_string(html_content, 'Reporte de Calificaciones.pdf', options=options)
+            with open('Reporte de Calificaciones.pdf', 'rb') as file:
+              pdf_data = file.read()
+              st.download_button(label="Download PDF", data=pdf_data, file_name='Reporte de Calificaciones.pdf', mime='application/pdf')
+
+
+#_______________________________________________________________                 
 # Main function
 def main():
   # Set the page layout
@@ -28,6 +68,8 @@ def main():
         'About': "App de calificación creada para los estudiantes de Medicina UdeA"
     }
 )
+
+
     #tomar informacion del QR por el metodo experimental_get_query_params
   student_id = st.experimental_get_query_params().get("student_id")
   materia= st.experimental_get_query_params().get("materia")
@@ -38,7 +80,6 @@ def main():
       #set the col 2 in right position
       col1.image("https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES", width=100)
       col2.image("https://almamater.hospital/wp-content/uploads/2023/03/logo-hospital-alma-mater-1.png", width=100)
-      with st.button("Informe calificaciones PDF")
       st.subheader(f"App de calificación UdeA, Materia: {materia[0]}")
       st.caption("Elaborado por Alejandro Hernández-Arango internista")
   except:
@@ -61,6 +102,13 @@ def main():
     # write a line 
     st.write("")
     # write a line
+    #calificaciones en PDF
+    if st.button('Descargar calificaciones en PDF'):
+            # Call the generate_pdf function
+            generate_pdf(student_id, materia)
+        # Display other student information like name, email, calificaciones, etc.
+
+
     with st.expander("Información del estudiante",expanded=True):
       st.subheader(f"{student['name']}")
       st.write(f"{student['email']}")
