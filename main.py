@@ -17,7 +17,7 @@ import pdfkit
 import base64
         
 
-def generate_pdf(student_id, materia):
+def generate_pdf(student_id, materia, calificaciones,emailpdf,idstupdf,namepdf, materiapdf):
             # Create the URL with parameters
             url = f"https://qrudeamedicina.streamlit.app/?student_id={int(student_id)}&materia={materia}"
 
@@ -29,10 +29,11 @@ def generate_pdf(student_id, materia):
                 <h1>QR Code URL:</h1>
                 <p>{url}</p>
                 <h2>Student Information:</h2>
-                <p>Name: namepdf</p>
-                <p>Email: emailpdf</p>
-                <p>Calificaciones: calificaciones</p>
-                <p>Materia: materia</p>
+                <p>Name: {namepdf}</p>
+                <p>ID: {idstupdf}</p>
+                <p>Email: {emailpdf}</p>
+                <p>Calificaciones: {calificaciones}</p>
+                <p>Materia: {materiapdf}</p>
                 <img src="https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES" alt="Faculty Logo" width="100">
                 <img src="https://almamater.hospital/wp-content/uploads/2023/03/logo-hospital-alma-mater-1.png" alt="Hospital Logo" width="100">
             </body>
