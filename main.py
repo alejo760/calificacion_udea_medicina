@@ -14,6 +14,7 @@ from firebase_admin import firestore
 from datetime import datetime
 import pytz 
 import pdfkit
+import base64
         
 
 def generate_pdf(student_id, materia):
@@ -52,8 +53,10 @@ def generate_pdf(student_id, materia):
             # Generate the PDF using pdfkit
             pdfkit.from_string(html_content, 'Reporte de Calificaciones.pdf', options=options)
             with open('Reporte de Calificaciones.pdf', 'rb') as file:
-              pdf_data = file.read()
-            st.download_button(label="Download PDF", data=pdf_data, file_name='Reporte de Calificaciones.pdf', mime='application/pdf')
+              b64 = base64.b64encode(open('Reporte de Calificaciones.pdf', 'rb').read()).decode()
+              href = f'<a href="data:file/json;base64,{b64}" download="Reporte de Calificaciones.pdf">Download json file</a>'
+              st.markdown(href, unsafe_allow_html=True)
+              st.success("Base de datos descargada exitosamente")
 
 
 #_______________________________________________________________                 
