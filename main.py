@@ -17,9 +17,9 @@ import pdfkit
 import base64
         
 
-def generate_pdf(student_id, materia, calificaciones,emailpdf,idstupdf,namepdf, materiapdf):
+def generate_pdf(materia, calificaciones,emailpdf,idstupdf,namepdf, materiapdf):
             # Create the URL with parameters
-            url = f"https://qrudeamedicina.streamlit.app/?student_id={int(student_id)}&materia={materia}"
+            url = f"https://qrudeamedicina.streamlit.app/?student_id={int(idstupdf)}&materia={materia}"
 
             # Generate the HTML content with the QR code and other data student_id, materia, calificaciones,emailpdf,idstupdf,namepdf, materiapdf
 
@@ -154,7 +154,7 @@ def main():
               emailpdf={student['email']}
               materiapdf={materia[0]}
 
-              generate_pdf(student_id, materia, calificaciones,emailpdf,idstupdf,namepdf, materiapdf)
+              generate_pdf( materia, calificaciones,emailpdf,idstupdf,namepdf, materiapdf)
                   # Generate Base64-encoded link for downloading the PDF
               b64 = base64.b64encode(open('Reporte de Calificaciones.pdf', 'rb').read()).decode()
               href = f'<a href="data:application/pdf;base64,{b64}" download="Reporte de Calificaciones.pdf">Download PDF</a>'
