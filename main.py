@@ -154,7 +154,7 @@ def main():
       emailpdf=str({student['email']})
       materiapdf=str({materia})
       calificacionespdf= calificaciones
-      generate_pdf( calificacionespdf,emailpdf,idstupdf,namepdf, materiapdf)
+      #generate_pdf( calificacionespdf,emailpdf,idstupdf,namepdf, materiapdf)
                   # Generate Base64-encoded link for downloading the PDF
       b64 = base64.b64encode(open('Reporte de Calificaciones.pdf', 'rb').read()).decode()
       href = f'<a href="data:application/pdf;base64,{b64}" download="Reporte de Calificaciones.pdf">Download PDF</a>'
