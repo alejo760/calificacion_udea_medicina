@@ -17,7 +17,7 @@ import pdfkit
 import base64
         
 
-def generate_pdf(materia, calificaciones,emailpdf,idstupdf,namepdf, materiapdf):
+def generate_pdf( calificacionespdf,emailpdf,idstupdf,namepdf, materiapdf):
             # Create the URL with parameters
             url = f"https://qrudeamedicina.streamlit.app/?student_id={int(idstupdf)}&materia={materia}"
 
@@ -32,7 +32,7 @@ def generate_pdf(materia, calificaciones,emailpdf,idstupdf,namepdf, materiapdf):
                 <p>Name: {namepdf}</p>
                 <p>ID: {idstupdf}</p>
                 <p>Email: {emailpdf}</p>
-                <p>Calificaciones: {calificaciones}</p>
+                <p>Calificaciones: {calificacionespdf}</p>
                 <p>Materia: {materiapdf}</p>
                 <img src="https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES" alt="Faculty Logo" width="100">
                 <img src="https://almamater.hospital/wp-content/uploads/2023/03/logo-hospital-alma-mater-1.png" alt="Hospital Logo" width="100">
@@ -149,12 +149,13 @@ def main():
   
       try:
               # Call the generate_pdf function
-              namepdf = {student['name']} 
-              idstupdf= {student_id[0]}
-              emailpdf={student['email']}
-              materiapdf={materia[0]}
+              namepdf = str({student['name']} )
+              idstupdf= str({student_id[0]})
+              emailpdf=str({student['email']})
+              materiapdf=str({materia})
+              calificacionespdf= calificaciones
 
-              generate_pdf( materia, calificaciones,emailpdf,idstupdf,namepdf, materiapdf)
+              generate_pdf( calificacionespdf,emailpdf,idstupdf,namepdf, materiapdf)
                   # Generate Base64-encoded link for downloading the PDF
               b64 = base64.b64encode(open('Reporte de Calificaciones.pdf', 'rb').read()).decode()
               href = f'<a href="data:application/pdf;base64,{b64}" download="Reporte de Calificaciones.pdf">Download PDF</a>'
