@@ -119,18 +119,21 @@ def main():
       st.write("")
       with st.container():
        if st.button('Descargar calificaciones en PDF'):
-            # Call the generate_pdf function
-            namepdf = {student['name']} 
-            idstupdf= {student_id[0]}
-            emailpdf={student['email']}
-            materiapdf={materia[0]}
+            try:
+              # Call the generate_pdf function
+              namepdf = {student['name']} 
+              idstupdf= {student_id[0]}
+              emailpdf={student['email']}
+              materiapdf={materia[0]}
 
-            generate_pdf(student_id, materia, calificaciones,emailpdf,idstupdf,namepdf, materiapdf)
-                # Generate Base64-encoded link for downloading the PDF
-            b64 = base64.b64encode(open('Reporte de Calificaciones.pdf', 'rb').read()).decode()
-            href = f'<a href="data:application/pdf;base64,{b64}" download="Reporte de Calificaciones.pdf">Download PDF</a>'
-            st.markdown(href, unsafe_allow_html=True)
-            st.success("PDF downloaded successfully")
+              generate_pdf(student_id, materia, calificaciones,emailpdf,idstupdf,namepdf, materiapdf)
+                  # Generate Base64-encoded link for downloading the PDF
+              b64 = base64.b64encode(open('Reporte de Calificaciones.pdf', 'rb').read()).decode()
+              href = f'<a href="data:application/pdf;base64,{b64}" download="Reporte de Calificaciones.pdf">Download PDF</a>'
+              st.markdown(href, unsafe_allow_html=True)
+              st.success("PDF downloaded successfully")
+            except Exception as e:
+              st.error(e)
         # Display other student information like name, email, calificaciones, etc.
 
 
