@@ -19,7 +19,7 @@ import base64
 
 def generate_pdf( calificacionespdf,emailpdf,idstupdf,namepdf, materiapdf):
             # Create the URL with parameters
-            url = f"https://qrudeamedicina.streamlit.app/?student_id={int(idstupdf)}&materia={materia}"
+            url = f"https://qrudeamedicina.streamlit.app/?student_id={int(idstupdf)}&materia={materiapdf}"
 
             # Generate the HTML content with the QR code and other data student_id, materia, calificaciones,emailpdf,idstupdf,namepdf, materiapdf
 
