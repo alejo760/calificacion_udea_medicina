@@ -129,7 +129,7 @@ def main():
       # create a new DataFrame from doc.to_dict()
       new_df = pd.DataFrame(doc.to_dict())
 # use concat to append new_df to df along the index axis
-      df = pd.concat([df, new_df], ignore_index=True)
+      df = pd.concat([df, new_df], ignore_index=False)
     df.to_json(f'notas_de_{materia}_{fecha}.json', orient="records")
     pd.json_normalize(df)
     with open(f'notas_de_{materia}_{fecha}.json') as f:
