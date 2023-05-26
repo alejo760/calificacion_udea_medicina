@@ -19,6 +19,7 @@ import base64
 
 import pandas as pd
 import pdfkit
+import tabulate
 
 def generate_pdf(calificacionespdf, emailpdf, idstupdf, namepdf, materiapdf):
     # Create the URL with parameters
