@@ -166,7 +166,7 @@ def main():
               pdf.set_font('Arial', size=12, style='B')
               pdf.cell(0, 10, "Calificaciones", ln=True, align='C')
               pdf.set_font('Arial', size=10)
-              pdf.multi_cell(0, 7, calificacionespdf)
+              pdf.multi_cell(0, 7, calificacionespdf, align='C', border=1)
               pdf.ln(30)
 
                 # New code: Generate and add QR code to the PDF
