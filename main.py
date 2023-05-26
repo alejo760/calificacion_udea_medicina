@@ -156,27 +156,23 @@ def main():
 
                 # New code: Add the data to the PDF with custom formatting
               pdf.set_font('Arial', size=12)
-              pdf.cell(0, 10, f"Name: {namepdf}", ln=True)
-              pdf.cell(0, 10, f"ID: {idstupdf}", ln=True)
-              pdf.cell(0, 10, f"Email: {emailpdf}", ln=True)
-              pdf.cell(0, 10, f"Subject: {materiapdf}", ln=True)
+              pdf.cell(0, 10, f"{namepdf}", ln=True, align='C')
+              pdf.cell(0, 10, f"{idstupdf}", ln=True, align='C')
+              pdf.cell(0, 10, f"{emailpdf}", ln=True, align='C')
+              pdf.cell(0, 10, f"Materia: {materiapdf}", ln=True, align='C')
               pdf.ln(10)
 
                 # New code: Add a table with formatted grades
               pdf.set_font('Arial', size=12, style='B')
-              pdf.cell(0, 10, "Grades", ln=True)
+              pdf.cell(0, 10, "Calificaciones", ln=True, align='C')
               pdf.set_font('Arial', size=10)
               pdf.multi_cell(0, 7, calificacionespdf)
               pdf.ln(30)
 
                 # New code: Generate and add QR code to the PDF
               generate_qr_codes(idstupdf, materiapdf)
-              pdf.image("QR.png", x=10, y=200, w=40)
+              pdf.image("QR.png", x=10, y=200, w=40, align='C')
                 # Add code to handle the QR code generation and placement in the PDF
-
-              html = create_download_link(pdf.output(dest="S").encode("latin-1"), "test")
-
-              st.markdown(html, unsafe_allow_html=True)
 
               html = create_download_link(pdf.output(dest="S").encode("latin-1"), "test")
 
