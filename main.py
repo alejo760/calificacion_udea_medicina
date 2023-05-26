@@ -171,6 +171,7 @@ def main():
                           data=f,
                           file_name='Reporte de Calificaciones.pdf',
                           mime='application/pdf'
+                      )
       except Exception as e:
               st.error(e)
         # Display other student information like name, email, calificaciones, etc.
