@@ -25,8 +25,6 @@ def generate_pdf(calificacionespdf, emailpdf, idstupdf, namepdf, materiapdf):
     # Create the URL with parameters
     url = f"https://qrudeamedicina.streamlit.app/?student_id={int(idstupdf)}&materia={materiapdf}"
 
-    # Convert calificacionespdf DataFrame to HTML table
-    calificaciones_html = calificacionespdf.to_html()
 
     # Generate the HTML content with the QR code, student information, and calificaciones table
     html_content = f"""
@@ -39,7 +37,7 @@ def generate_pdf(calificacionespdf, emailpdf, idstupdf, namepdf, materiapdf):
         <p>ID: {idstupdf}</p>
         <p>Email: {emailpdf}</p>
         <h2>Calificaciones:</h2>
-        {calificaciones_html}
+        {calificacionespdf}
         <p>Materia: {materiapdf}</p>
         <img src="https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES" alt="Faculty Logo" width="100">
         <img src="https://almamater.hospital/wp-content/uploads/2023/03/logo-hospital-alma-mater-1.png" alt="Hospital Logo" width="100">
