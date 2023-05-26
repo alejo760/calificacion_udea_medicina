@@ -161,21 +161,21 @@ def main():
               calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-1}"])
               calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
               calificacionespdf= calificaciones.to_markdown()
-
-              generate_pdf( calificacionespdf,emailpdf,idstupdf,namepdf, materiapdf)
+              generate_pdf(calificacionespdf, emailpdf, idstupdf, namepdf, materiapdf)
                   # Generate Base64-encoded link for downloading the PDF
-              if st.button('Generate PDF'):
-                  # Call the function to generate the PDF
-                  generate_pdf(calificacionespdf, emailpdf, idstupdf, namepdf, materiapdf)
-
-                  # Provide the download link for the generated PDF
-                  with open('Reporte de Calificaciones.pdf', 'rb') as f:
+              with open('Reporte de Calificaciones.pdf', 'rb') as f:
                       st.download_button(
                           label='Download PDF',
                           data=f,
                           file_name='Reporte de Calificaciones.pdf',
                           mime='application/pdf'
                       )
+
+                  # Call the function to generate the PDF
+                  
+
+                  # Provide the download link for the generated PDF
+
       except Exception as e:
               st.error(e)
         # Display other student information like name, email, calificaciones, etc.
