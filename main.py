@@ -81,6 +81,7 @@ def main():
      if st.button('Ver calificaciones anteriores')and numero_calificaciones!=None:
       st.write("")
       with st.container():
+       
 
        try:
         calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-1}"])
@@ -110,14 +111,18 @@ def main():
 
   
       try:
+          if st.button('Descargar calificaciones en PDF'):
               # Call the generate_pdf function
               namepdf = student['name']
               idstupdf= student_id[0]
               emailpdf=student['email']
               materiapdf=materia[0]
-              calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-1}"])
-              calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
-              calificacionespdf= calificaciones.to_markdown()
+              #Create a for loop to make a table for each calification an store in calificacionespdf
+              for i in range(0,numero_calificaciones):
+                calificacionespdf = pd.DataFrame(student[f"calificacion{i}"])
+                calificacionespdf.columns = pd.MultiIndex.from_product([[''], calificacionespdf.columns])
+                calificacionespdf=calificacionespdf.to_string()
+              
               pdf = FPDF()
               pdf.add_page()
               pdf.set_font('Arial', 'B', 16)
