@@ -174,7 +174,7 @@ def main():
               pdf.image("QR.png", x=90, y=200, w=40)
                 # Add code to handle the QR code generation and placement in the PDF
 
-              html = create_download_link(pdf.output(dest="S").encode("latin-1"), f"Reporte de calificación {namepdf}_{idstupdf}_{materiapdf}.pdf", "Descargar PDF")
+              html = create_download_link(pdf.output(dest="S").encode("latin-1"), f"Reporte de calificación {namepdf}_{idstupdf}_{materiapdf}.pdf")
 
               st.markdown(html, unsafe_allow_html=True)
     except Exception as e:
