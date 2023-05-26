@@ -23,7 +23,8 @@ def create_download_link(val, filename):
 def generate_qr_codes(idstupdf, materiapdf):
     qr_png = {}
     url = f"https://qrudeamedicina.streamlit.app/?student_id={idstupdf}&materia={materiapdf}"
-    qr = pyqrcode.create(url)       
+    qr = pyqrcode.create(url)  
+    qr.png(f"QR.png", scale=6)     
 # Main function
 def main():
   # Set the page layout
@@ -166,10 +167,11 @@ def main():
               pdf.cell(0, 10, "Grades", ln=True)
               pdf.set_font('Arial', size=10)
               pdf.multi_cell(0, 7, calificacionespdf)
-              pdf.ln(10)
+              pdf.ln(30)
 
                 # New code: Generate and add QR code to the PDF
               generate_qr_codes(idstupdf, materiapdf)
+              pdf.image("QR.png", x=10, y=200, w=40)
                 # Add code to handle the QR code generation and placement in the PDF
 
               html = create_download_link(pdf.output(dest="S").encode("latin-1"), "test")
