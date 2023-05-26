@@ -171,7 +171,7 @@ def main():
 
                 # New code: Generate and add QR code to the PDF
               generate_qr_codes(idstupdf, materiapdf)
-              pdf.image("QR.png", x=10, y=200, w=40, align='C')
+              pdf.image("QR.png", x=10, y=200, w=40)
                 # Add code to handle the QR code generation and placement in the PDF
 
               html = create_download_link(pdf.output(dest="S").encode("latin-1"), "test")
