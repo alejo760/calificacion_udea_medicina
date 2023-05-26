@@ -11,7 +11,7 @@ fpdf==1.7.2
 requests==2.27.1
 pytz==2021.3
 DateTime==4.7
-fpdf2
+
 ```
 
 
