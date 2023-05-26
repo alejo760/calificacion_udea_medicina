@@ -15,7 +15,6 @@ from datetime import datetime
 import pytz 
 import base64
 from fpdf import FPDF
-    
 def create_download_link(val, filename):
       b64 = base64.b64encode(val)
       return f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="{filename}.pdf">Download file</a>'
