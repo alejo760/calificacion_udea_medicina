@@ -20,6 +20,7 @@ import base64
 import pandas as pd
 import pdfkit
 import tabulate
+import wkhtmltopdf 
 
 def generate_pdf(calificacionespdf, emailpdf, idstupdf, namepdf, materiapdf):
     # Create the URL with parameters
