@@ -141,10 +141,6 @@ def main():
               pdf = FPDF()
               pdf.set_auto_page_break(auto=True, margin=15)  # Enable auto page break with a margin of 15mm
 
-                # New code: Set custom font and font size
-              pdf.add_font("Arial", style="", uni=True)
-              pdf.set_font('Arial', size=14)
-
               pdf.add_page()
 
                 # New code: Add the images to the PDF with custom positioning and dimensions
