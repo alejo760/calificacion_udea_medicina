@@ -109,9 +109,19 @@ def main():
        except Exception as e:
         st.warning("el estudiante no tiene más calificaciones anteriores")
 
-  
-      try:
-          if st.button('Descargar calificaciones en PDF'):
+                  # Generate Base64-encoded link for downloading the PDF
+
+        # Display other student information like name, email, calificaciones, etc.
+
+  except Exception as e:
+    st.warning("error en la base de datos el estudiante no se encuentra habilitado")
+    st.warning("por favor comuniquese con el administrador alejandro.hernandeza@udea.edu.co")
+    st.warning(e)
+    st.experimental_rerun()
+  #calificar el estudiante...
+  st.write("")
+  with st.expander("Descargar calificación",expanded=False):
+    try:
               # Call the generate_pdf function
               namepdf = student['name']
               idstupdf= student_id[0]
@@ -136,18 +146,8 @@ def main():
               html = create_download_link(pdf.output(dest="S").encode("latin-1"), "test")
 
               st.markdown(html, unsafe_allow_html=True)
-                  # Generate Base64-encoded link for downloading the PDF
-      except Exception as e:
+    except Exception as e:
               st.error(e)
-        # Display other student information like name, email, calificaciones, etc.
-
-  except Exception as e:
-    st.warning("error en la base de datos el estudiante no se encuentra habilitado")
-    st.warning("por favor comuniquese con el administrador alejandro.hernandeza@udea.edu.co")
-    st.warning(e)
-    st.experimental_rerun()
-  #calificar el estudiante...
-  st.write("")
   with st.expander("Ingreso de la calificación",expanded=False):
 
    #COLORR DE LOS SLIDERSSSS
