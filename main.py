@@ -138,47 +138,47 @@ def main():
                 calificacionespdf.columns = pd.MultiIndex.from_product([[''], calificacionespdf.columns])
                 calificacionespdf=calificacionespdf.to_string()
               
-                pdf = FPDF()
-                pdf.set_auto_page_break(auto=True, margin=15)  # Enable auto page break with a margin of 15mm
+              pdf = FPDF()
+              pdf.set_auto_page_break(auto=True, margin=15)  # Enable auto page break with a margin of 15mm
 
                 # New code: Set custom font and font size
-                pdf.add_font("Arial", style="", fname="Arial.ttf", uni=True)
-                pdf.set_font('Arial', size=14)
+              pdf.add_font("Arial", style="", uni=True)
+              pdf.set_font('Arial', size=14)
 
-                pdf.add_page()
+              pdf.add_page()
 
                 # New code: Add the images to the PDF with custom positioning and dimensions
-                pdf.image("https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES", x=10, y=10, w=40)
-                pdf.image("https://almamater.hospital/wp-content/uploads/2023/03/logo-hospital-alma-mater-1.png", x=160, y=10, w=40)
+              pdf.image("https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES", x=10, y=10, w=40)
+              pdf.image("https://almamater.hospital/wp-content/uploads/2023/03/logo-hospital-alma-mater-1.png", x=160, y=10, w=40)
 
                 # New code: Add spacing and formatting
-                pdf.ln(60)
-                pdf.set_font('Arial', size=18, style='B')
-                pdf.cell(0, 10, "Student Report", ln=True, align='C')
-                pdf.ln(10)
+              pdf.ln(60)
+              pdf.set_font('Arial', size=18, style='B')
+              pdf.cell(0, 10, "Informe de calificación Estudiante UdeA", ln=True, align='C')
+              pdf.ln(10)
 
                 # New code: Add the data to the PDF with custom formatting
-                pdf.set_font('Arial', size=12)
-                pdf.cell(0, 10, f"Name: {namepdf}", ln=True)
-                pdf.cell(0, 10, f"ID: {idstupdf}", ln=True)
-                pdf.cell(0, 10, f"Email: {emailpdf}", ln=True)
-                pdf.cell(0, 10, f"Subject: {materiapdf}", ln=True)
-                pdf.ln(10)
+              pdf.set_font('Arial', size=12)
+              pdf.cell(0, 10, f"Name: {namepdf}", ln=True)
+              pdf.cell(0, 10, f"ID: {idstupdf}", ln=True)
+              pdf.cell(0, 10, f"Email: {emailpdf}", ln=True)
+              pdf.cell(0, 10, f"Subject: {materiapdf}", ln=True)
+              pdf.ln(10)
 
                 # New code: Add a table with formatted grades
-                pdf.set_font('Arial', size=12, style='B')
-                pdf.cell(0, 10, "Grades", ln=True)
-                pdf.set_font('Arial', size=10)
-                pdf.multi_cell(0, 7, calificacionespdf)
-                pdf.ln(10)
+              pdf.set_font('Arial', size=12, style='B')
+              pdf.cell(0, 10, "Grades", ln=True)
+              pdf.set_font('Arial', size=10)
+              pdf.multi_cell(0, 7, calificacionespdf)
+              pdf.ln(10)
 
                 # New code: Generate and add QR code to the PDF
-                generate_qr_codes(idstupdf, materiapdf)
+              generate_qr_codes(idstupdf, materiapdf)
                 # Add code to handle the QR code generation and placement in the PDF
 
-                html = create_download_link(pdf.output(dest="S").encode("latin-1"), "test")
+              html = create_download_link(pdf.output(dest="S").encode("latin-1"), "test")
 
-                st.markdown(html, unsafe_allow_html=True)
+              st.markdown(html, unsafe_allow_html=True)
 
               html = create_download_link(pdf.output(dest="S").encode("latin-1"), "test")
 
