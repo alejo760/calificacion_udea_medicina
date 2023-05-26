@@ -154,10 +154,10 @@ def main():
   
       try:
               # Call the generate_pdf function
-              namepdf = st.write(student['name'])
-              idstupdf= st.write(student_id[0])
-              emailpdf=st.write(student['email'])
-              materiapdf=st.write(materia)
+              namepdf = student['name']
+              idstupdf= student_id[0]
+              emailpdf=student['email']
+              materiapdf=materia[0]
               calificacionespdf= st.write(calificaciones)
 
               generate_pdf( calificacionespdf,emailpdf,idstupdf,namepdf, materiapdf)
