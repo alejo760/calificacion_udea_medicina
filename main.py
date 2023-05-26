@@ -131,6 +131,7 @@ def main():
               namepdf = student['name']
               idstupdf= student_id[0]
               emailpdf=student['email']
+              materia= st.experimental_get_query_params().get("materia")
               materiapdf=materia[0]
               #Create a for loop to make a table for each calification an store in calificacionespdf
               for i in range(0,numero_calificaciones):
