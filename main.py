@@ -151,7 +151,7 @@ def main():
                 # New code: Add spacing and formatting
               pdf.ln(60)
               pdf.set_font('Arial', size=18, style='B')
-              pdf.cell(0, 10, "Informe de calificación", ln=True, align='C')
+              pdf.cell(0, 10, "Informe de Calificaciones", ln=True, align='C')
               pdf.ln(10)
 
                 # New code: Add the data to the PDF with custom formatting
