@@ -22,7 +22,7 @@ def create_download_link(val, filename):
       return f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="{filename}.pdf">Download file</a>'
 def generate_qr_codes(idstupdf, materiapdf):
     qr_png = {}
-    url = f"https://qrudeamedicina.streamlit.app/?student_id={idstupdf}&materia={materia}"
+    url = f"https://qrudeamedicina.streamlit.app/?student_id={idstupdf}&materia={materiapdf}"
     qr = pyqrcode.create(url)       
 # Main function
 def main():
@@ -131,7 +131,6 @@ def main():
               namepdf = student['name']
               idstupdf= student_id[0]
               emailpdf=student['email']
-              materia= st.experimental_get_query_params().get("materia")
               materiapdf=materia[0]
               #Create a for loop to make a table for each calification an store in calificacionespdf
               for i in range(0,numero_calificaciones):
