@@ -154,11 +154,11 @@ def main():
   
       try:
               # Call the generate_pdf function
-              namepdf = {student['name']} 
-              idstupdf= {student_id[0]}
-              emailpdf={student['email']}
-              materiapdf=materia
-              calificacionespdf= calificaciones
+              namepdf = st.write(student['name']} )
+              idstupdf= st.write({student_id[0]})
+              emailpdf={st.write(student['email']})
+              materiapdf=st.write(materia)
+              calificacionespdf= st.write(calificaciones)
 
               generate_pdf( calificacionespdf,emailpdf,idstupdf,namepdf, materiapdf)
                   # Generate Base64-encoded link for downloading the PDF
