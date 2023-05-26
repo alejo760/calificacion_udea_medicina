@@ -160,18 +160,12 @@ def main():
               materiapdf=materia
               calificacionespdf= calificaciones
 
-              if st.button('Generate PDF'):
-                  # Call the function to generate the PDF
-                  generate_pdf(calificacionespdf, emailpdf, idstupdf, namepdf, materiapdf)
-
-                  # Provide the download link for the generated PDF
-                  with open('Reporte de Calificaciones.pdf', 'rb') as f:
-                      st.download_button(
-                          label='Download PDF',
-                          data=f,
-                          file_name='Reporte de Calificaciones.pdf',
-                          mime='application/pdf'
-                      )
+              generate_pdf( calificacionespdf,emailpdf,idstupdf,namepdf, materiapdf)
+                  # Generate Base64-encoded link for downloading the PDF
+              b64 = base64.b64encode(open('Reporte de Calificaciones.pdf', 'rb').read()).decode()
+              href = f'<a href="data:application/pdf;base64,{b64}" download="Reporte de Calificaciones.pdf">Download PDF</a>'
+              st.markdown(href, unsafe_allow_html=True)
+              st.success("PDF downloaded successfully")
       except Exception as e:
               st.error(e)
         # Display other student information like name, email, calificaciones, etc.
