@@ -58,7 +58,8 @@ def generate_pdf(calificacionespdf, emailpdf, idstupdf, namepdf, materiapdf):
     }
 
     # Generate the PDF using pdfkit
-    pdfkit.from_string(html_content, 'Reporte de Calificaciones.pdf', options=options)
+    config = pdfkit.configuration(wkhtmltopdf='/path/to/wkhtmltopdf')
+    pdfkit.from_string(html_content, 'Reporte de Calificaciones.pdf', configuration=config, options=options)
 
 
 #_______________________________________________________________                 
