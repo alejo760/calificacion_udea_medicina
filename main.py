@@ -17,43 +17,48 @@ import pdfkit
 import base64
         
 
-def generate_pdf( calificacionespdf,emailpdf,idstupdf,namepdf, materiapdf):
-            # Create the URL with parameters
-            url = f"https://qrudeamedicina.streamlit.app/?student_id={int(idstupdf)}&materia={materiapdf}"
+import pandas as pd
+import pdfkit
 
-            # Generate the HTML content with the QR code and other data student_id, materia, calificaciones,emailpdf,idstupdf,namepdf, materiapdf
+def generate_pdf(calificacionespdf, emailpdf, idstupdf, namepdf, materiapdf):
+    # Create the URL with parameters
+    url = f"https://qrudeamedicina.streamlit.app/?student_id={int(idstupdf)}&materia={materiapdf}"
 
-            html_content = f"""
-            <html>
-            <body>
-                <h1>QR Code URL:</h1>
-                <p>{url}</p>
-                <h2>Student Information:</h2>
-                <p>Name: {namepdf}</p>
-                <p>ID: {idstupdf}</p>
-                <p>Email: {emailpdf}</p>
-                <p>Calificaciones: {calificacionespdf}</p>
-                <p>Materia: {materiapdf}</p>
-                <img src="https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES" alt="Faculty Logo" width="100">
-                <img src="https://almamater.hospital/wp-content/uploads/2023/03/logo-hospital-alma-mater-1.png" alt="Hospital Logo" width="100">
-            </body>
-            </html>
-            """
+    # Convert calificacionespdf DataFrame to HTML table
+    calificaciones_html = calificacionespdf.to_html()
 
-            # Set the options for pdfkit
-            options = {
-                'page-size': 'A4',
-                'margin-top': '0mm',
-                'margin-right': '0mm',
-                'margin-bottom': '0mm',
-                'margin-left': '0mm',
-                'encoding': "UTF-8",
-                'no-outline': None
-            }
+    # Generate the HTML content with the QR code, student information, and calificaciones table
+    html_content = f"""
+    <html>
+    <body>
+        <h1>QR Code URL:</h1>
+        <p>{url}</p>
+        <h2>Student Information:</h2>
+        <p>Name: {namepdf}</p>
+        <p>ID: {idstupdf}</p>
+        <p>Email: {emailpdf}</p>
+        <h2>Calificaciones:</h2>
+        {calificaciones_html}
+        <p>Materia: {materiapdf}</p>
+        <img src="https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES" alt="Faculty Logo" width="100">
+        <img src="https://almamater.hospital/wp-content/uploads/2023/03/logo-hospital-alma-mater-1.png" alt="Hospital Logo" width="100">
+    </body>
+    </html>
+    """
 
-            # Generate the PDF using pdfkit
-            pdfkit.from_string(html_content, 'Reporte de Calificaciones.pdf', options=options)
-          
+    # Set the options for pdfkit
+    options = {
+        'page-size': 'A4',
+        'margin-top': '0mm',
+        'margin-right': '0mm',
+        'margin-bottom': '0mm',
+        'margin-left': '0mm',
+        'encoding': "UTF-8",
+        'no-outline': None
+    }
+
+    # Generate the PDF using pdfkit
+    pdfkit.from_string(html_content, 'Reporte de Calificaciones.pdf', options=options)
 
 
 #_______________________________________________________________                 
@@ -147,20 +152,22 @@ def main():
         st.warning("el estudiante no tiene más calificaciones anteriores")
 
   
-
+      try:
               # Call the generate_pdf function
-      namepdf = str({student['name']} )
-      idstupdf= str({student_id[0]})
-      emailpdf=str({student['email']})
-      materiapdf=str({materia})
-      calificacionespdf= calificaciones
-      #generate_pdf( calificacionespdf,emailpdf,idstupdf,namepdf, materiapdf)
-                  # Generate Base64-encoded link for downloading the PDF
-      b64 = base64.b64encode(open('Reporte de Calificaciones.pdf', 'rb').read()).decode()
-      href = f'<a href="data:application/pdf;base64,{b64}" download="Reporte de Calificaciones.pdf">Download PDF</a>'
-      st.markdown(href, unsafe_allow_html=True)
-      st.success("PDF downloaded successfully")
+              namepdf = str({student['name']} )
+              idstupdf= str({student_id[0]})
+              emailpdf=str({student['email']})
+              materiapdf=str({materia})
+              calificacionespdf= calificaciones
 
+              generate_pdf( calificacionespdf,emailpdf,idstupdf,namepdf, materiapdf)
+                  # Generate Base64-encoded link for downloading the PDF
+              b64 = base64.b64encode(open('Reporte de Calificaciones.pdf', 'rb').read()).decode()
+              href = f'<a href="data:application/pdf;base64,{b64}" download="Reporte de Calificaciones.pdf">Download PDF</a>'
+              st.markdown(href, unsafe_allow_html=True)
+              st.success("PDF downloaded successfully")
+      except Exception as e:
+              st.error(e)
         # Display other student information like name, email, calificaciones, etc.
 
   except Exception as e:
