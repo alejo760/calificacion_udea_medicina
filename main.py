@@ -154,10 +154,10 @@ def main():
   
       try:
               # Call the generate_pdf function
-              namepdf = str({student['name']} )
-              idstupdf= str({student_id[0]})
-              emailpdf=str({student['email']})
-              materiapdf=str({materia})
+              namepdf = {student['name']} 
+              idstupdf= {student_id[0]}
+              emailpdf={student['email']}
+              materiapdf=materia
               calificacionespdf= calificaciones
 
               if st.button('Generate PDF'):
