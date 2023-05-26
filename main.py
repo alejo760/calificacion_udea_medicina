@@ -118,23 +118,19 @@ def main():
               calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-1}"])
               calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
               calificacionespdf= calificaciones.to_markdown()
-              export_as_pdf = st.button("Export Report")
-              if export_as_pdf:
-                pdf = FPDF()
-                pdf.add_page()
-                pdf.set_font('Arial', 'B', 16)
-                pdf.cell(40, 10, report_text)
-
+              pdf = FPDF()
+              pdf.add_page()
+              pdf.set_font('Arial', 'B', 16)
                 # New code: Add the data to the PDF
-                pdf.cell(0, 10, f"Name: {namepdf}", ln=True)
-                pdf.cell(0, 10, f"ID: {idstupdf}", ln=True)
-                pdf.cell(0, 10, f"Email: {emailpdf}", ln=True)
-                pdf.cell(0, 10, f"Subject: {materiapdf}", ln=True)
-                pdf.multi_cell(0, 10, f"Grades:\n{calificacionespdf}")
+              pdf.cell(0, 10, f"Name: {namepdf}", ln=True)
+              pdf.cell(0, 10, f"ID: {idstupdf}", ln=True)
+              pdf.cell(0, 10, f"Email: {emailpdf}", ln=True)
+              pdf.cell(0, 10, f"Subject: {materiapdf}", ln=True)
+              pdf.multi_cell(0, 10, f"Grades:\n{calificacionespdf}")
 
-                html = create_download_link(pdf.output(dest="S").encode("latin-1"), "test")
+              html = create_download_link(pdf.output(dest="S").encode("latin-1"), "test")
 
-                st.markdown(html, unsafe_allow_html=True)
+              st.markdown(html, unsafe_allow_html=True)
                   # Generate Base64-encoded link for downloading the PDF
       except Exception as e:
               st.error(e)
