@@ -20,7 +20,7 @@ import base64
 import pandas as pd
 import pdfkit
 import tabulate
- 
+import imgkit
 
 def generate_pdf(calificacionespdf, emailpdf, idstupdf, namepdf, materiapdf):
     # Create the URL with parameters
@@ -57,12 +57,17 @@ def generate_pdf(calificacionespdf, emailpdf, idstupdf, namepdf, materiapdf):
         'no-outline': None
     }
 
-    # Generate the PDF using pdfkit
-    config = pdfkit.configuration(wkhtmltopdf='/path/to/wkhtmltopdf')
-    pdfkit.from_string(html_content, 'Reporte de Calificaciones.pdf', configuration=config, options=options)
+    # Generate image from HTML content using imgkit
+    image_path = 'temp.png'
+    imgkit.from_string(html_content, image_path)
 
+    # Generate the PDF from the image using pdfkit
+    pdf_path = 'Reporte de Calificaciones.pdf'
+    pdfkit.from_file(image_path, pdf_path)
 
-#_______________________________________________________________                 
+    # Remove temporary image file
+    if os.path.exists(image_path):
+        os.remove(image_path)                
 # Main function
 def main():
   # Set the page layout
@@ -162,21 +167,13 @@ def main():
               calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-1}"])
               calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
               calificacionespdf= calificaciones.to_markdown()
-              generate_pdf(calificacionespdf, emailpdf, idstupdf, namepdf, materiapdf)
+
+              generate_pdf( calificacionespdf,emailpdf,idstupdf,namepdf, materiapdf)
                   # Generate Base64-encoded link for downloading the PDF
-              with open('Reporte de Calificaciones.pdf', 'rb') as f:
-                      st.download_button(
-                          label='Download PDF',
-                          data=f,
-                          file_name='Reporte de Calificaciones.pdf',
-                          mime='application/pdf'
-                      )
-
-                  # Call the function to generate the PDF
-                  
-
-                  # Provide the download link for the generated PDF
-
+              b64 = base64.b64encode(open('Reporte de Calificaciones.pdf', 'rb').read()).decode()
+              href = f'<a href="data:application/pdf;base64,{b64}" download="Reporte de Calificaciones.pdf">Download PDF</a>'
+              st.markdown(href, unsafe_allow_html=True)
+              st.success("PDF downloaded successfully")
       except Exception as e:
               st.error(e)
         # Display other student information like name, email, calificaciones, etc.
