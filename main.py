@@ -156,7 +156,7 @@ def main():
               # Call the generate_pdf function
               namepdf = st.write(student['name']} )
               idstupdf= st.write({student_id[0]})
-              emailpdf={st.write(student['email']})
+              emailpdf=st.write({student['email']})
               materiapdf=st.write(materia)
               calificacionespdf= st.write(calificaciones)
 
