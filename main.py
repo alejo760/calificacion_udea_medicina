@@ -158,7 +158,9 @@ def main():
               idstupdf= student_id[0]
               emailpdf=student['email']
               materiapdf=materia[0]
-              calificacionespdf= st.write(calificaciones)
+              calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-1}"])
+              calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
+              calificacionespdf= calificaciones.to_markdown()
 
               generate_pdf( calificacionespdf,emailpdf,idstupdf,namepdf, materiapdf)
                   # Generate Base64-encoded link for downloading the PDF
