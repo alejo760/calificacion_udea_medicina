@@ -126,59 +126,6 @@ def main():
     st.experimental_rerun()
   #calificar el estudiante...
   st.write("")
-  with st.expander("Descargar calificación",expanded=False):
-    try:
-              # Call the generate_pdf function
-              namepdf = student['name']
-              idstupdf= student_id[0]
-              emailpdf=student['email']
-              materiapdf=materia[0]
-              #Create a for loop to make a table for each calification an store in calificacionespdf
-              for i in range(0,numero_calificaciones):
-                calificacionespdf = pd.DataFrame(student[f"calificacion{i}"])
-                calificacionespdf.columns = pd.MultiIndex.from_product([[''], calificacionespdf.columns])
-                calificacionespdf=calificacionespdf.to_string()
-              
-              pdf = FPDF()
-              pdf.set_auto_page_break(auto=True, margin=15)  # Enable auto page break with a margin of 15mm
-
-              pdf.add_page()
-
-                # New code: Add the images to the PDF with custom positioning and dimensions
-              pdf.image("http://facultadmedicina.udea.edu.co/src/assets/Logo_UdeA_fac_medicina.png", x=10, y=10, w=40)
-              pdf.image("https://almamater.hospital/wp-content/uploads/2023/03/logo-hospital-alma-mater-1.png", x=160, y=10, w=40)
-
-                # New code: Add spacing and formatting
-              pdf.ln(60)
-              pdf.set_font('Arial', size=18, style='B')
-              pdf.cell(0, 10, "Informe de Calificaciones", ln=True, align='C')
-              pdf.ln(10)
-
-                # New code: Add the data to the PDF with custom formatting
-              pdf.set_font('Arial', size=12)
-              pdf.cell(0, 10, f"{namepdf}", ln=True, align='C')
-              pdf.cell(0, 10, f"{idstupdf}", ln=True, align='C')
-              pdf.cell(0, 10, f"{emailpdf}", ln=True, align='C')
-              pdf.cell(0, 10, f"Materia: {materiapdf}", ln=True, align='C')
-              pdf.ln(10)
-
-                # New code: Add a table with formatted grades
-              pdf.set_font('Arial', size=12, style='B')
-              pdf.cell(0, 10, "Calificaciones", ln=True, align='C')
-              pdf.set_font('Arial', size=10)
-              pdf.multi_cell(0, 7, calificacionespdf, align='C', border=1)
-              pdf.ln(30)
-
-                # New code: Generate and add QR code to the PDF
-              generate_qr_codes(idstupdf, materiapdf)
-              pdf.image("QR.png", x=90, y=200, w=40)
-                # Add code to handle the QR code generation and placement in the PDF
-
-              html = create_download_link(pdf.output(dest="S").encode("latin-1"), f"Reporte de calificación {namepdf}_{idstupdf}_{materiapdf}.pdf")
-
-              st.markdown(html, unsafe_allow_html=True)
-    except Exception as e:
-              st.error(e)
   with st.expander("Ingreso de la calificación",expanded=False):
 
     if materia[0]=="vejez":
@@ -277,6 +224,59 @@ def main():
                 st.warning('Login fallido, revise las credenciales de acceso son las mismas del Ghips')
                 st.stop()
 
+  with st.expander("Descargar calificación",expanded=False):
+    try:
+              # Call the generate_pdf function
+              namepdf = student['name']
+              idstupdf= student_id[0]
+              emailpdf=student['email']
+              materiapdf=materia[0]
+              #Create a for loop to make a table for each calification an store in calificacionespdf
+              for i in range(0,numero_calificaciones):
+                calificacionespdf = pd.DataFrame(student[f"calificacion{i}"])
+                calificacionespdf.columns = pd.MultiIndex.from_product([[''], calificacionespdf.columns])
+                calificacionespdf=calificacionespdf.to_string()
+              
+              pdf = FPDF()
+              pdf.set_auto_page_break(auto=True, margin=15)  # Enable auto page break with a margin of 15mm
+
+              pdf.add_page()
+
+                # New code: Add the images to the PDF with custom positioning and dimensions
+              pdf.image("http://facultadmedicina.udea.edu.co/src/assets/Logo_UdeA_fac_medicina.png", x=10, y=10, w=40)
+              pdf.image("https://almamater.hospital/wp-content/uploads/2023/03/logo-hospital-alma-mater-1.png", x=160, y=10, w=40)
+
+                # New code: Add spacing and formatting
+              pdf.ln(60)
+              pdf.set_font('Arial', size=18, style='B')
+              pdf.cell(0, 10, "Informe de Calificaciones", ln=True, align='C')
+              pdf.ln(10)
+
+                # New code: Add the data to the PDF with custom formatting
+              pdf.set_font('Arial', size=12)
+              pdf.cell(0, 10, f"{namepdf}", ln=True, align='C')
+              pdf.cell(0, 10, f"{idstupdf}", ln=True, align='C')
+              pdf.cell(0, 10, f"{emailpdf}", ln=True, align='C')
+              pdf.cell(0, 10, f"Materia: {materiapdf}", ln=True, align='C')
+              pdf.ln(10)
+
+                # New code: Add a table with formatted grades
+              pdf.set_font('Arial', size=12, style='B')
+              pdf.cell(0, 10, "Calificaciones", ln=True, align='C')
+              pdf.set_font('Arial', size=10)
+              pdf.multi_cell(0, 7, calificacionespdf, align='C', border=1)
+              pdf.ln(30)
+
+                # New code: Generate and add QR code to the PDF
+              generate_qr_codes(idstupdf, materiapdf)
+              pdf.image("QR.png", x=90, y=200, w=40)
+                # Add code to handle the QR code generation and placement in the PDF
+
+              html = create_download_link(pdf.output(dest="S").encode("latin-1"), f"Reporte de calificación {namepdf}_{idstupdf}_{materiapdf}.pdf")
+
+              st.markdown(html, unsafe_allow_html=True)
+    except Exception as e:
+              st.error(e)
 # Run the main function
 if __name__ == "__main__":
   main()
