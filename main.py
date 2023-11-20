@@ -78,47 +78,6 @@ def main():
       st.write(f"{student['email']}")
       st.write(f"CC:{student_id[0]}")
     st.write("")
-    with st.expander("Otras calificaciones de esta rotación",expanded=False):
-     if numero_calificaciones==None:
-        st.write("El estudiante **NO** ha sido calificado antes")
-     else:
-      st.write(f" El estudiante ha sido calificado antes **{student.get('calificaciones')}** veces")
-      #Show all the student's previous grades in firestore subcollection calificaciones in a table
-     if st.button('Ver calificaciones anteriores')and numero_calificaciones!=None:
-      st.write("")
-      with st.container():
-       
-
-       try:
-        calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-1}"])
-        calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
-        #order columns
-        st.write(calificaciones)
-        try:
-          calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-2}"])
-          calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
-          st.write(calificaciones)
-          try:
-            calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-3}"])
-            calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
-            st.write(calificaciones)
-            try:
-              calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-4}"])
-              calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
-              st.write(calificaciones)
-            except Exception as e:
-              st.warning("el estudiante no tien más calificaciones anteriores")
-          except Exception as e:
-            st.warning("el estudiante no tiene más calificaciones anteriores")
-        except Exception as e:
-          st.warning("el estudiante no tiene más calificaciones anteriores")
-       except Exception as e:
-        st.warning("el estudiante no tiene más calificaciones anteriores")
-
-                  # Generate Base64-encoded link for downloading the PDF
-
-        # Display other student information like name, email, calificaciones, etc.
-
   except Exception as e:
     st.warning("error en la base de datos el estudiante no se encuentra habilitado")
     st.warning("por favor comuniquese con el administrador alejandro.hernandeza@udea.edu.co")
@@ -277,6 +236,47 @@ def main():
               st.markdown(html, unsafe_allow_html=True)
     except Exception as e:
               st.error(e)
+  with st.expander("Otras calificaciones de esta rotación",expanded=False):
+     if numero_calificaciones==None:
+        st.write("El estudiante **NO** ha sido calificado antes")
+     else:
+      st.write(f" El estudiante ha sido calificado antes **{student.get('calificaciones')}** veces")
+      #Show all the student's previous grades in firestore subcollection calificaciones in a table
+     if st.button('Ver calificaciones anteriores')and numero_calificaciones!=None:
+      st.write("")
+      with st.container():
+       
+
+       try:
+        calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-1}"])
+        calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
+        #order columns
+        st.write(calificaciones)
+        try:
+          calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-2}"])
+          calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
+          st.write(calificaciones)
+          try:
+            calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-3}"])
+            calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
+            st.write(calificaciones)
+            try:
+              calificaciones = pd.DataFrame(student[f"calificacion{numero_calificaciones-4}"])
+              calificaciones.columns = pd.MultiIndex.from_product([[''], calificaciones.columns])
+              st.write(calificaciones)
+            except Exception as e:
+              st.warning("el estudiante no tien más calificaciones anteriores")
+          except Exception as e:
+            st.warning("el estudiante no tiene más calificaciones anteriores")
+        except Exception as e:
+          st.warning("el estudiante no tiene más calificaciones anteriores")
+       except Exception as e:
+        st.warning("el estudiante no tiene más calificaciones anteriores")
+
+                  # Generate Base64-encoded link for downloading the PDF
+
+        # Display other student information like name, email, calificaciones, etc.
+
 # Run the main function
 if __name__ == "__main__":
   main()
