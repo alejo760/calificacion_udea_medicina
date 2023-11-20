@@ -185,15 +185,18 @@ def main():
 
   with st.expander("Descargar calificación",expanded=False):
     try:
-              # Call the generate_pdf function
+              # Llamar a la función generate_pdf
               namepdf = student['name']
               idstupdf= student_id[0]
               emailpdf=student['email']
               materiapdf=materia[0]
-              #Create a for loop to make a table for each calification an store in calificacionespdf
+              # Crear un bucle for para hacer una tabla para cada calificación y almacenar en calificacionespdf
               for i in range(0,numero_calificaciones):
                 calificacionespdf = pd.DataFrame(student[f"calificacion{i}"])
-                calificacionespdf.columns = pd.MultiIndex.from_product([[''], calificacionespdf.columns])
+                # Cambiar los nombres de las columnas a una cadena vacía
+                calificacionespdf.columns = ['' for _ in calificacionespdf.columns]
+                # Cambiar el nombre del índice a una cadena vacía
+                calificacionespdf = calificacionespdf.rename(index=lambda x: '')
                 calificacionespdf=calificacionespdf.to_string()
               
               pdf = FPDF()
