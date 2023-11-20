@@ -181,27 +181,6 @@ def main():
               st.error(e)
   with st.expander("Ingreso de la calificación",expanded=False):
 
-   #COLORR DE LOS SLIDERSSSS
-    ColorMinMax = st.markdown(''' <style> div.stSlider > div[data-baseweb = "slider"] > div[data-testid="stTickBar"] > div {
-     background: rgb(1 1 1 / 0%); } </style>''', unsafe_allow_html = True)
-
-
-    Slider_Cursor = st.markdown(''' <style> div.stSlider > div[data-baseweb="slider"] > div > div > div[role="slider"]{
-       background-color: rgb(14, 38, 74); box-shadow: rgb(14 38 74 / 20%) 0px 0px 0px 0.2rem;} </style>''', unsafe_allow_html = True)
-
-    
-    Slider_Number = st.markdown(''' <style> div.stSlider > div[data-baseweb="slider"] > div > div > div > div
-                                { color: rgb(14, 38, 74); } </style>''', unsafe_allow_html = True)
-    
-    col = f''' <style> div.stSlider > div[data-baseweb = "slider"] > div > div {{
-          background: linear-gradient(to right, rgb(255, 255, 255) 0%,
-          rgb(255, 255, 255) 10%,
-          rgba(151, 166, 195, 0.25) 10%,
-          rgba(151, 166, 195, 0.25) 100%); }} </style>'''
-
-    ColorSlider = st.markdown(col, unsafe_allow_html = True)
-
-
     if materia[0]=="vejez":
       try: 
         nucleos=['Rotación Hospitalaria', 'Living lab', 'Consulta externa', 'Atención domiciliaria (ambulatoria)','cancer']
