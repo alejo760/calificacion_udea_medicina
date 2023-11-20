@@ -202,7 +202,7 @@ def main():
               pdf.add_page()
 
                 # New code: Add the images to the PDF with custom positioning and dimensions
-              pdf.image("http://facultadmedicina.udea.edu.co/src/assets/Logo_UdeA_fac_medicina.png", x=10, y=10, w=40)
+              pdf.image("https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES", x=10, y=10, w=40)
               pdf.image("https://almamater.hospital/wp-content/uploads/2023/03/logo-hospital-alma-mater-1.png", x=160, y=10, w=40)
 
                 # New code: Add spacing and formatting
