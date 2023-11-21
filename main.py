@@ -99,22 +99,21 @@ def main():
   if student_id is None or materia is None:
     student_id = st.text_input('Introduce la cedula o identificación del estudiante:')
     materia= st.radio( "seleccione la materia",["internado"])
-    if st.button('Buscar estudiantes'):
-            key_dict = json.loads(st.secrets["textkey"])
-            creds = service_account.Credentials.from_service_account_info(key_dict)
-            db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")  
-            student_ref = db.collection("students").document(student_id)
-            student = student_ref.get().to_dict()
-
-
-            if st.button(f"Descargar informe de {student['name']}"):
-              numero_calificaciones = student.get("calificaciones")
-              nucleobd = student.get("nucleo")
-              with st.expander("Descargar calificación",expanded=False):
+    #wait for the user write in texbox to continue
+    with st.expander("Descargar calificación",expanded=False):
+                numero_calificaciones = student.get("calificaciones")
+                nucleobd = student.get("nucleo")
                 try:
                   generate_report(student, student_id, materia, numero_calificaciones)
                 except Exception as e:
                   st.error(f"An error occurred: {e}")
+                key_dict = json.loads(st.secrets["textkey"])
+                creds = service_account.Credentials.from_service_account_info(key_dict)
+                db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")  
+                student_ref = db.collection("students").document(student_id)
+                student = student_ref.get().to_dict()
+
+
     st.stop()
           
   else:
