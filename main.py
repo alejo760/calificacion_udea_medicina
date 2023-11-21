@@ -101,7 +101,7 @@ def main():
       col1.image("https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES", width=100)
       col2.image("https://almamater.hospital/wp-content/uploads/2023/03/logo-hospital-alma-mater-1.png", width=100)
       st.subheader(f"App de calificación Alma Máter - UdeA 🎓")
-      st.caption("Elaborado por Alejandro Hernández-Arango internista")
+      st.caption("Elaborado por Alejandro Hernández-Arango internista- Informática Médica")
   except Exception as e:
     print(e)
     pass
