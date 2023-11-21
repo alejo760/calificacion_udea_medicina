@@ -109,10 +109,12 @@ def main():
             nucleobd = student.get("nucleo")
 
             if st.button(f"Descargar informe de {student['name']}"):
-              generate_report(student, student['student_id'], student['materia'], student['numero_calificaciones'])
+              generate_report(student_id, materia, numero_calificaciones)
     else:
         st.write('No se encontraron estudiantes con esa identificación')
         st.stop()
+
+
   key_dict = json.loads(st.secrets["textkey"])
   creds = service_account.Credentials.from_service_account_info(key_dict)
   db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")  
