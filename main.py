@@ -112,10 +112,12 @@ def main():
               nucleobd = student.get("nucleo")
               generate_report(student_id, materia, numero_calificaciones)
               st.stop()
+            st.stop()
+          
     else:
         st.write('No se encontraron estudiantes con esa identificación')
         st.stop()
-
+  
 
   key_dict = json.loads(st.secrets["textkey"])
   creds = service_account.Credentials.from_service_account_info(key_dict)
