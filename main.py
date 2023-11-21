@@ -105,10 +105,11 @@ def main():
             db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")  
             student_ref = db.collection("students").document(student_id)
             student = student_ref.get().to_dict()
-            numero_calificaciones = student.get("calificaciones")
-            nucleobd = student.get("nucleo")
+
 
             if st.button(f"Descargar informe de {student['name']}"):
+              numero_calificaciones = student.get("calificaciones")
+              nucleobd = student.get("nucleo")
               generate_report(student_id, materia, numero_calificaciones)
               st.stop()
     else:
