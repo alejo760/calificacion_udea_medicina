@@ -43,11 +43,10 @@ def search_and_download(student_id):
     return students_to_download
 
 def evaluate_student(materia, student_id):
-      st.warning(student_id[0])
       key_dict = json.loads(st.secrets["textkey"])
       creds = service_account.Credentials.from_service_account_info(key_dict)
       db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")  
-      student_ref = db.collection("students").document(student_id)
+      student_ref = db.collection("students").document(student_id[0])
       student = student_ref.get().to_dict()
       numero_calificaciones = student.get("calificaciones")
       nucleobd = student.get("nucleo")
