@@ -245,8 +245,6 @@ def main():
     st.write("")
   except Exception as e:
         student_id = st.text_input('Introduce la cedula o identificación del estudiante:')
-        student, numero_calificaciones, nucleobd = get_student_info(student_id)
-
         if st.button('Buscar estudiantes'):
           students_to_download = search_and_download(student_id)
           if students_to_download:
