@@ -178,13 +178,13 @@ def main():
 
   try:
     with st.expander("Información del estudiante",expanded=True):
-      student, numero_calificaciones, nucleobd = get_student_info(student_id)
       st.subheader(f"{student['name']}")
       st.write(f"{student['email']}")
       st.write(f"CC:{student_id[0]}")
     st.write("")
   except Exception as e:
         student_id = st.text_input('Introduce la cedula o identificación del estudiante:')
+        student, numero_calificaciones, nucleobd = get_student_info(student_id)
 
         if st.button('Buscar estudiantes'):
           students_to_download = search_and_download(student_id)
