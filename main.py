@@ -110,8 +110,11 @@ def main():
             if st.button(f"Descargar informe de {student['name']}"):
               numero_calificaciones = student.get("calificaciones")
               nucleobd = student.get("nucleo")
-              generate_report(student_id, materia, numero_calificaciones)
-  
+              with st.expander("Descargar calificación",expanded=False):
+                try:
+                  generate_report(student, student_id, materia, numero_calificaciones)
+                except Exception as e:
+                  st.error(f"An error occurred: {e}")
     st.stop()
           
   else:
