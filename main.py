@@ -101,17 +101,18 @@ def main():
     materia= st.radio( "seleccione la materia",["internado"])
     #wait for the user write in texbox to continue
     with st.expander("Descargar calificación",expanded=False):
+                key_dict = json.loads(st.secrets["textkey"])
+                creds = service_account.Credentials.from_service_account_info(key_dict)
+                db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")  
+                student_ref = db.collection("students").document(student_id)
+                student = student_ref.get().to_dict()
                 numero_calificaciones = student.get("calificaciones")
                 nucleobd = student.get("nucleo")
                 try:
                   generate_report(student, student_id, materia, numero_calificaciones)
                 except Exception as e:
                   st.error(f"An error occurred: {e}")
-                key_dict = json.loads(st.secrets["textkey"])
-                creds = service_account.Credentials.from_service_account_info(key_dict)
-                db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")  
-                student_ref = db.collection("students").document(student_id)
-                student = student_ref.get().to_dict()
+
 
 
     st.stop()
