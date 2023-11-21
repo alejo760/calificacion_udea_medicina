@@ -116,8 +116,8 @@ def main():
     st.stop()
           
   else:
-        st.write('No se encontraron estudiantes con esa identificación')
-        st.stop()
+     pass
+
   
 
   key_dict = json.loads(st.secrets["textkey"])
