@@ -20,26 +20,6 @@ from PIL import Image
 import io
 
 
-
-def generate_qr_and_url(student_id, materia):
-  # Crear la URL basada en el student_id
-  url = f"https://qrudeamedicina.streamlit.app/?student_id={student_id}&materia={materia}"
-
-  # Crear el código QR
-  qr = pyqrcode.create(url)
-  sbuf = io.BytesIO()
-  qr.png(sbuf, scale=6)
-
-  # Convertir el objeto BytesIO a una imagen PIL y luego a una imagen base64 para mostrar en Streamlit
-  b64 = base64.b64encode(sbuf.getvalue()).decode()
-
-  # Crear la imagen base64 para mostrar en Streamlit
-  qr_code = f'<img src="data:image/png;base64,{b64}" alt="qr-code" width="200"/>'
-
-  # Convertir la cadena base64 en una imagen PIL
-  pil_img = Image.open(io.BytesIO(base64.b64decode(b64)))
-
-  return qr_code, url, pil_img
 def generate_report(student, student_id, materia, numero_calificaciones):
     # Llamar a la función generate_pdf
     namepdf = student['name']
@@ -135,9 +115,9 @@ def main():
     #wait for the user write in texbox to continue
     if st.button('Buscar'):
       try:
-        st.success(f"¡Te Encontramos! 😊 ")
+                  st.success(f"¡Te Encontramos! 😊 ")
 
-        with st.expander("Calificaciones y QR",expanded=False):
+       #with st.expander("Calificaciones y QR",expanded=False):
                   key_dict = json.loads(st.secrets["textkey"])
                   creds = service_account.Credentials.from_service_account_info(key_dict)
                   db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")  
