@@ -108,6 +108,11 @@ def main():
     #tomar informacion del QR por el metodo experimental_get_query_params
   student_id = st.experimental_get_query_params().get("student_id")
   materia= st.experimental_get_query_params().get("materia")
+  if student_id is None or materia is None:
+    student_id = st.text_input('Introduce la cedula o identificación del estudiante:')
+    materia= st.radio( "seleccione la materia",["vejez","adultez_I","internado","cancer"])
+    search_and_download(student_id)
+    st.stop()
   key_dict = json.loads(st.secrets["textkey"])
   creds = service_account.Credentials.from_service_account_info(key_dict)
   db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")  
