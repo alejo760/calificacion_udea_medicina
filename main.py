@@ -22,7 +22,7 @@ def get_student_info(student_id):
     key_dict = json.loads(st.secrets["textkey"])
     creds = service_account.Credentials.from_service_account_info(key_dict)
     db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")  
-    student_ref = db.collection("students").document(student_id[0])
+    student_ref = db.collection("students").document(student_id)
     student = student_ref.get().to_dict()
     numero_calificaciones = student.get("calificaciones")
     nucleobd = student.get("nucleo")
@@ -163,6 +163,8 @@ def main():
     #tomar informacion del QR por el metodo experimental_get_query_params
   student_id = st.experimental_get_query_params().get("student_id")
   materia= st.experimental_get_query_params().get("materia")
+  student, numero_calificaciones, nucleobd = get_student_info(student_id)
+  
   try:
 
     with st.container():
@@ -180,7 +182,7 @@ def main():
     with st.expander("Información del estudiante",expanded=True):
       st.subheader(f"{student['name']}")
       st.write(f"{student['email']}")
-      st.write(f"CC:{student_id}")
+      st.write(f"CC:{student_id[0]}")
     st.write("")
   except Exception as e:
         student_id = st.text_input('Introduce la cedula o identificación del estudiante:')
