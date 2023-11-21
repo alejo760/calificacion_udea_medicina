@@ -46,7 +46,7 @@ def evaluate_student(materia, student_id):
       key_dict = json.loads(st.secrets["textkey"])
       creds = service_account.Credentials.from_service_account_info(key_dict)
       db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")  
-      student_ref = db.collection("students").document(student_id[0])
+      student_ref = db.collection("students").document(student_id)
       student = student_ref.get().to_dict()
       numero_calificaciones = student.get("calificaciones")
       nucleobd = student.get("nucleo")
@@ -141,7 +141,7 @@ def generate_report(student, student_id, materia, numero_calificaciones):
     pdf.image("QR.png", x=90, y=200, w=40)
     # Add code to handle the QR code generation and placement in the PDF
 
-    html = create_download_link(pdf.output(dest="S").encode("latin-1"), f"Reporte de calificación {namepdf}_{idstupdf}_{materiapdf}.pdf")
+    html = create_download_link(pdf.output(dest="S").encode("latin-1"), f"Reporte de calificación {namepdf}_{idstupdf}_{materiapdf}")
 
     st.markdown(html, unsafe_allow_html=True)
 
