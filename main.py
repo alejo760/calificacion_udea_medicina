@@ -137,7 +137,8 @@ def main():
                     pil_img = Image.open(io.BytesIO(base64.b64decode(b64)))
                     # Muestra el código QR y la URL
                     st.image(pil_img, caption='Código QR para calificar')
-                    st.write(f"URL para calificar: {url}")
+                    st.markdown(f"URL para calificar: [click aquí]({url})")
+                    st.write("Reporte de calificaciones en PDF:")
                     generate_report(student, student_id, materia, numero_calificaciones)
                   except Exception as e:
                     st.error(f"no se puede generar el informe: {e}")
