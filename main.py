@@ -138,8 +138,8 @@ def main():
                     # Convertir la cadena base64 en una imagen PIL
                     pil_img = Image.open(io.BytesIO(base64.b64decode(b64)))
                     # Muestra el código QR y la URL
-                    st.image(qr_code, caption='Código QR para calificar')
-                    st.write(f"URL para calificar: {url}")
+                    st.image(pil_img, caption='Código QR para calificar')
+                    st.write(f"URL para calificar: {url}"))
                     generate_report(student, student_id, materia, numero_calificaciones)
                     
                   except Exception as e:
@@ -174,16 +174,8 @@ def main():
       st.write(f"CC:{student_id[0]}")
     st.write("")
   except Exception as e:
-        student_id = st.text_input('Introduce la cedula o identificación del estudiante:')
-        if st.button('Buscar estudiantes'):
-          students_to_download = search_and_download(student_id)
-          if students_to_download:
-            for student in students_to_download:
-              if st.button(f"Descargar informe de {student['name']}"):
-                generate_report(student, student['student_id'], student['materia'], student['numero_calificaciones'])
-          else:
-            st.write('No se encontraron estudiantes con esa identificación')
-            st.stop()
+    st.warning("El estudiante no tiene calificaciones")
+    st.stop()
   #calificar el estudiante...
   st.write("")
   with st.expander("Ingreso de la calificación",expanded=False):
