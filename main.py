@@ -20,18 +20,18 @@ import pyqrcode
 
 
 def search_and_download(student_id):
-    key_dict = json.loads(st.secrets["textkey"])
-    creds = service_account.Credentials.from_service_account_info(key_dict)
-    db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")  
+  key_dict = json.loads(st.secrets["textkey"])
+  creds = service_account.Credentials.from_service_account_info(key_dict)
+  db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")  
 
-    # Buscar en la base de datos todos los estudiantes que coincidan con el student_id proporcionado
-    students_ref = db.collection("students")
-    matching_students = students_ref.where('student_id', '==', student_id).stream()
+  # Buscar en la base de datos todos los estudiantes que coincidan con el student_id proporcionado
+  students_ref = db.collection("students")
+  matching_students = students_ref.where(filter=('student_id', '==', student_id)).stream()
 
-    # Crear una lista de estudiantes para descargar sus calificaciones en PDF
-    students_to_download = [student.to_dict() for student in matching_students]
+  # Crear una lista de estudiantes para descargar sus calificaciones en PDF
+  students_to_download = [student.to_dict() for student in matching_students]
 
-    return students_to_download
+  return students_to_download
 def generate_report(student, student_id, materia, numero_calificaciones):
     # Llamar a la función generate_pdf
     namepdf = student['name']
