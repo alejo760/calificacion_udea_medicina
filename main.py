@@ -113,6 +113,7 @@ def main():
               generate_report(student_id, materia, numero_calificaciones)
               st.stop()
             st.stop()
+    st.stop()
           
   else:
         st.write('No se encontraron estudiantes con esa identificación')
