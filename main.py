@@ -17,6 +17,59 @@ import base64
 from fpdf import FPDF
 import pyqrcode
 
+def generate_report(student, student_id, materia, numero_calificaciones):
+    # Llamar a la función generate_pdf
+    namepdf = student['name']
+    idstupdf= student_id[0]
+    emailpdf=student['email']
+    materiapdf=materia[0]
+    # Crear un bucle for para hacer una tabla para cada calificación y almacenar en calificacionespdf
+    for i in range(0,numero_calificaciones):
+      calificacionespdf = pd.DataFrame(student[f"calificacion{i}"])
+      # Cambiar los nombres de las columnas a una cadena vacía
+      calificacionespdf.columns = ['' for _ in calificacionespdf.columns]
+      # Cambiar el nombre del índice a una cadena vacía
+      calificacionespdf = calificacionespdf.rename(index=lambda x: '')
+      calificacionespdf=calificacionespdf.to_string()
+    
+    pdf = FPDF()
+    pdf.set_auto_page_break(auto=True, margin=15)  # Enable auto page break with a margin of 15mm
+
+    pdf.add_page()
+
+    # New code: Add the images to the PDF with custom positioning and dimensions
+    pdf.image("https://almamater.hospital/wp-content/uploads/2023/03/logo-hospital-alma-mater-1.png", x=160, y=10, w=40)
+
+    # New code: Add spacing and formatting
+    pdf.ln(60)
+    pdf.set_font('Arial', size=18, style='B')
+    pdf.cell(0, 10, "Informe de Calificaciones", ln=True, align='C')
+    pdf.ln(10)
+
+    # New code: Add the data to the PDF with custom formatting
+    pdf.set_font('Arial', size=12)
+    pdf.cell(0, 10, f"{namepdf}", ln=True, align='C')
+    pdf.cell(0, 10, f"{idstupdf}", ln=True, align='C')
+    pdf.cell(0, 10, f"{emailpdf}", ln=True, align='C')
+    pdf.cell(0, 10, f"Materia: {materiapdf}", ln=True, align='C')
+    pdf.ln(10)
+
+    # New code: Add a table with formatted grades
+    pdf.set_font('Arial', size=12, style='B')
+    pdf.cell(0, 10, "Calificaciones", ln=True, align='C')
+    pdf.set_font('Arial', size=10)
+    pdf.multi_cell(0, 7, calificacionespdf, align='C', border=1)
+    pdf.ln(30)
+
+    # New code: Generate and add QR code to the PDF
+    generate_qr_codes(idstupdf, materiapdf)
+    pdf.image("QR.png", x=90, y=200, w=40)
+    # Add code to handle the QR code generation and placement in the PDF
+
+    html = create_download_link(pdf.output(dest="S").encode("latin-1"), f"Reporte de calificación {namepdf}_{idstupdf}_{materiapdf}.pdf")
+
+    st.markdown(html, unsafe_allow_html=True)
+
 def create_download_link(val, filename):
       b64 = base64.b64encode(val)
       return f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="{filename}.pdf">Download file</a>'
@@ -52,12 +105,30 @@ def main():
       st.subheader(f"App de calificación UdeA, Materia: {materia[0]}")
       st.caption("Elaborado por Alejandro Hernández-Arango internista")
   except:
-    st.warning("el codigo QR no fue leido adecuadamente:")
-    st.warning("por favor escanee el codigo QR nuevamente")
-    st.warning("si el problema persiste, por favor comuniquese con el administrador alejandro.hernandeza@udea.edu.co")
-    st.stop()
+   
+   def search_and_download(name):
+    key_dict = json.loads(st.secrets["textkey"])
+    creds = service_account.Credentials.from_service_account_info(key_dict)
+    db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")  
 
- 
+    # Buscar en la base de datos todos los estudiantes que coincidan con el nombre proporcionado
+    students_ref = db.collection("students")
+    matching_students = students_ref.where('name', '==', name).stream()
+
+    # Crear una lista de estudiantes para descargar sus calificaciones en PDF
+    students_to_download = [student.to_dict() for student in matching_students]
+
+    return students_to_download
+  name = st.text_input('Introduce el nombre del estudiante')
+
+  if st.button('Buscar estudiantes'):
+        students_to_download = search_and_download(name)
+        if students_to_download:
+            for student in students_to_download:
+                if st.button(f"Descargar informe de {student['name']}"):
+                    generate_report(student, student['student_id'], student['materia'], student['numero_calificaciones'])
+        else:
+            st.write('No se encontraron estudiantes con ese nombre')
   try:
   #cargar la llave de firebase
     key_dict = json.loads(st.secrets["textkey"])
@@ -82,7 +153,6 @@ def main():
     st.warning("error en la base de datos el estudiante no se encuentra habilitado")
     st.warning("por favor comuniquese con el administrador alejandro.hernandeza@udea.edu.co")
     st.warning(e)
-    st.experimental_rerun()
   #calificar el estudiante...
   st.write("")
   with st.expander("Ingreso de la calificación",expanded=False):
@@ -183,61 +253,12 @@ def main():
                 st.warning('Login fallido, revise las credenciales de acceso son las mismas del Ghips')
                 st.stop()
 
+
   with st.expander("Descargar calificación",expanded=False):
     try:
-              # Llamar a la función generate_pdf
-              namepdf = student['name']
-              idstupdf= student_id[0]
-              emailpdf=student['email']
-              materiapdf=materia[0]
-              # Crear un bucle for para hacer una tabla para cada calificación y almacenar en calificacionespdf
-              for i in range(0,numero_calificaciones):
-                calificacionespdf = pd.DataFrame(student[f"calificacion{i}"])
-                # Cambiar los nombres de las columnas a una cadena vacía
-                calificacionespdf.columns = ['' for _ in calificacionespdf.columns]
-                # Cambiar el nombre del índice a una cadena vacía
-                calificacionespdf = calificacionespdf.rename(index=lambda x: '')
-                calificacionespdf=calificacionespdf.to_string()
-              
-              pdf = FPDF()
-              pdf.set_auto_page_break(auto=True, margin=15)  # Enable auto page break with a margin of 15mm
-
-              pdf.add_page()
-
-                # New code: Add the images to the PDF with custom positioning and dimensions
-              pdf.image("https://almamater.hospital/wp-content/uploads/2023/03/logo-hospital-alma-mater-1.png", x=160, y=10, w=40)
-
-                # New code: Add spacing and formatting
-              pdf.ln(60)
-              pdf.set_font('Arial', size=18, style='B')
-              pdf.cell(0, 10, "Informe de Calificaciones", ln=True, align='C')
-              pdf.ln(10)
-
-                # New code: Add the data to the PDF with custom formatting
-              pdf.set_font('Arial', size=12)
-              pdf.cell(0, 10, f"{namepdf}", ln=True, align='C')
-              pdf.cell(0, 10, f"{idstupdf}", ln=True, align='C')
-              pdf.cell(0, 10, f"{emailpdf}", ln=True, align='C')
-              pdf.cell(0, 10, f"Materia: {materiapdf}", ln=True, align='C')
-              pdf.ln(10)
-
-                # New code: Add a table with formatted grades
-              pdf.set_font('Arial', size=12, style='B')
-              pdf.cell(0, 10, "Calificaciones", ln=True, align='C')
-              pdf.set_font('Arial', size=10)
-              pdf.multi_cell(0, 7, calificacionespdf, align='C', border=1)
-              pdf.ln(30)
-
-                # New code: Generate and add QR code to the PDF
-              generate_qr_codes(idstupdf, materiapdf)
-              pdf.image("QR.png", x=90, y=200, w=40)
-                # Add code to handle the QR code generation and placement in the PDF
-
-              html = create_download_link(pdf.output(dest="S").encode("latin-1"), f"Reporte de calificación {namepdf}_{idstupdf}_{materiapdf}.pdf")
-
-              st.markdown(html, unsafe_allow_html=True)
+      generate_report(student, student_id, materia, numero_calificaciones)
     except Exception as e:
-              st.error(e)
+      st.error(f"An error occurred: {e}")
   with st.expander("Otras calificaciones de esta rotación",expanded=False):
      if numero_calificaciones==None:
         st.write("El estudiante **NO** ha sido calificado antes")
