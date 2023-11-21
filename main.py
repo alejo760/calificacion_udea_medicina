@@ -46,7 +46,7 @@ def evaluate_student(materia, student_id, student_ref):
       key_dict = json.loads(st.secrets["textkey"])
       creds = service_account.Credentials.from_service_account_info(key_dict)
       db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")  
-      student_ref = db.collection("students").document(student_id[0])
+      #student_ref = db.collection("students").document(student_id[0])
       student = student_ref.get().to_dict()
       numero_calificaciones = student.get("calificaciones")
       nucleobd = student.get("nucleo")
