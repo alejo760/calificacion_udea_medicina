@@ -110,6 +110,7 @@ def main():
 
             if st.button(f"Descargar informe de {student['name']}"):
               generate_report(student_id, materia, numero_calificaciones)
+              st.stop()
     else:
         st.write('No se encontraron estudiantes con esa identificación')
         st.stop()
