@@ -163,6 +163,7 @@ def main():
     #tomar informacion del QR por el metodo experimental_get_query_params
   student_id = st.experimental_get_query_params().get("student_id")
   materia= st.experimental_get_query_params().get("materia")
+  get_student_info(student_id)
   try:
 
     with st.container():
