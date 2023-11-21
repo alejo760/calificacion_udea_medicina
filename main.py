@@ -119,7 +119,7 @@ def main():
     students_to_download = [student.to_dict() for student in matching_students]
 
     return students_to_download
-  name = st.text_input('Introduce el nombre del estudiante')
+   name = st.text_input('Introduce el nombre del estudiante')
 
   if st.button('Buscar estudiantes'):
         students_to_download = search_and_download(name)
