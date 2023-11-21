@@ -100,7 +100,8 @@ def main():
     student_id = st.text_input('Introduce la cedula o identificación del estudiante:')
     materia= st.radio( "seleccione la materia",["internado"])
     #wait for the user write in texbox to continue
-    with st.expander("Descargar calificación",expanded=False):
+    if st.button('Continuar'):
+      with st.expander("Descargar calificación",expanded=False):
                 key_dict = json.loads(st.secrets["textkey"])
                 creds = service_account.Credentials.from_service_account_info(key_dict)
                 db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")  
