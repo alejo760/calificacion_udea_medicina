@@ -114,7 +114,7 @@ def main():
               st.stop()
             st.stop()
           
-    else:
+  else:
         st.write('No se encontraron estudiantes con esa identificación')
         st.stop()
   
