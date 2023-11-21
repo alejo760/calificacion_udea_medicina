@@ -26,7 +26,7 @@ def search_and_download(student_id):
 
   # Buscar en la base de datos todos los estudiantes que coincidan con el student_id proporcionado
   students_ref = db.collection("students")
-  matching_students = students_ref.where(filter=('student_id', '==', student_id)).stream()
+  matching_students = students_ref.where('student_id', '==', student_id).stream()
 
   # Crear una lista de estudiantes para descargar sus calificaciones en PDF
   students_to_download = [student.to_dict() for student in matching_students]
