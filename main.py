@@ -111,8 +111,7 @@ def main():
               numero_calificaciones = student.get("calificaciones")
               nucleobd = student.get("nucleo")
               generate_report(student_id, materia, numero_calificaciones)
-              st.stop()
-            st.stop()
+  
     st.stop()
           
   else:
