@@ -180,7 +180,7 @@ def main():
     with st.expander("Información del estudiante",expanded=True):
       st.subheader(f"{student['name']}")
       st.write(f"{student['email']}")
-      st.write(f"CC:{student_id[0]}")
+      st.write(f"CC:{student_id}")
     st.write("")
   except Exception as e:
         student_id = st.text_input('Introduce la cedula o identificación del estudiante:')
