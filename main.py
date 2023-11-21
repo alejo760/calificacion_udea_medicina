@@ -111,6 +111,15 @@ def main():
   if student_id is None or materia is None:
     student_id = st.text_input('Introduce la cedula o identificación del estudiante:')
     materia= st.radio( "seleccione la materia",["internado"])
+    if st.button('Buscar estudiantes'):
+      students_to_download = search_and_download(student_id)
+      if students_to_download:
+        for student in students_to_download:
+          if st.button(f"Descargar informe de {student['name']}"):
+            generate_report(student, student['student_id'], student['materia'], student['numero_calificaciones'])
+      else:
+        st.write('No se encontraron estudiantes con esa identificación')
+        st.stop()
   key_dict = json.loads(st.secrets["textkey"])
   creds = service_account.Credentials.from_service_account_info(key_dict)
   db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")  
