@@ -146,7 +146,17 @@ def main():
                   numero_calificaciones = student.get("calificaciones")
                   nucleobd = student.get("nucleo")
                   try:
-                    qr_code, url = generate_qr_and_url(student_id, materia)
+                    url = f"https://qrudeamedicina.streamlit.app/?student_id={student_id}&materia={materia}"
+                    # Crear el código QR
+                    qr = pyqrcode.create(url)
+                    sbuf = io.BytesIO()
+                    qr.png(sbuf, scale=6)
+                    # Convertir el objeto BytesIO a una imagen PIL y luego a una imagen base64 para mostrar en Streamlit
+                    b64 = base64.b64encode(sbuf.getvalue()).decode()
+                    # Crear la imagen base64 para mostrar en Streamlit
+                    qr_code = f'<img src="data:image/png;base64,{b64}" alt="qr-code" width="200"/>'
+                    # Convertir la cadena base64 en una imagen PIL
+                    pil_img = Image.open(io.BytesIO(base64.b64decode(b64)))
                     # Muestra el código QR y la URL
                     st.image(qr_code, caption='Código QR para calificar')
                     st.write(f"URL para calificar: {url}")
