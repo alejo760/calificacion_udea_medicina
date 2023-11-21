@@ -110,7 +110,7 @@ def main():
   materia= st.experimental_get_query_params().get("materia")
   if student_id is None or materia is None:
     student_id = st.text_input('Introduce la cedula o identificación del estudiante:')
-    materia= st.radio( "seleccione la materia",["vejez","adultez_I","internado","cancer"])
+    materia= st.radio( "seleccione la materia",["internado"])
     search_and_download(student_id)
     st.stop()
   key_dict = json.loads(st.secrets["textkey"])
