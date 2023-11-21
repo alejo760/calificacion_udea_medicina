@@ -115,38 +115,36 @@ def main():
     #wait for the user write in texbox to continue
     if st.button('Buscar'):
       try:
-                  st.success(f"¡Te Encontramos! 😊 ")
+        st.success(f"¡Te Encontramos! 😊 ")
 
-       #with st.expander("Calificaciones y QR",expanded=False):
-                  key_dict = json.loads(st.secrets["textkey"])
-                  creds = service_account.Credentials.from_service_account_info(key_dict)
-                  db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")  
-                  student_ref = db.collection("students").document(student_id)
-                  student = student_ref.get().to_dict()
-                  numero_calificaciones = student.get("calificaciones")
-                  nucleobd = student.get("nucleo")
-                  try:
-                    url = f"https://qrudeamedicina.streamlit.app/?student_id={student_id}&materia={materia}"
-                    # Crear el código QR
-                    qr = pyqrcode.create(url)
-                    sbuf = io.BytesIO()
-                    qr.png(sbuf, scale=6)
-                    # Convertir el objeto BytesIO a una imagen PIL y luego a una imagen base64 para mostrar en Streamlit
-                    b64 = base64.b64encode(sbuf.getvalue()).decode()
-                    # Convertir la cadena base64 en una imagen PIL
-                    pil_img = Image.open(io.BytesIO(base64.b64decode(b64)))
-                    # Muestra el código QR y la URL
-                    st.image(pil_img, caption='Código QR para calificar')
-                    st.markdown(f"URL para calificar: [click aquí]({url})")
-                    st.write("Reporte de calificaciones en PDF:")
-                    generate_report(student, student_id, materia, numero_calificaciones)
-                  except Exception as e:
-                    st.error(f"no se puede generar el informe: {e}")
+        key_dict = json.loads(st.secrets["textkey"])
+        creds = service_account.Credentials.from_service_account_info(key_dict)
+        db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")  
+        student_ref = db.collection("students").document(student_id)
+        student = student_ref.get().to_dict()
+        numero_calificaciones = student.get("calificaciones")
+        nucleobd = student.get("nucleo")
+        try:
+          url = f"https://qrudeamedicina.streamlit.app/?student_id={student_id}&materia={materia}"
+          # Crear el código QR
+          qr = pyqrcode.create(url)
+          sbuf = io.BytesIO()
+          qr.png(sbuf, scale=6)
+          # Convertir el objeto BytesIO a una imagen PIL y luego a una imagen base64 para mostrar en Streamlit
+          b64 = base64.b64encode(sbuf.getvalue()).decode()
+          # Convertir la cadena base64 en una imagen PIL
+          pil_img = Image.open(io.BytesIO(base64.b64decode(b64)))
+          # Muestra el código QR y la URL
+          st.write("<p style='text-align: center;'>", unsafe_allow_html=True)
+          st.image(pil_img, caption='Código QR para calificar')
+          st.markdown(f"URL para calificar: [click aquí]({url})")
+          st.write("Reporte de calificaciones en PDF:")
+          generate_report(student, student_id, materia, numero_calificaciones)
+          st.write("</p>", unsafe_allow_html=True)
+        except Exception as e:
+          st.error(f"no se puede generar el informe: {e}")
       except:
-
         st.error(f"¡No se encontró el estudiante! 😞 Por favor, revisa la cédula.")
-
-
 
     st.stop()
           
