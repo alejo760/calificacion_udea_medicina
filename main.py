@@ -26,7 +26,7 @@ def get_student_info(student_id):
     student = student_ref.get().to_dict()
     numero_calificaciones = student.get("calificaciones")
     nucleobd = student.get("nucleo")
-    return student, numero_calificaciones, nucleobd, student_ref
+    return student, numero_calificaciones, nucleobd
 
 def search_and_download(student_id):
     key_dict = json.loads(st.secrets["textkey"])
