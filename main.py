@@ -16,10 +16,28 @@ import pytz
 import base64
 from fpdf import FPDF
 import pyqrcode
+from PIL import Image
+import io
 
 
 
+def generate_qr_and_url(student_id, materia):
+    # Crear la URL basada en el student_id
+    url = f"https://qrudeamedicina.streamlit.app/?student_id={student_id}&materia={materia}"
 
+    # Crear el código QR
+    qr = pyqrcode.create(url)
+    sbuf = io.BytesIO()
+    qr.png(sbuf, scale=6)
+
+    # Convertir el objeto BytesIO a una imagen PIL y luego a una imagen base64 para mostrar en Streamlit
+    pil_img = Image.open(sbuf)
+    b64 = base64.b64encode(sbuf.getvalue()).decode()
+
+    # Crear la imagen base64 para mostrar en Streamlit
+    qr_code = f'<img src="data:image/png;base64,{b64}" alt="qr-code" width="200"/>'
+
+    return qr_code, url
 def generate_report(student, student_id, materia, numero_calificaciones):
     # Llamar a la función generate_pdf
     namepdf = student['name']
@@ -116,7 +134,8 @@ def main():
     if st.button('Buscar'):
       try:
         st.success(f"¡Te Encontramos! 😊 ")
-        with st.expander("Descargar calificación",expanded=False):
+
+        with st.expander("Calificaciones y QR",expanded=False):
                   key_dict = json.loads(st.secrets["textkey"])
                   creds = service_account.Credentials.from_service_account_info(key_dict)
                   db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")  
@@ -125,7 +144,12 @@ def main():
                   numero_calificaciones = student.get("calificaciones")
                   nucleobd = student.get("nucleo")
                   try:
+                    qr_code, url = generate_qr_and_url(student_id)
+                    # Muestra el código QR y la URL
+                    st.image(qr_code, caption='Código QR para calificar')
+                    st.write(f"URL para calificar: {url}")
                     generate_report(student, student_id, materia, numero_calificaciones)
+                    
                   except Exception as e:
                     st.error(f"no se puede generar el informe: {e}")
       except:
