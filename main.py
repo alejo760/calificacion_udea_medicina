@@ -19,19 +19,7 @@ import pyqrcode
 
 
 
-def search_and_download(student_id):
-  key_dict = json.loads(st.secrets["textkey"])
-  creds = service_account.Credentials.from_service_account_info(key_dict)
-  db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")  
 
-  # Buscar en la base de datos todos los estudiantes que coincidan con el student_id proporcionado
-  students_ref = db.collection("students")
-  matching_students = students_ref.where('student_id', '==', student_id).stream()
-
-  # Crear una lista de estudiantes para descargar sus calificaciones en PDF
-  students_to_download = [student.to_dict() for student in matching_students]
-
-  return students_to_download
 def generate_report(student, student_id, materia, numero_calificaciones):
     # Llamar a la función generate_pdf
     namepdf = student['name']
@@ -112,12 +100,17 @@ def main():
     student_id = st.text_input('Introduce la cedula o identificación del estudiante:')
     materia= st.radio( "seleccione la materia",["internado"])
     if st.button('Buscar estudiantes'):
-      students_to_download = search_and_download(student_id)
-      if students_to_download:
-        for student in students_to_download:
-          if st.button(f"Descargar informe de {student['name']}"):
-            generate_report(student, student['student_id'], student['materia'], student['numero_calificaciones'])
-      else:
+            key_dict = json.loads(st.secrets["textkey"])
+            creds = service_account.Credentials.from_service_account_info(key_dict)
+            db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")  
+            student_ref = db.collection("students").document(student_id)
+            student = student_ref.get().to_dict()
+            numero_calificaciones = student.get("calificaciones")
+            nucleobd = student.get("nucleo")
+
+            if st.button(f"Descargar informe de {student['name']}"):
+              generate_report(student, student['student_id'], student['materia'], student['numero_calificaciones'])
+    else:
         st.write('No se encontraron estudiantes con esa identificación')
         st.stop()
   key_dict = json.loads(st.secrets["textkey"])
