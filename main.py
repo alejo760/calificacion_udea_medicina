@@ -43,6 +43,8 @@ def search_and_download(student_id):
     return students_to_download
 
 def evaluate_student(materia, student_id):
+      if student_id is None:
+        raise ValueError("student_id no puede ser None")
       key_dict = json.loads(st.secrets["textkey"])
       creds = service_account.Credentials.from_service_account_info(key_dict)
       db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")  
