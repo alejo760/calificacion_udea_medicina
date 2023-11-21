@@ -207,7 +207,7 @@ def main():
   #calificar el estudiante...
   st.write("")
   with st.expander("Ingreso de la calificación",expanded=False):
-    evaluate_student(materia, nucleobd, numero_calificaciones, student, student_ref)
+    evaluate_student(materia, student_id)
   with st.expander("Descargar calificación",expanded=False):
     try:
       generate_report(student, student_id, materia, numero_calificaciones)
