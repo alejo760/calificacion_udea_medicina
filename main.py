@@ -26,7 +26,7 @@ def get_student_info(student_id):
     student = student_ref.get().to_dict()
     numero_calificaciones = student.get("calificaciones")
     nucleobd = student.get("nucleo")
-    return student, numero_calificaciones, nucleobd
+    return student, numero_calificaciones, nucleobd, student_ref
 
 def search_and_download(student_id):
     key_dict = json.loads(st.secrets["textkey"])
@@ -43,8 +43,6 @@ def search_and_download(student_id):
     return students_to_download
 
 def evaluate_student(materia, student_id):
-      if student_id is None:
-        raise ValueError("student_id no puede ser None")
       key_dict = json.loads(st.secrets["textkey"])
       creds = service_account.Credentials.from_service_account_info(key_dict)
       db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")  
@@ -146,7 +144,6 @@ def generate_report(student, student_id, materia, numero_calificaciones):
     html = create_download_link(pdf.output(dest="S").encode("latin-1"), f"Reporte de calificación {namepdf}_{idstupdf}_{materiapdf}")
 
     st.markdown(html, unsafe_allow_html=True)
-
 def create_download_link(val, filename):
       b64 = base64.b64encode(val)
       return f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="{filename}.pdf">Download file</a>'
