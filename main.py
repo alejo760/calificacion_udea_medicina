@@ -115,7 +115,8 @@ def main():
                   except Exception as e:
                     st.error(f"no se puede generar el informe: {e}")
       except:
-        st.error(f"no se encontró el estudiante revisa la cédula")
+
+        st.error(f"¡No se encontró el estudiante! 😞 Por favor, revisa la cédula.")
 
 
 
