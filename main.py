@@ -92,6 +92,19 @@ def main():
         'About': "App de calificación creada para los estudiantes de Medicina UdeA"
     }
 )
+    
+  try:
+
+    with st.container():
+      col1, col2= st.columns(2)
+      #set the col 2 in right position
+      col1.image("https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES", width=100)
+      col2.image("https://almamater.hospital/wp-content/uploads/2023/03/logo-hospital-alma-mater-1.png", width=100)
+      st.subheader(f"App de calificación Alma Máter - UdeA, Materia: {materia[0]}")
+      st.caption("Elaborado por Alejandro Hernández-Arango internista")
+  except Exception as e:
+    print(e)
+    pass
 
     #tomar informacion del QR por el metodo experimental_get_query_params
   student_id = st.experimental_get_query_params().get("student_id")
@@ -102,6 +115,7 @@ def main():
     #wait for the user write in texbox to continue
     if st.button('Buscar'):
       try:
+        st.success(f"¡Te Encontramos! 😊 ")
         with st.expander("Descargar calificación",expanded=False):
                   key_dict = json.loads(st.secrets["textkey"])
                   creds = service_account.Credentials.from_service_account_info(key_dict)
@@ -136,19 +150,6 @@ def main():
   nucleobd = student.get("nucleo")
 
 
-  
-  try:
-
-    with st.container():
-      col1, col2= st.columns(2)
-      #set the col 2 in right position
-      col1.image("https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES", width=100)
-      col2.image("https://almamater.hospital/wp-content/uploads/2023/03/logo-hospital-alma-mater-1.png", width=100)
-      st.subheader(f"App de calificación UdeA, Materia: {materia[0]}")
-      st.caption("Elaborado por Alejandro Hernández-Arango internista")
-  except Exception as e:
-    print(e)
-    pass
 
   try:
     with st.expander("Información del estudiante",expanded=True):
