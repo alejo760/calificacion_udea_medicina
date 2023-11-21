@@ -144,7 +144,7 @@ def main():
                   numero_calificaciones = student.get("calificaciones")
                   nucleobd = student.get("nucleo")
                   try:
-                    qr_code, url = generate_qr_and_url(student_id)
+                    qr_code, url = generate_qr_and_url(student_id, materia)
                     # Muestra el código QR y la URL
                     st.image(qr_code, caption='Código QR para calificar')
                     st.write(f"URL para calificar: {url}")
