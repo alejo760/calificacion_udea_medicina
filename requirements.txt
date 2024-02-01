@@ -2,7 +2,7 @@ pandas==1.4.1
 PyQRCode==1.2.1
 streamlit==1.14.0
 toml==0.10.2
-openpyxl
+openpyxl == 3.1.0
 pypng==0.20220715.0
 xlsxwriter==3.0.3
 attrdict==2.0.1
