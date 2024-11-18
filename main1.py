@@ -54,22 +54,22 @@ def create_users_in_moodle(df):
     for i, row in df.iterrows():
         email = row['email']
         firstname = row['name']
-        lastname = "Default"  # You can modify this if you have last names in the data
+        lastname = "."  # You can modify this if you have last names in the data
         user_id = row['id']
-        password = "DefaultPassword123!"
+
 
         params = {
             "wstoken": MOODLE_API_TOKEN,
-            "wsfunction": "core_user_create_users",
-            "moodlewsrestformat": "json",
-            "users[0][username]": email,
-            "users[0][email]": email,
-            "users[0][firstname]": firstname,
-            "users[0][lastname]": lastname,
-            "users[0][idnumber]": user_id,
-            "users[0][auth]": "manual",
-            "users[0][lang]": "es",
-            "users[0][password]": password
+        "moodlewsrestformat": "json",
+        "users[0][username]": email,
+        "users[0][email]": email,
+        "users[0][firstname]": firstname,
+        "users[0][lastname]": lastname,
+        "users[0][idnumber]": user_id,
+        "users[0][auth]": "manual",
+        "users[0][lang]": "es",
+        "users[0][createpassword]": 1,  # 0 significa que no se generará automáticamente
+
         }
 
         response = requests.post(MOODLE_API_URL, data=params)
