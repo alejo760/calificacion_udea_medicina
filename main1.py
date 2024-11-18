@@ -1,187 +1,135 @@
-
 import streamlit as st
 import pandas as pd
 import pyqrcode
-import png
 import base64
-import io
-import xlsxwriter
 import json
 from zipfile import ZipFile
-from firebase_admin import firestore
-from google.cloud.firestore import Client
-from google.oauth2 import service_account
-import firebase_admin
+import requests
+import pytz
 from datetime import datetime
-import pytz 
-import openpyxl
-from firebase_admin import credentials
 
-
-
-key_dict = json.loads(st.secrets["textkey"])
-creds = service_account.Credentials.from_service_account_info(key_dict)
-db = firestore.Client(credentials=creds, project="estudiantesudea-1bbcd")
+# Moodle Configuration (Add these keys to your Streamlit secrets or environment variables)
+MOODLE_API_URL = st.secrets["MOODLE_API_URL"]
+MOODLE_API_TOKEN = st.secrets["MOODLE_API_TOKEN"]
+STUDENT_ROLE_ID = 5  # Role ID for student enrollment
 
 def set_time():
-  tz_col = pytz.timezone('America/Bogota') 
-  fecha = datetime.now(tz_col).strftime('%a, %d %b %Y %I:%M %p')
-  return fecha
-
-#---------------------------------#
-
-#---------------------------------#
+    tz_col = pytz.timezone('America/Bogota')
+    fecha = datetime.now(tz_col).strftime('%a, %d %b %Y %I:%M %p')
+    return fecha
 
 # Function to upload a database in xlsx format with the list of students name, e-mail, and id
 def upload_database():
-  data = st.file_uploader("Subir base de datos de estudiantes, debe tener id, nombre, email", type="xlsx")
-  if data is not None:
-    df = pd.read_excel(data)
-    return df
-def upload_database_json():
-  data = st.file_uploader("Subir base de datos de estudiantes en json", type="json")
-  if data is not None:
-    df = pd.read_json(data)
-    return df
-  
+    data = st.file_uploader("Subir base de datos de estudiantes, debe tener id, nombre, email", type="xlsx")
+    if data is not None:
+        df = pd.read_excel(data)
+        return df
+
 # Function to generate a QR code for each student
 def generate_qr_codes(df, materia):
-  fecha=set_time()
-  qr_png={}
-  for i, row in df.iterrows():
-    url = f"https://qrudeamedicina.streamlit.app/?student_id={int(row['id'])}&materia={materia}"
-    qr = pyqrcode.create(url)
-    # Download png image of the QR code with student name and id caption
-    qr.png(f"{row['name']}_{row['id']}.png", scale=6)
-    qr_png[row['name']]=f"{row['name']}_{row['id']}.png"
-    # button to download all the QR codes
-  zipObj = ZipFile(f'todos_qr_codes.zip', 'w')
-  for key in qr_png:
-        zipObj.write(qr_png[key])
-  zipObj.close()
-  #download zip in streamlit
-  b64 = base64.b64encode(open(f'todos_qr_codes.zip', 'rb').read()).decode()
-  href = f'<a href="data:file/zip;base64,{b64}" download="todos_qr_codes.zip">Download zip file</a>'
-  st.markdown(href, unsafe_allow_html=True)
-
-  return qr_png
-
-# Create aaaaa function to store all the data in Firestore and check if the student exists and if exists dont update
-def store_data_in_firestore(df,materia):
-  for i, row in df.iterrows():
-    student_ref = db.collection('students').document(str(int(row['id'])))
-    student = student_ref.get()
-    student_ref.set({
-        'name': row['name'],
-        'email': row['email'],
-        'calificaciones': 0,
-        'materia':materia
-      })
-
-#create new collection in firestore from a json file
-def create_collection_from_json(df, materia):
-  df=upload_database_json()
-  if df is not None:
-    fecha=set_time()
+    fecha = set_time()
+    qr_png = {}
     for i, row in df.iterrows():
-      student_ref = db.collection('students').document(str(int(row['id'])))
-      student = student_ref.get()
-      if student.exists:
-        st.warning(f"El estudiante {row['name']} ya existe en la base de datos")
-      else:
-        student_ref.set(student)
-        st.success(f"El estudiante {row['name']} fue agregado exitosamente a la base de datos")
+        url = f"https://qrudeamedicina.streamlit.app/?student_id={int(row['id'])}&materia={materia}"
+        qr = pyqrcode.create(url)
+        qr_filename = f"{row['name']}_{row['id']}.png"
+        qr.png(qr_filename, scale=6)
+        qr_png[row['name']] = qr_filename
 
+    # Create a ZIP file with all QR codes
+    zipObj = ZipFile(f'todos_qr_codes.zip', 'w')
+    for key in qr_png:
+        zipObj.write(qr_png[key])
+    zipObj.close()
+
+    # Provide download link for ZIP file
+    b64 = base64.b64encode(open(f'todos_qr_codes.zip', 'rb').read()).decode()
+    href = f'<a href="data:file/zip;base64,{b64}" download="todos_qr_codes.zip">Download zip file</a>'
+    st.markdown(href, unsafe_allow_html=True)
+
+    return qr_png
+
+# Function to create users in Moodle
+def create_users_in_moodle(df):
+    for i, row in df.iterrows():
+        email = row['email']
+        firstname = row['name']
+        lastname = "Default"  # You can modify this if you have last names in the data
+        user_id = row['id']
+        password = "DefaultPassword123!"
+
+        params = {
+            "wstoken": MOODLE_API_TOKEN,
+            "wsfunction": "core_user_create_users",
+            "moodlewsrestformat": "json",
+            "users[0][username]": email,
+            "users[0][email]": email,
+            "users[0][firstname]": firstname,
+            "users[0][lastname]": lastname,
+            "users[0][idnumber]": user_id,
+            "users[0][auth]": "manual",
+            "users[0][lang]": "es",
+            "users[0][password]": password
+        }
+
+        response = requests.post(MOODLE_API_URL, data=params)
+        if response.status_code == 200:
+            try:
+                result = response.json()
+                if "error" in result:
+                    st.error(f"Error creando usuario {email}: {result['message']}")
+                else:
+                    st.success(f"Usuario {email} creado exitosamente.")
+                    user_moodle_id = result[0]['id']  # Get the created user ID for enrollment
+                    enroll_user_in_course(user_moodle_id, STUDENT_ROLE_ID, course_id=2)  # Modify course_id as needed
+            except ValueError:
+                st.error(f"Respuesta inválida al crear usuario {email}: {response.text}")
+        else:
+            st.error(f"Error creando usuario {email}: {response.status_code} {response.text}")
+
+# Function to enroll user in Moodle course
+def enroll_user_in_course(userid, roleid, course_id):
+    params = {
+        "wstoken": MOODLE_API_TOKEN,
+        "wsfunction": "enrol_manual_enrol_users",
+        "moodlewsrestformat": "json",
+        "enrolments[0][roleid]": roleid,
+        "enrolments[0][userid]": userid,
+        "enrolments[0][courseid]": course_id
+    }
+
+    response = requests.post(MOODLE_API_URL, data=params)
+    if response.status_code == 200:
+        try:
+            # Success message for enrollment
+            st.success(f"Usuario con ID {userid} matriculado exitosamente en el curso con ID {course_id}.")
+        except ValueError:
+            st.error(f"Respuesta inválida al matricular usuario {userid}: {response.text}")
+    else:
+        st.error(f"Error matriculando usuario {userid}: {response.status_code} {response.text}")
 
 # Main function
 def main():
-  st.image("https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES", width=200)
-  st.title("App Crear codigos QR y abrir base de datos de estudiantes")
-  st.subheader("-Medicina Interna UdeA-")
-  st.caption ("hecha por Alejandro Hernández-Arango MD")
-  materias=['vejez', 'internado', 'adultez_I']
-  collection='students'
-  materia=st.selectbox("Seleccione la materia", materias)
-  # Upload the database
-  with st.expander("Crear colección desde json"):
-   if st.button("Crear colección desde json"):
+    st.image("https://portal.udea.edu.co/wps/wcm/connect/udea/bb031677-32be-43d2-8866-c99378f98aeb/1/Logo+Facultad+color+%282%29.png?MOD=AJPERES", width=200)
+    st.title("App Crear codigos QR y subir estudiantes a Moodle")
+    st.subheader("-Medicina Interna UdeA-")
+    st.caption("hecha por Alejandro Hernández-Arango MD")
+    materias = ['Medicina Interna Internado']
+    materia = st.selectbox("Seleccione la materia", materias)
+    # Upload the database
+    with st.expander("Crear base de datos desde excel"):
+        df = upload_database()
+        if df is not None:
+            # Generate QR codes
+            if st.button("Generar códigos QR"):
+                generate_qr_codes(df, materia)
+                st.success("Códigos QR generados exitosamente")
 
-
-      create_collection_from_json()
-      st.success("Colección creada exitosamente")
-  with st.expander("Crear base de datos desde excel"):
-    df = upload_database()
-    if df is not None:
-      #set_time()
-      fecha = set_time()
-      store_data_in_firestore(df,materia)
-      st.success("Base de datos cargada exitosamente y guardada exitosamente")
-      # Generate QR codes
-      if st.button("Generar códigos QR"):
-        generate_qr_codes(df, materia)
-        st.success("códigos QR generados exitosamente")
-# generate a xlsx from firestore database
-  if st.button(f"Descargar base de datos {materia} del periodo {collection}"):
-    #select documents from firestore materia 
-    fecha=set_time()
-    docs = db.collection(collection).where("materia", "==", materia).stream()
-    df = pd.DataFrame(columns=['id', 'name', 'email', 'calificaciones', 'materia'])
-    for doc in docs:
-      # create a new DataFrame from doc.to_dict()
-      new_df = pd.DataFrame(doc.to_dict(),index=[0])
-# use concat to append new_df to df along the index axis
-      df = pd.concat([df,new_df], ignore_index=True)
-    df.to_json(f'notas_de_{materia}_{fecha}.json', orient="records")
-    pd.json_normalize(df)
-    with open(f'notas_de_{materia}_{fecha}.json') as f:
-
-      df = json.load(f)
-    #in this list of list extract name email nucelo and score
-    df = pd.DataFrame(df)
-    # iterate over the calificacion columns and extract the scores
-
-    # extract the required columns
-    result = df
-    result.to_excel(f'notas_de_{materia}_{fecha}.xlsx', index=False)
-    b64 = base64.b64encode(open(f'notas_de_{materia}_{fecha}.xlsx', 'rb').read()).decode()
-    href = f'<a href="data:file/json;base64,{b64}" download="notas_de_{materia}_{fecha}.xlsx">Download xlsx file</a>'
-
-    st.markdown(href, unsafe_allow_html=True)
-    st.success("Base de datos descargada exitosamente")
-
-        #download json file from firestore database
-  if st.button(f"Descargar base de datos {materia} del periodo {collection} en formato json"):
-    #select documents from firestore materia 
-    fecha=set_time()
-    docs = db.collection(collection).where("materia", "==", materia).stream()
-    df = pd.DataFrame(columns=['id', 'name', 'email', 'calificaciones', 'materia'])
-    for doc in docs:
-            # create a new DataFrame from doc.to_dict()
-      new_df = pd.DataFrame(doc.to_dict(),index=[0])
-# use concat to append new_df to df along the index axis
-      df = pd.concat([df,new_df], ignore_index=True)
-    df.to_json(f'notas_de_{materia}_{fecha}.json', orient="records")
-    pd.json_normalize(df)
-    with open(f'notas_de_{materia}_{fecha}.json') as f:
-
-      df = json.load(f)
-    #in this list of list extract name email nucelo and score
-    df = pd.DataFrame(df)
-    # iterate over the calificacion columns and extract the scores
-
-    df.to_json(f'notas_de_{materia}_{fecha}.json', orient="records")
-    
-    b64 = base64.b64encode(open(f'notas_de_{materia}_{fecha}.json', 'rb').read()).decode()
-    href = f'<a href="data:file/json;base64,{b64}" download="notas_de_{materia}_{fecha}.json">Download json file</a>'
-    st.markdown(href, unsafe_allow_html=True)
-    st.success("Base de datos descargada exitosamente")
-
-
-
-#---------------------------------
-  
+            # Create users in Moodle
+            if st.button("Crear usuarios en Moodle y matricular"):
+                create_users_in_moodle(df)
+                st.success("Usuarios creados y matriculados exitosamente en Moodle")
 
 # Run the app
 if __name__ == "__main__":
-  main()
-
+    main()
