@@ -158,7 +158,7 @@ def main():
         if st.button("Crear usuarios y matricular en Moodle"):
             for i, row in df.iterrows():
                 email = row['email']
-                fullname = row['name'].split()
+                fullname = row['nombre'].split()
                 firstname = fullname[0] if len(fullname) > 0 else ''
                 lastname = ' '.join(fullname[1:]) if len(fullname) > 1 else ''
                 idnumber = str(row['id'])
