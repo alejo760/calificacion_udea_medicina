@@ -160,7 +160,7 @@ def main():
                 email = row['email']
                 fullname = row['nombre'].split()
                 firstname = fullname[0] if len(fullname) > 0 else ''
-                lastname = ' '.join(fullname[1:]) if len(fullname) > 1 else ''
+                lastname = ' '.join(fullname[1:]) if len(fullname) > 1 else '.'
                 idnumber = str(row['id'])
 
                 # Check if user exists
