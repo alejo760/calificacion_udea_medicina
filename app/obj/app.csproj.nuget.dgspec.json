@@ -1,0 +1,80 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/alejo/Documents/GHIPS/moodle/calificacion_udea_medicina/app/app.csproj": {}
+  },
+  "projects": {
+    "/Users/alejo/Documents/GHIPS/moodle/calificacion_udea_medicina/app/app.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/alejo/Documents/GHIPS/moodle/calificacion_udea_medicina/app/app.csproj",
+        "projectName": "app",
+        "projectPath": "/Users/alejo/Documents/GHIPS/moodle/calificacion_udea_medicina/app/app.csproj",
+        "packagesPath": "/Users/alejo/.nuget/packages/",
+        "outputPath": "/Users/alejo/Documents/GHIPS/moodle/calificacion_udea_medicina/app/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/alejo/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation": {
+              "target": "Package",
+              "version": "[9.0.1, )"
+            },
+            "System.Net.Http.Json": {
+              "target": "Package",
+              "version": "[9.0.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.101/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
