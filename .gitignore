@@ -1,12 +1,38 @@
-data.json
-data.toml
-tomltojson.py
-secrets.toml
-.vscode
-firestore-key.json
-notas_de_vejez_COMPLETO.xlsx
-notas_de_vejez_CON_PROMEDIO_EN_HOSP.xlsx
-notas_de_vejez_Fri, 17 Mar 2023 03_14 PM.xlsx
-generate_docs.py
-documentation.txt
-.env
+# User-specific files
+*.env
+*.json
+!appsettings.json
+!appsettings.Development.json
+*.toml
+*.py
+*.xlsx
+
+# Visual Studio Code
+.vscode/
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Visual Studio cache files
+# files ending in .cache can be ignored
+*.[Cc]ache
+# but keep track of directories ending in .cache
+!?*.[Cc]ache/

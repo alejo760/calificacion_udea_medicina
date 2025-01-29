@@ -1,10 +1,38 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Inicio";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">@Model.Message</h1>
+    <p>Sistema de gestión de calificaciones para la Facultad de Medicina.</p>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Acceso Rápido</h5>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <a href="/Calificaciones" class="text-decoration-none">Gestionar Calificaciones</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="/Reportes" class="text-decoration-none">Ver Reportes</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Información</h5>
+                <p class="card-text">
+                    Para soporte técnico, por favor contacte al administrador del sistema.
+                </p>
+            </div>
+        </div>
+    </div>
 </div>
